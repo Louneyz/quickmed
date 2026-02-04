@@ -31,7 +31,7 @@ export function Navbar() {
                 </nav>
                 <div className="flex items-center gap-4">
                     {/* Mobile Menu Trigger could go here */}
-                    <Link href="https://portal.quickmed.ca/login" className={cn(buttonVariants("default"), "hidden md:inline-flex bg-transparent border border-white text-white hover:bg-white hover:text-primary font-bold shadow-none")}>
+                    <Link href="/login" className={cn(buttonVariants("default"), "hidden md:inline-flex bg-transparent border border-white text-white hover:bg-white hover:text-primary font-bold shadow-none")}>
                         Login
                     </Link>
                     <Button variant="ghost" size="icon" className="md:hidden text-white hover:bg-white/10 hover:text-white">
