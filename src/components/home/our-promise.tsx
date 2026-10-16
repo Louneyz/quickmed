@@ -35,8 +35,8 @@ export function OurPromise() {
                 />
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
                     {promises.map(({ icon: Icon, ...promise }, index) => (
-                        <Reveal key={promise.title} delay={index * 100} className="rounded-[20px] bg-surface p-6 md:p-7">
-                            <span className="mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-brand text-ink">
+                        <Reveal key={promise.title} delay={index * 100} className="rounded-[20px] bg-surface p-6 md:p-7 text-center">
+                            <span className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-brand text-ink">
                                 <Icon className="h-5 w-5" aria-hidden="true" />
                             </span>
                             <h3 className="text-2xl tracking-tight text-ink mb-3">{promise.title}</h3>

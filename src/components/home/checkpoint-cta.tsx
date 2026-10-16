@@ -13,9 +13,7 @@ export function CheckpointCta() {
                             Don&apos;t lose the patients who can&apos;t make it in.
                         </p>
                         <p className="mt-4 text-lg leading-snug">
-                            When getting to the pharmacy gets hard, patients go looking for one that delivers. Keep them with
-                            you. Our trained drivers handle every order under PHIPA, from $5 a delivery, with no drivers for
-                            you to hire.
+                            When getting to the pharmacy gets hard, patients go looking for one that delivers.
                         </p>
                     </div>
                     <div className="shrink-0 flex flex-col items-start md:items-end gap-3">

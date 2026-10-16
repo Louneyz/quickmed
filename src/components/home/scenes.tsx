@@ -169,55 +169,28 @@ export function SupportScene() {
 }
 
 // Last stop: a wide route that ends at the patient's door, drawn for the dark panel.
-const DOOR_ROUTE = "M60 240 C 140 240, 160 140, 260 140 S 400 200, 470 150 S 540 90, 572 112";
-
-export function DoorstepScene() {
-    const motion = !useReducedMotion();
+// Closing panel: a straight route from the pharmacy to the patient's door, drawn under the buttons.
+export function DoorstepLine() {
     return (
-        <Scene label="Delivery route ending at the patient's front door" >
-            <svg viewBox="0 30 640 256" className="h-full w-full" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-                <defs>
-                    <pattern id="door-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                        <path d="M40 0H0V40" fill="none" stroke="rgb(255 255 255 / 0.08)" strokeWidth="1" />
-                    </pattern>
-                </defs>
-                <rect width="640" height="320" fill="url(#door-grid)" />
-                <path d={DOOR_ROUTE} fill="none" stroke="rgb(255 255 255 / 0.2)" strokeWidth="3" strokeDasharray="2 8" strokeLinecap="round" />
-                <path id="door-route" d={DOOR_ROUTE} pathLength={1} fill="none" stroke="var(--brand)" strokeWidth="4" strokeLinecap="round" className="s-draw" />
-
-                <g transform="translate(60 240)">
-                    <rect x="-20" y="-20" width="40" height="40" rx="10" fill="var(--brand)" />
-                    <path d="M-3 -10h6v7h7v6h-7v7h-6v-7h-7v-6h7z" fill="var(--ink)" />
-                </g>
-
-                {/* The patient's home */}
-                <g transform="translate(572 112)">
-                    <circle r="34" fill="var(--brand)" opacity="0.15" className="pin-pulse" />
+        <Scene label="Delivery route from the pharmacy to the patient's front door" className="flex items-center gap-3 md:gap-4">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-brand" aria-hidden="true">
+                <svg viewBox="-12 -12 24 24" className="h-5 w-5"><path d="M-3 -10h6v7h7v6h-7v7h-6v-7h-7v-6h7z" fill="var(--ink)" /></svg>
+            </span>
+            <span className="relative h-2.5 flex-1" aria-hidden="true">
+                <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 border-t-2 border-dashed border-white/25" />
+                <span className="s-line absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-brand" />
+                <span className="s-drive absolute inset-0">
+                    <span className="absolute left-0 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-brand bg-white" />
+                </span>
+            </span>
+            <span className="relative flex h-10 w-10 shrink-0 items-center justify-center" aria-hidden="true">
+                <span className="pin-pulse absolute inset-0 rounded-full bg-brand/20" />
+                <svg viewBox="-24 -22 48 48" className="relative h-8 w-8">
                     <path d="M-22 4 L0 -18 L22 4" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M-16 0 V22 H16 V0" fill="none" stroke="white" strokeWidth="3" strokeLinejoin="round" />
                     <rect x="-5" y="8" width="10" height="14" rx="2" fill="var(--brand)" />
-                </g>
-
-                <g>
-                    <circle r="10" fill="white" stroke="var(--brand)" strokeWidth="4" />
-                    {/* Separate elements so SMIL starts fresh when motion turns on after hydration. */}
-                    {motion ? (
-                        <animateMotion key="drive" dur="6s" repeatCount="indefinite">
-                            <mpath href="#door-route" />
-                        </animateMotion>
-                    ) : (
-                        <animateMotion key="still" dur="0.01s" fill="freeze" keyPoints="1;1" keyTimes="0;1" calcMode="linear">
-                            <mpath href="#door-route" />
-                        </animateMotion>
-                    )}
-                </g>
-
-                <g transform="translate(472 210)"><g className="s-delivered">
-                    <rect x="-62" y="-20" width="124" height="40" rx="10" fill="white" />
-                    <circle cx="-40" cy="0" r="5" fill="var(--brand)" />
-                    <text x="-28" y="5" className="scene-chip">Delivered</text>
-                </g></g>
-            </svg>
+                </svg>
+            </span>
         </Scene>
     );
 }

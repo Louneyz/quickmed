@@ -37,7 +37,7 @@ const services = [
 export function Services() {
     return (
         <section id="safeguards" className="bg-white py-20 md:py-32 scroll-mt-24">
-            <div className="mx-auto max-w-6xl px-5 md:px-8">
+            <div className="mx-auto max-w-6xl xl:max-w-7xl px-5 md:px-8">
                 <div className="max-w-3xl mb-12 md:mb-16">
                     <WordReveal
                         className="title-lg text-ink"
@@ -51,13 +51,14 @@ export function Services() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 md:gap-5">
+                {/* One row of five on wide screens; three or two per row below that, with the last row centred at the same card size. */}
+                <div className="flex flex-wrap justify-center gap-4 md:gap-5">
                     {services.map(({ scene: SceneArt, ...service }, index) => (
-                        <Reveal key={service.title} delay={(index % 3) * 100} className={`bg-surface rounded-[20px] p-6 md:p-7 flex flex-col ${index < 3 ? "lg:col-span-2" : "lg:col-span-3"} ${index === 4 ? "sm:col-span-2 lg:col-span-3" : ""}`}>
+                        <Reveal key={service.title} delay={index * 80} className="bg-surface rounded-[20px] p-6 xl:p-5 flex flex-col w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.84rem)] xl:w-[calc(20%-1rem)]">
                             <p className="label-mono text-ink mb-4">{service.eyebrow}</p>
-                            <h3 className="text-2xl tracking-tight text-ink mb-3">{service.title}</h3>
-                            <p className="text-ink leading-relaxed mb-6">{service.description}</p>
-                            <div className="relative mt-auto aspect-[16/9] sm:aspect-[4/3] rounded-xl overflow-hidden bg-white">
+                            <h3 className="text-2xl xl:text-xl tracking-tight text-ink mb-3">{service.title}</h3>
+                            <p className="text-ink leading-relaxed mb-6 xl:text-[15px]">{service.description}</p>
+                            <div className="relative mt-auto aspect-[16/9] xl:aspect-[4/3] rounded-xl overflow-hidden bg-white">
                                 <SceneArt />
                             </div>
                         </Reveal>
