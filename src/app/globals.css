@@ -6,6 +6,17 @@
   --primary: #41bff9;
   --secondary: #0f172a;
   --muted: #64748b;
+
+  /* Homepage design tokens: terminal-industries.com layout on QuickMed's own
+     colours (logo blue, white, slate text). */
+  --ink: #1e293b;
+  --accent: #41bff9;
+  --surface: #f0f2f4;
+  --gray: #4a5560;
+  --gray-mid: #7c858f;
+  --gray-light: #c3c8cd;
+  --hairline: #e5e7ea;
+  --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 @theme inline {
@@ -14,11 +25,100 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-muted: var(--muted);
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
+  --color-surface: var(--surface);
+  --color-gray: var(--gray);
+  --color-gray-mid: var(--gray-mid);
+  --color-gray-light: var(--gray-light);
+  --color-hairline: var(--hairline);
   --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
+}
+
+/* Small uppercase mono label used for eyebrows, step numbers and buttons. */
+.label-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Large, light, tightly tracked headlines. */
+.title-xl {
+  font-weight: 400;
+  font-size: clamp(2.5rem, 5.7vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.title-lg {
+  font-weight: 400;
+  font-size: clamp(2.25rem, 4.6vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.title-md {
+  font-weight: 400;
+  font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* Faint square grid used on the blue panels. */
+.grid-pattern {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.14) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Trapezoid "tab" that joins two sections. Colour comes from currentColor. */
+.notch {
+  height: 48px;
+  width: min(420px, 70vw);
+  background: currentColor;
+  clip-path: polygon(48px 0, calc(100% - 48px) 0, 100% 100%, 0 100%);
+}
+
+.notch-down {
+  clip-path: polygon(0 0, 100% 0, calc(100% - 48px) 100%, 48px 100%);
+}
+
+/* Button fill that slides up from the bottom on hover. */
+.cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--cta-hover, var(--ink));
+  transform: translateY(101%);
+  transition: transform 0.7s var(--ease-expo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover::before {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta::before {
+    transition: none;
+  }
 }
