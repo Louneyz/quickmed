@@ -249,8 +249,13 @@ function ConnectedRoute({
 
         let length = 0;
         let birdScale = 1;
+        // Where the long bottom run under the buttons starts along the route, and how long it is.
+        let bottomAt = 0;
+        let bottomLen = 0;
         const layout = () => {
             const box = section.getBoundingClientRect();
+            bottomAt = 0;
+            bottomLen = 0;
             // A smaller bird on phones so it stays in proportion with the smaller icons.
             birdScale = box.width < 640 ? 0.62 : 1;
             // Phones and laptops can use different copies of the icons; follow whichever is showing.
@@ -274,7 +279,7 @@ function ConnectedRoute({
                 // Phones keep the trip up by the title; the loop under the buttons is for wider screens.
                 if (under && box.width >= 768 && under.offsetParent !== null && under.getBoundingClientRect().bottom > Math.max(a.bottom, b.bottom)) {
                     // Drop straight down from the pharmacy, run under the body and buttons, and climb to the door.
-                    const low = under.getBoundingClientRect().bottom - box.top + 56;
+                    const low = under.getBoundingClientRect().bottom - box.top + 72;
                     // On phones the icons sit over the text column, so the sides of the loop run out in the margins.
                     const xs = Math.min(x0, under.getBoundingClientRect().left - box.left - 8);
                     const xe = Math.max(x1, under.getBoundingClientRect().right - box.left + 8);
@@ -282,6 +287,9 @@ function ConnectedRoute({
                     const left = xs < x0 ? `C ${x0} ${y0 + 24}, ${xs} ${y0 + 8}, ${xs} ${y0 + 40} ` : "";
                     const right = xe > x1 ? ` V${y1 + 40} C ${xe} ${y1 + 8}, ${x1} ${y1 + 24}, ${x1} ${y1}` : ` V${y1}`;
                     d = `M${x0} ${y0} ${left}V${low - r} Q${xs} ${low} ${xs + r} ${low} H${xe - r} Q${xe} ${low} ${xe} ${low - r}${right}`;
+                    // The drop plus the rounded corner (a quadratic quarter turn is about 1.15r long).
+                    bottomAt = left ? 0 : low - r - y0 + 1.15 * r;
+                    bottomLen = left ? 0 : xe - xs - 2 * r;
                 } else {
                     // Dip below the title row (on phones the icons sit beside the lines, so clear "Delivered.").
                     const row = from.parentElement?.getBoundingClientRect();
@@ -315,16 +323,25 @@ function ConnectedRoute({
             dot.setAttribute("opacity", String(seen));
         };
 
-        // The trip loops on its own: drive for about 6.4s, pause while the bird is inside, start again.
+        // The trip loops on its own: drive (about 6.4s, longer when there's a bottom run), pause while
+        // the bird is inside, start again. The bottom run under the buttons goes at 70% of the speed.
         const DRIVE = 6430;
         const WAIT = 1500;
+        const SLOW = 0.7;
         let frame = 0;
         let start = 0;
         const tick = (now: number) => {
             if (!start) start = now;
-            const t = (now - start) % (DRIVE + WAIT);
-            const x = Math.min(1, t / DRIVE);
-            place(x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+            const extra = bottomLen * (1 / SLOW - 1);
+            const drive = length ? DRIVE * ((length + extra) / length) : DRIVE;
+            const t = (now - start) % (drive + WAIT);
+            const x = Math.min(1, t / drive);
+            const eased = x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+            // Walk a stretched copy of the route, then squeeze the bottom run back to its real length.
+            const e = eased * (length + extra);
+            const end = bottomAt + bottomLen / SLOW;
+            const dist = e < bottomAt ? e : e < end ? bottomAt + (e - bottomAt) * SLOW : e - extra;
+            place(length ? Math.min(1, dist / length) : eased);
             frame = requestAnimationFrame(tick);
         };
         const onResize = () => {
@@ -415,10 +432,10 @@ export function HeroNavyCentred() {
             <div className="absolute inset-0 grid-pattern" aria-hidden="true" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgb(65_191_249/0.22),transparent_60%)]" aria-hidden="true" />
             <ConnectedRoute sectionRef={ref} fromRef={pharmacySideRef} toRef={homeSideRef} underRef={ctaRef} shape="sag" />
-            <div className="relative mx-auto max-w-6xl px-4 sm:px-5 md:px-8 pt-32 md:pt-44 pb-14 md:pb-36 text-center">
+            <div className="relative mx-auto max-w-6xl px-4 sm:px-5 md:px-8 pt-32 md:pt-44 pb-14 md:pb-40 text-center">
                 {/* Pharmacy on the left of the title, the patient's home on the right. On phones the pharmacy
                     sits level with "Your Care." and the home with "Delivered." */}
-                <div className="flex items-end justify-center gap-1.5 sm:gap-4 md:gap-8 lg:gap-14">
+                <div className="flex items-end justify-center gap-1.5 sm:gap-4 md:gap-16 lg:gap-28">
                     <div ref={pharmacySideRef} className="shrink-0 self-center md:self-end">
                         <PharmacyFront className="h-12 w-12 sm:h-20 sm:w-20 md:h-28 md:w-28 lg:h-32 lg:w-32" />
                     </div>
@@ -431,7 +448,7 @@ export function HeroNavyCentred() {
                         <HomeFront className="h-12 w-14 sm:h-20 sm:w-24 md:h-32 md:w-36 lg:h-36 lg:w-40" />
                     </div>
                 </div>
-                <p className="mt-10 md:mt-12 text-lg md:text-xl leading-snug text-white max-w-xl mx-auto mb-10">{BODY}</p>
+                <p className="mt-16 md:mt-12 text-lg md:text-xl leading-snug text-white max-w-xl mx-auto mb-10">{BODY}</p>
                 <div ref={ctaRef} className="flex flex-col sm:flex-row sm:w-fit sm:mx-auto gap-3 justify-center">
                     <CtaLink href="/partners" variant="accent" className="[--cta-hover:#ffffff] hover:text-ink">
                         Become a partner
