@@ -157,14 +157,13 @@ function PharmacyFront({ className }: { className?: string }) {
 function HomeFront({ className }: { className?: string }) {
     return (
         <svg viewBox="0 0 160 150" className={className} overflow="visible" aria-hidden="true">
+            <path d="M36 62 L80 22 L124 62 V128 H36 Z" fill="var(--ink)" />
             <path d="M22 72 L80 20 L138 72" fill="none" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M36 62 V128 H124 V62" fill="none" stroke="white" strokeWidth="7" strokeLinejoin="round" />
             <rect x="68" y="88" width="24" height="40" rx="3" fill="var(--brand)" />
             <circle cx="86" cy="109" r="2" fill="var(--ink)" />
             <rect x="46" y="78" width="14" height="14" rx="2" fill="white" opacity="0.85" />
             <rect x="100" y="78" width="14" height="14" rx="2" fill="white" opacity="0.85" />
-            <path d="M98 122 h14 l-1.5 -11 h-11z" fill="white" />
-            <path d="M101 111 a4 4 0 0 1 8 0" fill="none" stroke="white" strokeWidth="1.6" />
             <rect x="26" y="128" width="108" height="5" rx="2.5" fill="white" opacity="0.35" />
         </svg>
     );
@@ -265,12 +264,15 @@ function ConnectedRoute({
                 // Pharmacy and home sit either side of the title: leave the pharmacy door, dip under the
                 // headline, and come up to the home's front door.
                 const x0 = a.left + a.width * 0.5 - box.left;
-                const y0 = a.top + a.height * 0.94 - box.top;
+                // Start and end inside the doorways; the icons are drawn over the route, so the bird
+                // comes out of the pharmacy and goes in at the patient's door.
+                const y0 = a.top + a.height * 0.76 - box.top;
                 const x1 = b.left + b.width * 0.5 - box.left;
-                const y1 = b.top + b.height * 0.86 - box.top;
+                const y1 = b.top + b.height * 0.72 - box.top;
                 const dx = x1 - x0;
                 const under = underRef?.current;
-                if (under && under.offsetParent !== null && under.getBoundingClientRect().bottom > Math.max(a.bottom, b.bottom)) {
+                // Phones keep the trip up by the title; the loop under the buttons is for wider screens.
+                if (under && box.width >= 768 && under.offsetParent !== null && under.getBoundingClientRect().bottom > Math.max(a.bottom, b.bottom)) {
                     // Drop straight down from the pharmacy, run under the body and buttons, and climb to the door.
                     const low = under.getBoundingClientRect().bottom - box.top + 56;
                     // On phones the icons sit over the text column, so the sides of the loop run out in the margins.
@@ -281,8 +283,13 @@ function ConnectedRoute({
                     const right = xe > x1 ? ` V${y1 + 40} C ${xe} ${y1 + 8}, ${x1} ${y1 + 24}, ${x1} ${y1}` : ` V${y1}`;
                     d = `M${x0} ${y0} ${left}V${low - r} Q${xs} ${low} ${xs + r} ${low} H${xe - r} Q${xe} ${low} ${xe} ${low - r}${right}`;
                 } else {
-                    const low = Math.max(y0, y1) + Math.max(36, Math.min(80, dx * 0.09));
-                    d = `M${x0} ${y0} C ${x0 + dx * 0.12} ${low}, ${x1 - dx * 0.12} ${low}, ${x1} ${y1}`;
+                    // Dip below the title row (on phones the icons sit beside the lines, so clear "Delivered.").
+                    const row = from.parentElement?.getBoundingClientRect();
+                    const floor = row ? row.bottom - box.top + 12 : 0;
+                    const low = Math.max(Math.max(y0, y1) + Math.max(36, Math.min(80, dx * 0.09)), floor + 12);
+                    // Straight down out of the door, level under the title, straight up into the home.
+                    const r = Math.min(28, (low - Math.max(y0, y1)), dx / 4);
+                    d = `M${x0} ${y0} V${low - r} Q${x0} ${low} ${x0 + r} ${low} H${x1 - r} Q${x1} ${low} ${x1} ${low - r} V${y1}`;
                 }
             } else {
                 // End at the home's front step and leave and arrive level, so the route reads as one long S
@@ -298,12 +305,17 @@ function ConnectedRoute({
             track.setAttribute("d", d);
             length = path.getTotalLength();
         };
-        const place = (progress: number) => {
+        const place = (progress: number, fade = true) => {
             const point = path.getPointAtLength(length * progress);
-            dot.setAttribute("transform", `translate(${point.x} ${point.y}) scale(${birdScale})`);
+            // Shrink and fade over the last stretch so the bird goes in through the door, and come
+            // out of the pharmacy the same way at the start of each loop.
+            const edge = Math.min(length * progress, length * (1 - progress));
+            const seen = fade ? Math.max(0, Math.min(1, edge / 50)) : 1;
+            dot.setAttribute("transform", `translate(${point.x} ${point.y}) scale(${birdScale * (0.25 + 0.75 * seen)})`);
+            dot.setAttribute("opacity", String(seen));
         };
 
-        // The trip loops on its own: drive for 4.5s, wait at the door for 1.5s, start again.
+        // The trip loops on its own: drive for 4.5s, pause while the bird is inside, start again.
         const DRIVE = 4500;
         const WAIT = 1500;
         let frame = 0;
@@ -317,7 +329,7 @@ function ConnectedRoute({
         };
         const onResize = () => {
             layout();
-            if (reduced) place(1);
+            if (reduced) place(1, false);
         };
         onResize();
         const observer = new ResizeObserver(onResize);
@@ -403,11 +415,11 @@ export function HeroNavyCentred() {
             <div className="absolute inset-0 grid-pattern" aria-hidden="true" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgb(65_191_249/0.22),transparent_60%)]" aria-hidden="true" />
             <ConnectedRoute sectionRef={ref} fromRef={pharmacySideRef} toRef={homeSideRef} underRef={ctaRef} shape="sag" />
-            <div className="relative mx-auto max-w-6xl px-4 sm:px-5 md:px-8 pt-32 md:pt-44 pb-24 md:pb-36 text-center">
+            <div className="relative mx-auto max-w-6xl px-4 sm:px-5 md:px-8 pt-32 md:pt-44 pb-14 md:pb-36 text-center">
                 {/* Pharmacy on the left of the title, the patient's home on the right. On phones the pharmacy
-                    sits up by the first line and the home down by "Delivered." */}
+                    sits level with "Your Care." and the home with "Delivered." */}
                 <div className="flex items-end justify-center gap-1.5 sm:gap-4 md:gap-8 lg:gap-14">
-                    <div ref={pharmacySideRef} className="shrink-0 self-start md:self-end">
+                    <div ref={pharmacySideRef} className="shrink-0 self-center md:self-end">
                         <PharmacyFront className="h-12 w-12 sm:h-20 sm:w-20 md:h-28 md:w-28 lg:h-32 lg:w-32" />
                     </div>
                     <WordReveal
