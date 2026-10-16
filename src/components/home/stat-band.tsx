@@ -100,6 +100,23 @@ export function StatBand() {
                                 </div>
                             ))}
                         </dl>
+
+                        {/* One small link; the full source list opens on demand. */}
+                        <details className="group mt-10">
+                            <summary className="label-mono inline-flex cursor-pointer list-none items-center gap-2 text-white/50 hover:text-white [&::-webkit-details-marker]:hidden">
+                                Sources
+                                <span className="transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                            </summary>
+                            <ol className="mt-4 space-y-1 text-xs text-white/50">
+                                {stats.map((stat) => (
+                                    <li key={stat.source}>
+                                        <a href={stat.href} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white">
+                                            {stat.source}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ol>
+                        </details>
                     </div>
                 </div>
             </div>
