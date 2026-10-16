@@ -98,7 +98,7 @@ export function Hero() {
                             ]}
                         />
                         <p className="text-lg md:text-xl leading-snug text-ink max-w-xl mb-10">
-                            QuickMed picks up prescriptions from your pharmacy and brings them to your patients&apos; homes. You offer delivery without hiring drivers or planning routes.
+                            QuickMed is the prescription delivery partner for Ontario pharmacies. When an order is ready, book a pickup in our portal. One of our trained drivers collects it from your counter and brings it to your patient&apos;s door, sealed and handled with care. Your patients get their medication without leaving home, and you never have to hire a driver.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3">
                             <CtaLink href="/partners" variant="ink">
