@@ -104,7 +104,7 @@ export function StatBand() {
                         {/* One small link; the full source list opens on demand. */}
                         <details className="group mt-10">
                             <summary className="label-mono inline-flex cursor-pointer list-none items-center gap-2 text-white hover:text-white [&::-webkit-details-marker]:hidden">
-                                Sources · industry research, not QuickMed data
+                                Sources
                                 <span className="transition-transform group-open:rotate-45" aria-hidden="true">+</span>
                             </summary>
                             <ol className="mt-4 space-y-1 text-xs text-white">
