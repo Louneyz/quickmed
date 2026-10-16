@@ -27,9 +27,9 @@ const services = [
         scene: PrivacyScene,
     },
     {
-        eyebrow: "05 Customer first",
-        title: "Here for you",
-        description: "Your customer-first delivery partner in Ontario, with your pharmacy's needs at the centre of everything.",
+        eyebrow: "05 Guarantee",
+        title: "Customer first",
+        description: "Your delivery partner in Ontario, with your pharmacy's needs at the centre of everything.",
         scene: SupportScene,
     },
 ];
