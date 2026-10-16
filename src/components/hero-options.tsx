@@ -222,8 +222,11 @@ function ConnectedRoute({
     fromRef,
     toRef,
     shape = "s",
+    underRef,
 }: {
     shape?: "s" | "sag";
+    /** With shape "sag": the route scoops below this element (e.g. the buttons) on its way across. */
+    underRef?: React.RefObject<HTMLElement | null>;
     sectionRef: React.RefObject<HTMLElement | null>;
     fromRef: React.RefObject<HTMLElement | null> | React.RefObject<HTMLElement | null>[];
     toRef: React.RefObject<HTMLElement | null> | React.RefObject<HTMLElement | null>[];
@@ -263,8 +266,16 @@ function ConnectedRoute({
                 const x1 = b.left + b.width * 0.5 - box.left;
                 const y1 = b.top + b.height * 0.86 - box.top;
                 const dx = x1 - x0;
-                const low = Math.max(y0, y1) + Math.max(36, Math.min(80, dx * 0.09));
-                d = `M${x0} ${y0} C ${x0 + dx * 0.12} ${low}, ${x1 - dx * 0.12} ${low}, ${x1} ${y1}`;
+                const under = underRef?.current;
+                if (under && under.offsetParent !== null && under.getBoundingClientRect().bottom > Math.max(a.bottom, b.bottom)) {
+                    // Drop straight down from the pharmacy, run under the body and buttons, and climb to the door.
+                    const low = under.getBoundingClientRect().bottom - box.top + 56;
+                    const r = Math.min(90, (low - Math.max(y0, y1)) / 2, dx / 4);
+                    d = `M${x0} ${y0} V${low - r} Q${x0} ${low} ${x0 + r} ${low} H${x1 - r} Q${x1} ${low} ${x1} ${low - r} V${y1}`;
+                } else {
+                    const low = Math.max(y0, y1) + Math.max(36, Math.min(80, dx * 0.09));
+                    d = `M${x0} ${y0} C ${x0 + dx * 0.12} ${low}, ${x1 - dx * 0.12} ${low}, ${x1} ${y1}`;
+                }
             } else {
                 // End at the home's front step and leave and arrive level, so the route reads as one long S
                 // whether the home sits up and to the right (laptops) or below (phones).
@@ -308,7 +319,7 @@ function ConnectedRoute({
             observer.disconnect();
             if (frame) cancelAnimationFrame(frame);
         };
-    }, [reduced, shape, sectionRef, fromRef, toRef]);
+    }, [reduced, shape, underRef, sectionRef, fromRef, toRef]);
 
     return (
         <svg ref={svgRef} className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
@@ -380,12 +391,13 @@ export function HeroNavyCentred() {
     const homeSideRef = useRef<HTMLDivElement>(null);
     const pharmacyBelowRef = useRef<HTMLDivElement>(null);
     const homeBelowRef = useRef<HTMLDivElement>(null);
+    const ctaRef = useRef<HTMLDivElement>(null);
     return (
         <section ref={ref} id="option-1b" className="relative overflow-hidden bg-ink text-white">
             <div className="absolute inset-0 grid-pattern" aria-hidden="true" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgb(65_191_249/0.22),transparent_60%)]" aria-hidden="true" />
-            <ConnectedRoute sectionRef={ref} fromRef={[pharmacySideRef, pharmacyBelowRef]} toRef={[homeSideRef, homeBelowRef]} shape="sag" />
-            <div className="relative mx-auto max-w-6xl px-5 md:px-8 pt-32 md:pt-44 pb-14 md:pb-20 text-center">
+            <ConnectedRoute sectionRef={ref} fromRef={[pharmacySideRef, pharmacyBelowRef]} toRef={[homeSideRef, homeBelowRef]} underRef={ctaRef} shape="sag" />
+            <div className="relative mx-auto max-w-6xl px-5 md:px-8 pt-32 md:pt-44 pb-14 md:pb-36 text-center">
                 {/* Pharmacy on the left of the title, the patient's home on the right. */}
                 <div className="flex items-end justify-center gap-8 lg:gap-14">
                     <div ref={pharmacySideRef} className="hidden md:block shrink-0">
@@ -393,15 +405,15 @@ export function HeroNavyCentred() {
                     </div>
                     <WordReveal
                         as="h1"
-                        className="title-lg text-left"
-                        parts={[{ text: "Your patients." }, { text: "Your care." }, { text: "Delivered.", className: "text-brand" }]}
+                        className="title-lg text-center"
+                        parts={[{ text: "Your patients." }, { text: "Your care." }, { text: "Delivered.", className: "text-brand font-semibold" }]}
                     />
                     <div ref={homeSideRef} className="hidden md:block shrink-0">
                         <HomeFront className="h-32 w-36 lg:h-36 lg:w-40" />
                     </div>
                 </div>
-                <p className="mt-10 md:mt-24 text-lg md:text-xl leading-snug text-white max-w-xl mx-auto mb-10">{BODY}</p>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <p className="mt-10 md:mt-12 text-lg md:text-xl leading-snug text-white max-w-xl mx-auto mb-10">{BODY}</p>
+                <div ref={ctaRef} className="flex flex-col sm:flex-row gap-3 justify-center">
                     <CtaLink href="/partners" variant="accent" className="[--cta-hover:#ffffff] hover:text-ink">
                         Become a partner
                     </CtaLink>
