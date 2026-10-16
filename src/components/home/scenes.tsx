@@ -169,55 +169,56 @@ export function SupportScene() {
 }
 
 // Last stop: a wide route that ends at the patient's door, drawn for the dark panel.
-const DOOR_ROUTE = "M60 240 C 140 240, 160 140, 260 140 S 400 200, 470 150 S 540 90, 572 112";
+// A gentle up-and-down route from x0 to x1 along y, as smooth quadratic waves.
+function waveRoute(x0: number, x1: number, y: number, waves: number, amp: number) {
+    const half = (x1 - x0) / (waves * 2);
+    return `M${x0} ${y} q ${half / 2} ${-amp * 2} ${half} 0` + ` t ${half} 0`.repeat(waves * 2 - 1);
+}
 
-export function DoorstepScene() {
+function DoorstepRoute({ width, waves, id, className }: { width: number; waves: number; id: string; className?: string }) {
     const motion = !useReducedMotion();
+    const route = waveRoute(64, width - 64, 50, waves, 16);
     return (
-        <Scene label="Delivery route ending at the patient's front door" >
-            <svg viewBox="0 30 640 256" className="h-full w-full" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-                <defs>
-                    <pattern id="door-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                        <path d="M40 0H0V40" fill="none" stroke="rgb(255 255 255 / 0.08)" strokeWidth="1" />
-                    </pattern>
-                </defs>
-                <rect width="640" height="320" fill="url(#door-grid)" />
-                <path d={DOOR_ROUTE} fill="none" stroke="rgb(255 255 255 / 0.2)" strokeWidth="3" strokeDasharray="2 8" strokeLinecap="round" />
-                <path id="door-route" d={DOOR_ROUTE} pathLength={1} fill="none" stroke="var(--brand)" strokeWidth="4" strokeLinecap="round" className="s-draw" />
+        <svg viewBox={`0 0 ${width} 100`} className={cn("h-auto w-full", className)} aria-hidden="true">
+            <path d={route} fill="none" stroke="rgb(255 255 255 / 0.2)" strokeWidth="3" strokeDasharray="2 8" strokeLinecap="round" />
+            <path id={id} d={route} pathLength={1} fill="none" stroke="var(--brand)" strokeWidth="4" strokeLinecap="round" className="s-draw" />
 
-                <g transform="translate(60 240)">
-                    <rect x="-20" y="-20" width="40" height="40" rx="10" fill="var(--brand)" />
-                    <path d="M-3 -10h6v7h7v6h-7v7h-6v-7h-7v-6h7z" fill="var(--ink)" />
-                </g>
+            <g transform="translate(32 50)">
+                <rect x="-22" y="-22" width="44" height="44" rx="11" fill="var(--brand)" />
+                <path d="M-3.5 -11h7v7.5h7.5v7h-7.5v7.5h-7v-7.5h-7.5v-7h7.5z" fill="var(--ink)" />
+            </g>
 
-                {/* The patient's home */}
-                <g transform="translate(572 112)">
-                    <circle r="34" fill="var(--brand)" opacity="0.15" className="pin-pulse" />
-                    <path d="M-22 4 L0 -18 L22 4" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M-16 0 V22 H16 V0" fill="none" stroke="white" strokeWidth="3" strokeLinejoin="round" />
-                    <rect x="-5" y="8" width="10" height="14" rx="2" fill="var(--brand)" />
-                </g>
+            <g transform={`translate(${width - 32} 50)`}>
+                <circle r="26" fill="var(--brand)" opacity="0.18" className="pin-pulse" />
+                <path d="M-18 3 L0 -15 L18 3" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M-13 0 V18 H13 V0" fill="none" stroke="white" strokeWidth="3" strokeLinejoin="round" />
+                <rect x="-4" y="7" width="8" height="11" rx="2" fill="var(--brand)" />
+            </g>
 
-                <g>
-                    <circle r="10" fill="white" stroke="var(--brand)" strokeWidth="4" />
-                    {/* Separate elements so SMIL starts fresh when motion turns on after hydration. */}
-                    {motion ? (
-                        <animateMotion key="drive" dur="6s" repeatCount="indefinite">
-                            <mpath href="#door-route" />
-                        </animateMotion>
-                    ) : (
-                        <animateMotion key="still" dur="0.01s" fill="freeze" keyPoints="1;1" keyTimes="0;1" calcMode="linear">
-                            <mpath href="#door-route" />
-                        </animateMotion>
-                    )}
-                </g>
+            <g>
+                <circle r="9" fill="white" stroke="var(--brand)" strokeWidth="4" />
+                {/* Separate elements so SMIL starts fresh when motion turns on after hydration. */}
+                {motion ? (
+                    <animateMotion key="drive" dur="6s" repeatCount="indefinite">
+                        <mpath href={`#${id}`} />
+                    </animateMotion>
+                ) : (
+                    <animateMotion key="still" dur="0.01s" fill="freeze" keyPoints="1;1" keyTimes="0;1" calcMode="linear">
+                        <mpath href={`#${id}`} />
+                    </animateMotion>
+                )}
+            </g>
+        </svg>
+    );
+}
 
-                <g transform="translate(472 210)"><g className="s-delivered">
-                    <rect x="-62" y="-20" width="124" height="40" rx="10" fill="white" />
-                    <circle cx="-40" cy="0" r="5" fill="var(--brand)" />
-                    <text x="-28" y="5" className="scene-chip">Delivered</text>
-                </g></g>
-            </svg>
+// Closing panel: a winding route from the pharmacy to the patient's door, drawn under the buttons.
+// Phones get a shorter route with fewer bends so the icons stay a readable size.
+export function DoorstepLine() {
+    return (
+        <Scene label="Delivery route from the pharmacy to the patient's front door">
+            <DoorstepRoute width={420} waves={2} id="door-route-sm" className="md:hidden" />
+            <DoorstepRoute width={1100} waves={4} id="door-route-lg" className="hidden md:block" />
         </Scene>
     );
 }

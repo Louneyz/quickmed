@@ -381,3 +381,4 @@ html:has(dialog[open]) {
 a[href^="tel:"] {
   white-space: nowrap;
 }
+
