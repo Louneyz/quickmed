@@ -1,6 +1,6 @@
-import Image from "next/image";
 import { CtaLink } from "../ui/cta-link";
-import { Reveal, WordReveal } from "../motion/reveal";
+import { WordReveal } from "../motion/reveal";
+import { DoorstepScene } from "./scenes";
 
 // Last stop of the route: the patient's door, and the page's final ask.
 export function JoinCta() {
@@ -10,7 +10,7 @@ export function JoinCta() {
                 <div className="flex justify-center text-ink" aria-hidden="true">
                     <div className="notch" />
                 </div>
-                <div className="relative overflow-hidden rounded-[20px] bg-ink text-white px-6 pt-16 md:px-16 md:pt-24 text-center">
+                <div className="relative overflow-hidden rounded-[20px] bg-ink text-white px-6 pt-16 pb-6 md:px-16 md:pt-24 md:pb-10 text-center">
                     <div className="absolute inset-0 grid-pattern" aria-hidden="true" />
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgb(65_191_249/0.35),transparent_60%)]" aria-hidden="true" />
                     <div className="relative">
@@ -36,15 +36,9 @@ export function JoinCta() {
                                 Become a driver
                             </CtaLink>
                         </div>
-                        <Reveal className="relative mx-auto mt-14 max-w-3xl aspect-[16/9] rounded-t-xl overflow-hidden">
-                            <Image
-                                src="/images/photos/doorstep-delivery.jpg"
-                                alt="Courier handing a package to a customer at their front door"
-                                fill
-                                sizes="(min-width: 768px) 768px, 90vw"
-                                className="object-cover"
-                            />
-                        </Reveal>
+                        <div className="relative mx-auto mt-12 max-w-4xl aspect-[5/2]">
+                            <DoorstepScene />
+                        </div>
                     </div>
                 </div>
             </div>
