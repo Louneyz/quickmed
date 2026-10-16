@@ -70,12 +70,14 @@ body {
 }
 
 /* Even line lengths in headings, and no single word left alone on a paragraph's last line. */
-h1, h2, h3, h4, dt, .title-lg, .title-md {
-  text-wrap: balance;
-}
+@layer base {
+  h1, h2, h3, h4, dt, dd, .title-lg, .title-md {
+    text-wrap: balance;
+  }
 
-p, li, dd, summary, label {
-  text-wrap: pretty;
+  p, li, summary, label {
+    text-wrap: pretty;
+  }
 }
 
 .title-lg {
@@ -266,7 +268,9 @@ p, li, dd, summary, label {
   stroke-dashoffset: 0;
 }
 
-.scene .s-lock,
+.scene .s-ring,
+.scene .s-ring-waves,
+.scene .s-eye,
 .scene .s-seal,
 .scene .s-delivered {
   transform-box: fill-box;
@@ -282,18 +286,20 @@ p, li, dd, summary, label {
     animation: route-draw 2s var(--ease-expo) both;
   }
 
-  .scene[data-in="true"] .s-ticket {
-    animation: s-ticket 4s var(--ease-expo) infinite;
+  .scene[data-in="true"] .s-ring {
+    animation: s-ring 5s ease-in-out infinite;
   }
 
-  .scene[data-in="true"] .s-field {
-    transform-box: fill-box;
-    transform-origin: left;
-    animation: s-field 4.5s var(--ease-expo) infinite;
+  .scene[data-in="true"] .s-ring-waves {
+    animation: s-ring-waves 5s ease-out infinite;
   }
 
-  .scene[data-in="true"] .s-lock {
-    animation: s-pop 4.5s var(--ease-expo) infinite;
+  .scene[data-in="true"] .s-eye {
+    animation: s-eye 6s var(--ease-expo) infinite;
+  }
+
+  .scene[data-in="true"] .s-shake {
+    animation: s-shake 4s ease-in-out infinite;
   }
 
   .scene[data-in="true"] .s-seal {
@@ -310,22 +316,38 @@ p, li, dd, summary, label {
   }
 }
 
-@keyframes s-ticket {
-  0%, 10% { transform: translateX(-90px); opacity: 0; }
-  20% { opacity: 1; }
-  70% { transform: translateX(80px); opacity: 1; }
-  85%, 100% { transform: translateX(80px); opacity: 0; }
+/* The alarm goes off near the end of each loop. */
+@keyframes s-ring {
+  0%, 70%, 100% { transform: rotate(0); }
+  73%, 79%, 85%, 91% { transform: rotate(-9deg); }
+  76%, 82%, 88%, 94% { transform: rotate(9deg); }
+  97% { transform: rotate(0); }
 }
 
-@keyframes s-field {
-  0%, 8% { transform: scaleX(0); }
-  30%, 100% { transform: scaleX(1); }
+@keyframes s-ring-waves {
+  0%, 70% { opacity: 0; transform: scale(0.9); }
+  74%, 92% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.08); }
 }
 
-@keyframes s-pop {
-  0%, 55% { transform: scale(0); }
-  68% { transform: scale(1.12); }
-  76%, 100% { transform: scale(1); }
+/* The eye opens behind the lens, looks around, then blinks away. */
+@keyframes s-eye {
+  0%, 30% { opacity: 0; transform: scaleY(0.1); }
+  38% { opacity: 1; transform: scaleY(1); }
+  50% { transform: translateX(-8px); }
+  62% { transform: translateX(8px); }
+  72% { opacity: 1; transform: none; }
+  76% { transform: scaleY(0.1); }
+  80% { transform: none; }
+  90% { opacity: 1; transform: scaleY(1); }
+  98%, 100% { opacity: 0; transform: scaleY(0.1); }
+}
+
+@keyframes s-shake {
+  0%, 50%, 100% { transform: translateY(0); }
+  58%, 74% { transform: translateY(-1.2px); }
+  66%, 82% { transform: translateY(0.9px); }
+  90% { transform: translateY(0); }
 }
 
 @keyframes s-stamp {
@@ -341,6 +363,13 @@ p, li, dd, summary, label {
 @keyframes s-delivered {
   0%, 82% { opacity: 0; transform: translateY(8px); }
   88%, 100% { opacity: 1; transform: none; }
+}
+
+/* In-page links (FAQ in the nav) glide instead of jumping. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Keep the page behind an open pop-up from scrolling. */

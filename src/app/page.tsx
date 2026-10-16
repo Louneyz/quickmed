@@ -8,10 +8,11 @@ import { CheckpointCta } from "@/components/home/checkpoint-cta";
 import { JoinCta } from "@/components/home/join-cta";
 import { RouteTracker } from "@/components/home/route-tracker";
 import { FAQ } from "@/components/faq";
+import { OurPromise } from "@/components/home/our-promise";
 import { Footer } from "@/components/footer";
 
 // The homepage reads as a delivery route and narrows like a funnel:
-// pickup (hero) → trust → why it matters → how it works → safeguards → ask → questions → doorstep (final ask).
+// pickup (hero) → trust → why it matters → how it works → safeguards → ask → promise → doorstep (final ask) → questions.
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col">
@@ -23,8 +24,9 @@ export default function Home() {
       <Process />
       <Services />
       <CheckpointCta />
-      <FAQ />
+      <OurPromise />
       <JoinCta />
+      <FAQ />
       <Footer />
     </main>
   );

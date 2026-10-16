@@ -28,8 +28,8 @@ const services = [
     },
     {
         eyebrow: "05 Customer first",
-        title: "A real person on the phone",
-        description: "Questions about a delivery? Call (416)\u00a0834-9123 and talk to our team.",
+        title: "Here for you",
+        description: "Your customer-first delivery partner in Ontario. We put your pharmacy's needs at the centre of everything, with reliable deliveries and friendly service from a real person at (416)\u00a0834-9123.",
         scene: SupportScene,
     },
 ];
@@ -43,7 +43,7 @@ export function Services() {
                         className="title-lg text-ink"
                         parts={[
                             { text: "Handled with care," },
-                            { text: "pharmacy to patient.", className: "text-brand-deep" },
+                            { text: "pharmacy to patient.", className: "text-brand-deep font-semibold" },
                         ]}
                     />
                     <p className="mt-6 text-lg text-ink max-w-xl">

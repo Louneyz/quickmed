@@ -36,52 +36,58 @@ function PharmacyMark({ x, y }: { x: number; y: number }) {
     );
 }
 
-// 01 Collaboration: an order ticket slides across the counter from pharmacy to courier.
+// Speedy: a clock that now and then sets off its alarm.
 export function CounterScene() {
     return (
-        <Scene label="Order passing from the pharmacy to a QuickMed courier">
+        <Scene label="Alarm clock ringing for a pickup">
             <svg viewBox="0 0 320 240" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
                 {STREETS}
-                <line x1="30" y1="168" x2="290" y2="168" stroke="var(--ink)" strokeWidth="2" strokeLinecap="round" />
-                <PharmacyMark x={62} y={128} />
-                <g transform="translate(258 128)">
-                    <circle r="18" fill="var(--brand)" />
-                    <circle r="6" fill="var(--ink)" />
+                <g transform="translate(160 128)">
+                    <g className="s-ring-waves" fill="none" stroke="var(--brand)" strokeWidth="3" strokeLinecap="round">
+                        <path d="M-78 -40 a 90 90 0 0 0 0 40" />
+                        <path d="M-92 -50 a 110 110 0 0 0 0 60" />
+                        <path d="M78 -40 a 90 90 0 0 1 0 40" />
+                        <path d="M92 -50 a 110 110 0 0 1 0 60" />
+                    </g>
+                    <g className="s-ring">
+                        <path d="M-50 -48 a 18 18 0 0 1 26 -18" fill="var(--ink)" stroke="var(--ink)" strokeWidth="6" strokeLinecap="round" />
+                        <path d="M50 -48 a 18 18 0 0 0 -26 -18" fill="var(--ink)" stroke="var(--ink)" strokeWidth="6" strokeLinecap="round" />
+                        <path d="M-34 44 l-10 14 M34 44 l10 14" stroke="var(--ink)" strokeWidth="6" strokeLinecap="round" />
+                        <circle r="54" fill="white" stroke="var(--ink)" strokeWidth="6" />
+                        {[0, 90, 180, 270].map((a) => (
+                            <path key={a} d="M0 -44 v8" stroke="var(--ink)" strokeWidth="4" strokeLinecap="round" transform={`rotate(${a})`} />
+                        ))}
+                        <path d="M0 0 L-18 -14" stroke="var(--ink)" strokeWidth="5" strokeLinecap="round" />
+                        <path d="M0 0 L22 -26" stroke="var(--brand)" strokeWidth="4" strokeLinecap="round" />
+                        <circle r="5" fill="var(--ink)" />
+                    </g>
                 </g>
-                <g className="s-ticket">
-                    <rect x="-26" y="-34" width="52" height="34" rx="6" fill="white" stroke="var(--ink)" strokeWidth="1.5" transform="translate(160 166)" />
-                    <rect x="-26" y="-34" width="52" height="9" rx="4" fill="var(--brand)" transform="translate(160 166)" />
-                    <path d="M144 146h32M144 154h22" stroke="var(--gray-light)" strokeWidth="3" strokeLinecap="round" />
-                </g>
-                <text x="62" y="196" textAnchor="middle" className="scene-label">Pharmacy</text>
-                <text x="258" y="196" textAnchor="middle" className="scene-label">Courier</text>
             </svg>
         </Scene>
     );
 }
 
-// 02 Privacy: the request form fills in, then a lock closes over it.
+// Secure: a magnifying glass over a request, with an eye that now and then looks through it.
 export function PrivacyScene() {
     return (
-        <Scene label="Delivery request form secured with a lock">
+        <Scene label="Magnifying glass watching over a delivery request">
             <svg viewBox="0 0 320 240" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
                 {STREETS}
-                <rect x="90" y="44" width="140" height="152" rx="12" fill="white" stroke="var(--hairline)" strokeWidth="1.5" />
-                <rect x="90" y="44" width="140" height="26" rx="12" fill="var(--ink)" />
-                <rect x="90" y="58" width="140" height="12" fill="var(--ink)" />
-                <circle cx="106" cy="57" r="3" fill="var(--brand)" />
-                {[92, 122, 152].map((y, i) => (
-                    <g key={y}>
-                        <rect x="106" y={y - 8} width="40" height="4" rx="2" fill="var(--gray-light)" />
-                        <rect x="106" y={y} width="108" height="12" rx="4" fill="var(--surface)" />
-                        <rect x="110" y={y + 4} width="80" height="4" rx="2" fill="var(--brand)" className="s-field" style={{ animationDelay: `${i * 350}ms` }} />
-                    </g>
+                <rect x="70" y="50" width="130" height="150" rx="12" fill="white" stroke="var(--hairline)" strokeWidth="1.5" />
+                <rect x="70" y="50" width="130" height="24" rx="12" fill="var(--ink)" />
+                <rect x="70" y="62" width="130" height="12" fill="var(--ink)" />
+                {[96, 124, 152, 180].map((y) => (
+                    <rect key={y} x="86" y={y} width={y % 56 === 12 ? 70 : 98} height="8" rx="4" fill="var(--surface)" />
                 ))}
-                <g transform="translate(226 186)"><g className="s-lock">
-                    <circle r="22" fill="var(--brand)" stroke="white" strokeWidth="4" />
-                    <rect x="-8" y="-3" width="16" height="12" rx="2.5" fill="var(--ink)" />
-                    <path d="M-5 -3v-4a5 5 0 0 1 10 0v4" fill="none" stroke="var(--ink)" strokeWidth="2.5" />
-                </g></g>
+                <g transform="translate(196 118)">
+                    <path d="M38 38 L74 74" stroke="var(--ink)" strokeWidth="14" strokeLinecap="round" />
+                    <circle r="50" fill="var(--brand-soft)" stroke="var(--ink)" strokeWidth="8" />
+                    <g className="s-eye">
+                        <path d="M-30 0 Q0 -26 30 0 Q0 26 -30 0 Z" fill="white" stroke="var(--ink)" strokeWidth="4" strokeLinejoin="round" />
+                        <circle r="11" fill="var(--brand)" />
+                        <circle r="5" fill="var(--ink)" />
+                    </g>
+                </g>
             </svg>
         </Scene>
     );
@@ -141,25 +147,22 @@ export function PackageScene() {
     );
 }
 
-// 05 Customer first: a call comes in, the phone rings, and a person answers.
+// Customer first: two hands meeting in a handshake (Lucide's handshake, drawn large).
 export function SupportScene() {
     return (
-        <Scene label="A phone call answered by the QuickMed team">
+        <Scene label="Two hands shaking">
             <svg viewBox="0 0 320 240" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
                 {STREETS}
-                <g transform="translate(120 132)">
-                    <circle r="46" fill="var(--brand)" opacity="0.15" className="pin-pulse" />
-                    <circle r="30" fill="var(--ink)" />
-                    <path d="M-10 -12 c-3 0 -5 2 -5 5 c0 12 10 22 22 22 c3 0 5 -2 5 -5 v-4 l-7 -3 l-3 4 c-5 -2 -9 -6 -11 -11 l4 -3 l-3 -7 z" fill="white" />
+                <circle cx="160" cy="120" r="78" fill="var(--brand-soft)" />
+                <g transform="translate(88 50) scale(6)">
+                    <g className="s-shake" fill="none" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m21 3 1 11h-2" stroke="var(--brand)" strokeWidth="1.6" />
+                        <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" stroke="var(--ink)" />
+                        <path d="M3 4h8" stroke="var(--ink)" />
+                        <path d="m11 17 2 2a1 1 0 1 0 3-3" stroke="var(--ink)" />
+                        <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" stroke="var(--ink)" />
+                    </g>
                 </g>
-                <g transform="translate(214 92)"><g className="s-lock">
-                    <rect x="-48" y="-22" width="96" height="44" rx="12" fill="white" stroke="var(--hairline)" strokeWidth="1.5" />
-                    <path d="M-30 22 l-6 12 l16 -12 z" fill="white" />
-                    <circle cx="-28" cy="0" r="5" fill="var(--brand)" />
-                    <rect x="-16" y="-6" width="48" height="4" rx="2" fill="var(--ink)" />
-                    <rect x="-16" y="3" width="32" height="4" rx="2" fill="var(--gray-light)" />
-                </g></g>
-                <text x="120" y="204" textAnchor="middle" className="scene-label">(416) 834-9123</text>
             </svg>
         </Scene>
     );

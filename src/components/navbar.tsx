@@ -10,6 +10,7 @@ const links = [
     { href: "/", label: "Home" },
     { href: "/partners", label: "Become a partner" },
     { href: "/drivers", label: "Become a driver" },
+    { href: "/#questions", label: "FAQ" },
 ];
 
 // Floating frosted-glass bar. `overlay` lets it sit over a dark hero (homepage);
