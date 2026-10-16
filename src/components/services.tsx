@@ -6,29 +6,29 @@ const services = [
         eyebrow: "01 Collaboration",
         title: "Seamless Collaboration",
         description: "We work directly with pharmacies to fit delivery into your existing workflow.",
-        image: "/images/service_collaboration_1770207670910.png",
-        alt: "Pharmacist handing a bag to a courier",
+        image: "/images/photos/pharmacist-counseling.jpg",
+        alt: "Pharmacist at the counter showing a prescription bottle to a patient",
     },
     {
         eyebrow: "02 Privacy",
         title: "Patient Privacy",
         description: "Patient information is handled in line with Ontario's PHIPA and Canada's PIPEDA, and requests go through our secure member area.",
-        image: "/images/service_delivery_1770207689182.png",
-        alt: "Delivery details on a phone screen",
+        image: "/images/photos/secure-member-area.jpg",
+        alt: "Person entering details on a laptop",
     },
     {
         eyebrow: "03 Drivers",
         title: "Trained Drivers",
         description: "Professional drivers who are trained for medication delivery and know the local routes.",
-        image: "/images/service_scooter_1770207705372.png",
-        alt: "Courier on a scooter following a route",
+        image: "/images/photos/driver-navigation.jpg",
+        alt: "Driver following a route on a phone mounted on the dashboard",
     },
     {
         eyebrow: "04 Handling",
         title: "Discreet and Secure",
         description: "Secure, discreet packaging, with temperature control when a medication needs it.",
-        image: "/images/service_team_1770207719832.png",
-        alt: "QuickMed team under a row of stars",
+        image: "/images/photos/sealed-handoff.jpg",
+        alt: "Sealed package being handed over",
     },
 ];
 
@@ -37,7 +37,6 @@ export function Services() {
         <section id="safeguards" className="bg-white py-20 md:py-32 scroll-mt-24">
             <div className="mx-auto max-w-6xl px-5 md:px-8">
                 <div className="max-w-3xl mb-12 md:mb-16">
-                    <p className="label-mono text-gray-mid mb-6">Stop 04 · How we keep it safe</p>
                     <WordReveal
                         className="title-lg text-ink"
                         parts={[

@@ -81,7 +81,6 @@ export function Process() {
             <div className="mx-auto max-w-6xl px-5 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
                 <div className="lg:col-span-5">
                     <div className="lg:sticky lg:top-36">
-                        <p className="label-mono text-gray-mid mb-6">Stop 03 · How it works</p>
                         <WordReveal
                             className="title-lg text-ink"
                             parts={[

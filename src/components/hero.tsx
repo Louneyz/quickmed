@@ -89,7 +89,6 @@ export function Hero() {
             <div className="relative mx-auto max-w-6xl px-5 md:px-8 pt-32 md:pt-44 pb-16 md:pb-24">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
                     <div className="lg:col-span-7">
-                        <p className="label-mono text-ink/70 mb-8">Pharmacy delivery partner · Ontario</p>
                         <WordReveal
                             as="h1"
                             className="title-lg mb-8"
@@ -109,9 +108,6 @@ export function Hero() {
                                 Apply as driver
                             </CtaLink>
                         </div>
-                        <p className="mt-6 text-ink/80">
-                            Questions? Call <a href="tel:+14168349123" className="underline underline-offset-4 hover:text-ink">(416) 834-9123</a>
-                        </p>
                     </div>
 
                     <div className="lg:col-span-5 flex justify-center lg:justify-end">
@@ -119,12 +115,6 @@ export function Hero() {
                     </div>
                 </div>
 
-                <a href="#trusted" className="mt-16 md:mt-20 hidden md:flex items-center gap-4 text-ink/70 hover:text-ink">
-                    <span className="relative block h-10 w-px bg-ink/20 overflow-hidden">
-                        <span className="scroll-cue absolute inset-0 bg-ink" />
-                    </span>
-                    <span className="label-mono">Follow the route</span>
-                </a>
             </div>
 
             <div className="relative flex justify-center text-white" aria-hidden="true">

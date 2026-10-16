@@ -36,13 +36,13 @@ export function JoinCta() {
                                 Become a driver
                             </CtaLink>
                         </div>
-                        <Reveal className="relative mx-auto mt-14 w-56 md:w-72 aspect-square translate-y-6">
+                        <Reveal className="relative mx-auto mt-14 max-w-3xl aspect-[16/9] rounded-t-xl overflow-hidden">
                             <Image
-                                src="/images/hero_illustration_transparent.png"
-                                alt="QuickMed courier carrying a pharmacy delivery bag"
+                                src="/images/photos/doorstep-delivery.jpg"
+                                alt="Courier handing a package to a customer at their front door"
                                 fill
-                                sizes="288px"
-                                className="object-contain object-bottom"
+                                sizes="(min-width: 768px) 768px, 90vw"
+                                className="object-cover"
                             />
                         </Reveal>
                     </div>

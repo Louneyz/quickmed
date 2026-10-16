@@ -78,7 +78,6 @@ export function StatBand() {
                     <div className="absolute inset-0 grid-pattern" aria-hidden="true" />
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgb(65_191_249/0.25),transparent_55%)]" aria-hidden="true" />
                     <div className="relative">
-                        <p className="label-mono text-white/60 mb-6">Stop 02 · Why delivery matters</p>
                         <WordReveal
                             className="title-lg max-w-3xl mb-14"
                             parts={[
@@ -97,22 +96,10 @@ export function StatBand() {
                                     </dt>
                                     <dd className="text-white/80 leading-snug mb-4">
                                         {stat.label}
-                                        <sup className="label-mono text-white/40 ml-1">{index + 1}</sup>
                                     </dd>
                                 </div>
                             ))}
                         </dl>
-
-                        <ol className="mt-10 pt-6 border-t border-white/10 space-y-1 text-xs text-white/40">
-                            {stats.map((stat, index) => (
-                                <li key={stat.source + index}>
-                                    {index + 1}.{" "}
-                                    <a href={stat.href} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white">
-                                        {stat.source}
-                                    </a>
-                                </li>
-                            ))}
-                        </ol>
                     </div>
                 </div>
             </div>
