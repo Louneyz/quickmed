@@ -41,13 +41,16 @@ export function DeliveriesList({
 
     const fetchPage = useCallback(
         async (offset: number) => {
+            // The staff board leaves out the sales demo pharmacy; its client page still shows it.
+            const hideDemo = staff && !pharmacyId;
             let q = supabase()
                 .from("deliveries")
-                .select("*, delivery_requests(delivery_date, notes), pharmacies(name)")
+                .select(`*, delivery_requests(delivery_date, notes), pharmacies${hideDemo ? "!inner" : ""}(name, is_demo)`)
                 .order("created_at", { ascending: false })
                 .range(offset, offset + PAGE_SIZE - 1);
             if (filter !== "all") q = q.eq("status", filter);
             if (pharmacyId) q = q.eq("pharmacy_id", pharmacyId);
+            if (hideDemo) q = q.eq("pharmacies.is_demo", false);
             // Strip characters that have meaning in PostgREST filter syntax.
             const term = search.replace(/[%,()*\\]/g, " ").trim();
             if (term) {
@@ -61,7 +64,7 @@ export function DeliveriesList({
             if (error) throw error;
             return (data ?? []) as Delivery[];
         },
-        [filter, search, pharmacyId],
+        [filter, search, pharmacyId, staff],
     );
 
     useEffect(() => {
@@ -224,8 +227,8 @@ function DeliveryRow({
         : [row.street, row.street2, row.city, row.postal_code].filter(Boolean).join(", ");
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-4 gap-y-2 px-5 py-4 items-start lg:items-center">
-            <div className="lg:col-span-3 min-w-0">
+        <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-x-4 gap-y-2 px-5 py-4 items-start md:items-center">
+            <div className="md:col-span-3 lg:col-span-3 min-w-0">
                 <p className={cn("text-ink", row.redacted_at && "text-gray-mid italic")}>{name}</p>
                 {!row.redacted_at && row.phone && (
                     <a href={`tel:${row.phone}`} className="text-sm text-gray hover:text-ink">{row.phone}</a>
@@ -240,8 +243,8 @@ function DeliveryRow({
                     </div>
                 )}
             </div>
-            <p className="lg:col-span-3 text-sm text-gray">{address}</p>
-            <div className="lg:col-span-2 text-sm">
+            <p className="md:col-span-3 lg:col-span-3 text-sm text-gray">{address}</p>
+            <div className="md:col-span-2 lg:col-span-2 text-sm">
                 {staff ? (
                     <Link href={`/admin/clients/${row.pharmacy_id}`} className="text-ink hover:underline">
                         {row.pharmacies?.name}
@@ -253,11 +256,11 @@ function DeliveryRow({
                     <p className="text-gray-mid">For {formatDate(row.delivery_requests.delivery_date)}</p>
                 )}
             </div>
-            <div className="lg:col-span-2">
+            <div className="md:col-span-2 lg:col-span-2">
                 <StatusBadge status={row.status} />
                 {row.completed_at && <p className="mt-1 text-xs text-gray-mid">{formatDate(row.completed_at, true)}</p>}
             </div>
-            <div className="lg:col-span-2 lg:text-right">
+            <div className="md:col-span-2 lg:col-span-2 md:text-right">
                 {staff ? (
                     row.status === "pending" ? (
                         <Button variant="accent" className="px-4 py-3" disabled={saving} onClick={() => onStatus("completed")}>
@@ -278,7 +281,7 @@ function DeliveryRow({
                 )}
             </div>
             {row.delivery_requests?.notes && (
-                <p className="lg:col-span-12 text-sm text-gray bg-surface rounded-md px-3 py-2">
+                <p className="md:col-span-6 lg:col-span-12 text-sm text-gray bg-surface rounded-md px-3 py-2">
                     <span className="label-mono text-gray-mid mr-2">Note</span>
                     {row.delivery_requests.notes}
                 </p>

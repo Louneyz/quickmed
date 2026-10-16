@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { AuthFrame } from "@/components/portal/auth-frame";
 import { Button, Field, Input, Notice } from "@/components/portal/ui";
-import { homeFor, loadProfile } from "@/lib/portal/session";
+import { homeFor, loadProfile, toLoginEmail } from "@/lib/portal/session";
 import { isConfigured, supabase } from "@/lib/portal/supabase";
 
 export default function LoginPage() {
@@ -19,9 +19,9 @@ export default function LoginPage() {
         e.preventDefault();
         setBusy(true);
         setError(null);
-        const { data, error } = await supabase().auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase().auth.signInWithPassword({ email: toLoginEmail(email), password });
         if (error || !data.user) {
-            setError("That email and password don't match. Try again or reset your password.");
+            setError("That login and password don't match. Try again or reset your password.");
             setBusy(false);
             return;
         }
@@ -66,10 +66,11 @@ export default function LoginPage() {
                 </div>
             ) : (
                 <form onSubmit={mode === "login" ? handleLogin : handleReset} className="space-y-5">
-                    <Field label="Email">
+                    <Field label={mode === "login" ? "Email or username" : "Email"}>
                         <Input
-                            type="email"
-                            autoComplete="email"
+                            type={mode === "login" ? "text" : "email"}
+                            autoCapitalize="none"
+                            autoComplete="username"
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}

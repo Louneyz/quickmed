@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "setup:portal": "node --env-file=.env.local scripts/setup-portal.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",

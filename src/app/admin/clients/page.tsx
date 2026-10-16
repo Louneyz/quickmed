@@ -98,7 +98,7 @@ export default function ClientsPage() {
 
             {visible.length > 0 && (
                 <div className="rounded-lg bg-white border border-hairline overflow-hidden">
-                    <div className="hidden md:grid grid-cols-12 gap-4 px-5 py-3 bg-surface/60">
+                    <div className="hidden lg:grid grid-cols-12 gap-4 px-5 py-3 bg-surface/60">
                         {columns.map((c) => (
                             <button
                                 key={c.key}
@@ -117,21 +117,22 @@ export default function ClientsPage() {
                             <li key={r.pharmacy_id}>
                                 <Link
                                     href={`/admin/clients/${r.pharmacy_id}`}
-                                    className="grid grid-cols-2 md:grid-cols-12 gap-x-4 gap-y-1 px-5 py-4 items-center hover:bg-brand-soft/50 transition-colors"
+                                    className="grid grid-cols-2 lg:grid-cols-12 gap-x-4 gap-y-1 px-5 py-4 items-center hover:bg-brand-soft/50 transition-colors"
                                 >
-                                    <div className="col-span-2 md:col-span-4 min-w-0">
+                                    <div className="col-span-2 lg:col-span-4 min-w-0">
                                         <p className="text-ink truncate">
                                             {r.name}
+                                            {r.is_demo && <span className="ml-2 label-mono rounded bg-brand-soft px-1.5 py-0.5 text-ink">Demo</span>}
                                             {r.status === "paused" && <span className="ml-2 label-mono text-gray-mid">Paused</span>}
                                         </p>
                                         <p className="text-sm text-gray truncate">{r.contact_name ?? r.email}</p>
                                     </div>
-                                    <Num label="Requests" value={r.request_count} className="md:col-span-1" />
-                                    <Num label="Stops" value={r.delivery_count} className="md:col-span-1" />
-                                    <Num label="Done" value={r.completed_count} className="md:col-span-1" />
-                                    <Num label="Pending" value={r.pending_count} className="md:col-span-2" highlight={r.pending_count > 0} />
-                                    <p className="col-span-2 md:col-span-3 text-sm text-gray md:text-right">
-                                        <span className="md:hidden label-mono text-gray-mid mr-2">Last request</span>
+                                    <Num label="Requests" value={r.request_count} className="lg:col-span-1" />
+                                    <Num label="Stops" value={r.delivery_count} className="lg:col-span-1" />
+                                    <Num label="Done" value={r.completed_count} className="lg:col-span-1" />
+                                    <Num label="Pending" value={r.pending_count} className="lg:col-span-2" highlight={r.pending_count > 0} />
+                                    <p className="col-span-2 lg:col-span-3 text-sm text-gray lg:text-right">
+                                        <span className="lg:hidden label-mono text-gray-mid mr-2">Last request</span>
                                         {formatDate(r.last_request_at)}
                                     </p>
                                 </Link>
@@ -146,8 +147,8 @@ export default function ClientsPage() {
 
 function Num({ label, value, className, highlight }: { label: string; value: number; className?: string; highlight?: boolean }) {
     return (
-        <p className={cn("text-sm md:text-right tabular-nums", className)}>
-            <span className="md:hidden label-mono text-gray-mid mr-2">{label}</span>
+        <p className={cn("text-sm lg:text-right tabular-nums", className)}>
+            <span className="lg:hidden label-mono text-gray-mid mr-2">{label}</span>
             <span className={cn("text-ink", highlight && "rounded bg-brand-soft px-1.5 py-0.5")}>{value}</span>
         </p>
     );

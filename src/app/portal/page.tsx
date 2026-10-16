@@ -108,7 +108,7 @@ export default function RequestDeliveryPage() {
             <PageHeader eyebrow="New request" title="Request a delivery" />
 
             <Card className="p-6 md:p-8">
-                <div className="grid gap-6 md:grid-cols-3">
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     <Field label="Pharmacy">
                         <Input value={pharmacy?.name ?? ""} readOnly className="bg-surface" />
                     </Field>

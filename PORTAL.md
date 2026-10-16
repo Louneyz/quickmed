@@ -16,7 +16,7 @@ QuickMed staff use `/admin` to see every delivery, mark stops complete, manage c
 2. **Run the schema.** In the dashboard, open SQL Editor, paste `supabase/migrations/0001_portal.sql`, run it.
 3. **Auth settings** (Authentication → Providers / Sign In / URL Configuration):
    - Email provider on; **turn "Allow new users to sign up" off** (accounts are invite-only).
-   - Minimum password length 12.
+   - Minimum password length 10 (the demo password is 10 characters; new pharmacy users are asked for 12).
    - Site URL `https://quickmed.ca`; add `https://quickmed.ca/set-password` and `http://localhost:3000/set-password` to Redirect URLs.
 4. **Email sending** (Authentication → Emails → SMTP Settings). Supabase's built-in sender is for testing only. Use Resend (resend.com) or Amazon SES in `ca-central-1`, and add their DNS records to quickmed.ca. Optionally edit the "Invite user" template, e.g. subject "Your QuickMed pharmacy portal login".
 5. **Retention job.** Database → Extensions → enable `pg_cron`, then in SQL Editor:
@@ -28,12 +28,20 @@ QuickMed staff use `/admin` to see every delivery, mark stops complete, manage c
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - `SUPABASE_SERVICE_ROLE_KEY` (secret; server only)
-7. **First staff login.** Authentication → Users → "Invite user" with your email. Then in SQL Editor:
-   ```sql
-   insert into public.profiles (id, role, full_name, email)
-   select id, 'staff', 'Your Name', email from auth.users where email = 'you@quickmed.ca';
+7. **Your staff login and the sales demo.** On your computer, in the repo folder:
+   ```bash
+   cp .env.example .env.local   # fill in the Supabase values, STAFF_* and DEMO_PASSWORD
+   npm install
+   npm run setup:portal
    ```
-   Accept the invite email, set a password, and you land in `/admin`. From there, onboard pharmacies with "Onboard a client".
+   This creates your `/admin` login (no email needed) and the sales demo login (username `Demo`), and loads the demo's sample deliveries. Run it again any time to reset the demo to a clean state or change either password. From `/admin`, onboard real pharmacies with "Onboard a client".
+
+## Sales demo
+
+- Log in at `/login` with username `Demo` and the `DEMO_PASSWORD` you set. It is a normal pharmacy account flagged `is_demo`, so the database never shows it real clients' data.
+- Its sample deliveries are made up. A banner reminds salespeople not to type real patient details.
+- Its requests are hidden from the staff Deliveries board and counts; they appear only on the demo's own client page, tagged "Demo" in Clients.
+- Re-run `npm run setup:portal` after a demo to wipe what was entered and reload the samples.
 
 ## Local development
 

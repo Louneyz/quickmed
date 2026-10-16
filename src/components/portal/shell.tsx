@@ -66,7 +66,18 @@ export function PortalShell({
                     </nav>
                 </div>
             </header>
-            <main className="mx-auto max-w-6xl px-4 md:px-8 py-8 md:py-12">{children}</main>
+            <main className="mx-auto max-w-6xl px-4 md:px-8 py-8 md:py-12">
+                {pharmacy?.is_demo && (
+                    <div className="mb-8 rounded-lg bg-ink text-white px-5 py-4 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4" role="note">
+                        <span className="label-mono text-accent">Demo account</span>
+                        <span className="text-sm text-white/80">
+                            Everything here is sample data. Use made-up patient details only; real patient information
+                            must never be entered in the demo.
+                        </span>
+                    </div>
+                )}
+                {children}
+            </main>
             <footer className="mx-auto max-w-6xl px-4 md:px-8 pb-10 text-xs text-gray-mid flex flex-wrap gap-x-6 gap-y-2">
                 <span>Questions? Call <a href="tel:+14168349123" className="text-ink underline">(416) 834-9123</a></span>
                 <span>

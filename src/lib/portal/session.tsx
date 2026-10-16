@@ -23,6 +23,16 @@ export function usePortalSession() {
     return value;
 }
 
+// Accounts without an email (like the sales demo, "Demo") sign in with a username,
+// which maps to an address on a domain we never send mail to. Keep in sync with
+// scripts/setup-portal.mjs.
+export const USERNAME_DOMAIN = "accounts.quickmed.ca";
+
+export function toLoginEmail(value: string) {
+    const v = value.trim().toLowerCase();
+    return v.includes("@") ? v : `${v}@${USERNAME_DOMAIN}`;
+}
+
 export function homeFor(role: Role) {
     return role === "staff" ? "/admin" : "/portal";
 }

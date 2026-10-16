@@ -18,6 +18,14 @@ export default function SetPasswordPage() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        // Only a fresh invite or reset link may set a password, so a shared login
+        // (like the sales demo) can't be changed just by visiting this page.
+        const fromLink = /access_token|token_hash|code=|type=/.test(window.location.hash + window.location.search);
+        if (!fromLink) {
+            // Deferred so the effect doesn't set state synchronously.
+            const t = window.setTimeout(() => setReady(false), 0);
+            return () => window.clearTimeout(t);
+        }
         const { data: sub } = supabase().auth.onAuthStateChange((_event, session) => {
             if (session) setReady(true);
         });

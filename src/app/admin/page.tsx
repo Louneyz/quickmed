@@ -17,10 +17,13 @@ export default function AdminDeliveriesPage() {
     useEffect(() => {
         const db = supabase();
         // Head-only count queries: no rows are downloaded, however large the history gets.
+        // Counts leave out the sales demo pharmacy.
+        const deliveries = () =>
+            db.from("deliveries").select("id, pharmacies!inner(is_demo)", { count: "exact", head: true }).eq("pharmacies.is_demo", false);
         Promise.all([
-            db.from("deliveries").select("id", { count: "exact", head: true }).eq("status", "pending"),
-            db.from("deliveries").select("id", { count: "exact", head: true }).eq("status", "completed").gte("completed_at", startOfToday()),
-            db.from("pharmacies").select("id", { count: "exact", head: true }).eq("status", "active"),
+            deliveries().eq("status", "pending"),
+            deliveries().eq("status", "completed").gte("completed_at", startOfToday()),
+            db.from("pharmacies").select("id", { count: "exact", head: true }).eq("status", "active").eq("is_demo", false),
         ]).then(([pending, today, clients]) =>
             setCounts({ pending: pending.count ?? 0, today: today.count ?? 0, clients: clients.count ?? 0 }),
         );

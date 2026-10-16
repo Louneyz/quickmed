@@ -19,6 +19,7 @@ export type Pharmacy = {
     postal_code: string | null;
     notes: string | null;
     status: "active" | "paused";
+    is_demo: boolean;
     created_at: string;
 };
 
@@ -42,7 +43,7 @@ export type Delivery = {
     redacted_at: string | null;
     created_at: string;
     delivery_requests?: { delivery_date: string | null; notes: string | null } | null;
-    pharmacies?: { name: string } | null;
+    pharmacies?: { name: string; is_demo?: boolean } | null;
 };
 
 export type PharmacyStats = {
@@ -52,6 +53,7 @@ export type PharmacyStats = {
     email: string;
     phone: string | null;
     status: "active" | "paused";
+    is_demo: boolean;
     created_at: string;
     request_count: number;
     delivery_count: number;

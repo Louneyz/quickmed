@@ -28,6 +28,8 @@ create table public.pharmacies (
     postal_code text,
     notes text,
     status text not null default 'active' check (status in ('active', 'paused')),
+    -- Sales demo account: seeded with made-up data, hidden from the staff delivery board.
+    is_demo boolean not null default false,
     created_at timestamptz not null default now()
 );
 
@@ -280,6 +282,7 @@ select
     p.email,
     p.phone,
     p.status,
+    p.is_demo,
     p.created_at,
     (select count(*) from public.delivery_requests r where r.pharmacy_id = p.id) as request_count,
     count(d.id) as delivery_count,
