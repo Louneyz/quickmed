@@ -42,8 +42,8 @@ export function Services() {
                     <WordReveal
                         className="title-lg text-ink"
                         parts={[
-                            { text: "Speedy, reliable," },
-                            { text: "discreet and secure.", className: "text-gray-light" },
+                            { text: "Handled with care," },
+                            { text: "pharmacy to patient.", className: "text-gray-light" },
                         ]}
                     />
                     <p className="mt-6 text-lg text-gray max-w-xl">
