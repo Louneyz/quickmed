@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Reveal, WordReveal } from "./motion/reveal";
 
 const services = [
     {
@@ -33,28 +34,32 @@ const services = [
 
 export function Services() {
     return (
-        <section className="bg-white pb-20 md:pb-32">
+        <section id="safeguards" className="bg-white py-20 md:py-32 scroll-mt-24">
             <div className="mx-auto max-w-6xl px-5 md:px-8">
                 <div className="max-w-3xl mb-12 md:mb-16">
-                    <p className="label-mono text-gray-mid mb-6">What we do</p>
-                    <h2 className="title-lg text-ink">
-                        Logistics built for pharmacies. <span className="text-gray-light">Nothing else.</span>
-                    </h2>
+                    <p className="label-mono text-gray-mid mb-6">Stop 04 · How we keep it safe</p>
+                    <WordReveal
+                        className="title-lg text-ink"
+                        parts={[
+                            { text: "Every handoff," },
+                            { text: "accounted for.", className: "text-gray-light" },
+                        ]}
+                    />
                     <p className="mt-6 text-lg text-gray max-w-xl">
                         QuickMed provides a comprehensive logistics solution tailored specifically for the pharmaceutical industry.
                     </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-                    {services.map((service) => (
-                        <article key={service.title} className="bg-surface rounded-[20px] p-6 md:p-7 flex flex-col">
+                    {services.map((service, index) => (
+                        <Reveal key={service.title} delay={index * 100} className="bg-surface rounded-[20px] p-6 md:p-7 flex flex-col">
                             <p className="label-mono text-gray-mid mb-4">{service.eyebrow}</p>
                             <h3 className="text-2xl tracking-tight text-ink mb-3">{service.title}</h3>
                             <p className="text-gray leading-relaxed mb-6">{service.description}</p>
                             <div className="relative mt-auto aspect-[16/9] sm:aspect-[4/3] rounded-xl overflow-hidden bg-white">
                                 <Image src={service.image} alt={service.alt} fill sizes="(min-width: 1024px) 270px, (min-width: 640px) 45vw, 90vw" className="object-cover" />
                             </div>
-                        </article>
+                        </Reveal>
                     ))}
                 </div>
             </div>

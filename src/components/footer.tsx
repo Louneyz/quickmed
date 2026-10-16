@@ -36,7 +36,7 @@ export function Footer() {
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
                     <div className="md:col-span-4 space-y-4">
-                        <img src="/images/quickmed_logo_transparent.png" alt="QuickMed" className="h-7 w-auto" />
+                        <img src="/images/brand/quickmed-logo-white.svg" alt="QuickMed" className="h-7 w-auto" />
                         <p className="text-white/60 max-w-xs">
                             Fast and reliable pharmaceutical delivery services for pharmacies and patients.
                         </p>

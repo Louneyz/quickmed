@@ -30,10 +30,10 @@ export function FAQ() {
     };
 
     return (
-        <section className="bg-white py-20 md:py-32">
+        <section id="questions" className="bg-white py-20 md:py-32 scroll-mt-24">
             <div className="mx-auto max-w-6xl px-5 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
                 <div className="lg:col-span-4">
-                    <p className="label-mono text-gray-mid mb-6">FAQ</p>
+                    <p className="label-mono text-gray-mid mb-6">Stop 05 · Questions</p>
                     <h2 className="title-md text-ink max-w-xs">
                         Frequently asked <span className="text-gray-light">questions.</span>
                     </h2>
