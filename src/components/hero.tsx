@@ -64,11 +64,11 @@ function RouteMap() {
                 </g>
             </svg>
 
-            <span className="label-mono absolute left-5 bottom-5 text-gray-mid">Pharmacy</span>
-            <span className="label-mono absolute right-5 top-5 text-gray-mid">Patient</span>
+            <span className="label-mono absolute left-5 bottom-5 text-ink">Pharmacy</span>
+            <span className="label-mono absolute right-5 top-5 text-ink">Patient</span>
 
             <div className="absolute left-5 top-5 rounded-lg bg-ink text-white px-4 py-3 min-w-44">
-                <p className="label-mono text-white/50 mb-1">Status</p>
+                <p className="label-mono text-white mb-1">Status</p>
                 <p className="text-lg tracking-tight" aria-live="off">
                     <span className="inline-block h-2 w-2 rounded-full bg-brand mr-2 align-middle" />
                     {statuses[status]}
@@ -94,10 +94,10 @@ export function Hero() {
                             className="title-lg mb-8"
                             parts={[
                                 { text: "You fill it." },
-                                { text: "We deliver it.", className: "text-ink/55 block" },
+                                { text: "We deliver it.", className: "text-ink block" },
                             ]}
                         />
-                        <p className="text-lg md:text-xl leading-snug text-ink/80 max-w-xl mb-10">
+                        <p className="text-lg md:text-xl leading-snug text-ink max-w-xl mb-10">
                             QuickMed picks up prescriptions from your pharmacy and brings them to your patients&apos; homes. You offer delivery without hiring drivers or planning routes.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3">

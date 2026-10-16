@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #1e293b;
+  --foreground: #0f172a;
   --primary: #41bff9;
   --secondary: #0f172a;
   --muted: #64748b;
@@ -13,6 +13,8 @@
   --ink-soft: #1e293b;
   --brand: #41bff9;
   --brand-soft: #e8f7fe;
+  /* Brand blue dark enough for text on white (4.8:1). */
+  --brand-deep: #0b78b5;
   --accent: #41bff9;
   --surface: #f1f5f9;
   --gray: #475569;
@@ -33,6 +35,7 @@
   --color-accent: var(--accent);
   --color-brand: var(--brand);
   --color-brand-soft: var(--brand-soft);
+  --color-brand-deep: var(--brand-deep);
   --color-surface: var(--surface);
   --color-gray: var(--gray);
   --color-gray-mid: var(--gray-mid);
@@ -64,6 +67,15 @@ body {
   font-size: clamp(2.5rem, 5.7vw, 6.5rem);
   line-height: 0.95;
   letter-spacing: -0.035em;
+}
+
+/* Even line lengths in headings, and no single word left alone on a paragraph's last line. */
+h1, h2, h3, h4, dt, .title-lg, .title-md {
+  text-wrap: balance;
+}
+
+p, li, dd, summary, label {
+  text-wrap: pretty;
 }
 
 .title-lg {
@@ -240,7 +252,7 @@ body {
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  fill: var(--gray-mid);
+  fill: var(--ink);
 }
 
 .scene-chip {
@@ -334,4 +346,9 @@ body {
 /* Keep the page behind an open pop-up from scrolling. */
 html:has(dialog[open]) {
   overflow: hidden;
+}
+
+/* Phone numbers never break across lines. */
+a[href^="tel:"] {
+  white-space: nowrap;
 }

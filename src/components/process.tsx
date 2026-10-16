@@ -85,18 +85,18 @@ export function Process() {
                             className="title-lg text-ink"
                             parts={[
                                 { text: "Four steps," },
-                                { text: "counter to doorstep.", className: "text-gray-light" },
+                                { text: "door to door.", className: "text-brand-deep" },
                             ]}
                         />
-                        <p className="mt-6 text-lg text-gray max-w-md">
+                        <p className="mt-6 text-lg text-ink max-w-md">
                             You keep running the pharmacy. We handle everything after the order is packed.
                         </p>
 
                         {/* Live tracker card that follows the active step (desktop). */}
                         <div className="hidden lg:block mt-12 max-w-sm rounded-[20px] bg-white p-6" aria-hidden="true">
                             <div className="flex items-center justify-between mb-6">
-                                <p className="label-mono text-gray-mid">Delivery status</p>
-                                <p className="label-mono text-gray-light">
+                                <p className="label-mono text-ink">Delivery status</p>
+                                <p className="label-mono text-brand-deep">
                                     {String(active + 1).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}
                                 </p>
                             </div>
@@ -139,19 +139,19 @@ export function Process() {
                                         data-stop
                                         className={cn(
                                             "relative z-10 h-12 w-12 rounded-lg flex items-center justify-center transition-colors duration-500",
-                                            reached ? "bg-brand text-ink" : "bg-white text-gray-light",
+                                            reached ? "bg-brand text-ink" : "bg-white text-brand-deep",
                                         )}
                                     >
                                         <Icon className="h-5 w-5" />
                                     </span>
                                     <div>
-                                        <p className={cn("label-mono mb-3 transition-colors duration-500", reached ? "text-gray-mid" : "text-gray-light")}>
+                                        <p className={cn("label-mono mb-3 transition-colors duration-500", reached ? "text-ink" : "text-brand-deep")}>
                                             {String(index + 1).padStart(2, "0")} · {step.status}
                                         </p>
-                                        <h3 className={cn("title-md mb-3 transition-colors duration-500", reached ? "text-ink" : "text-gray-light")}>
+                                        <h3 className={cn("title-md mb-3 transition-colors duration-500", reached ? "text-ink" : "text-brand-deep")}>
                                             {step.title}
                                         </h3>
-                                        <p className={cn("text-lg leading-snug max-w-md transition-colors duration-500", reached ? "text-gray" : "text-gray-mid/70")}>
+                                        <p className={cn("text-lg leading-snug max-w-md transition-colors duration-500", "text-ink")}>
                                             {step.description}
                                         </p>
                                     </div>

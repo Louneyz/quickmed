@@ -62,7 +62,7 @@ export function RouteTracker() {
                             aria-current={index === active ? "step" : undefined}
                             className={cn(
                                 "group flex items-center gap-3 label-mono transition-colors",
-                                index === active ? "text-ink" : index < active ? "text-gray-mid" : "text-gray-light hover:text-gray-mid",
+                                index <= active ? "text-ink" : "text-brand-deep hover:text-ink",
                             )}
                         >
                             <span

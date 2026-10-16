@@ -60,15 +60,15 @@ export default function PrivacyPage() {
         <main className="min-h-screen flex flex-col">
             <Navbar />
             <article className="flex-1 mx-auto w-full max-w-3xl px-5 md:px-8 py-16 md:py-24">
-                <p className="label-mono text-gray-mid">Privacy</p>
+                <p className="label-mono text-ink">Privacy</p>
                 <h1 className="title-lg text-ink mt-4">Privacy policy</h1>
-                <p className="mt-6 text-gray">Last updated October 2026</p>
+                <p className="mt-6 text-ink">Last updated October 2026</p>
                 <div className="mt-14 space-y-12">
                     {sections.map((s) => (
                         <section key={s.title}>
                             <h2 className="title-md text-ink">{s.title}</h2>
                             {s.body.map((p) => (
-                                <p key={p.slice(0, 32)} className="mt-4 text-lg leading-relaxed text-gray">{p}</p>
+                                <p key={p.slice(0, 32)} className="mt-4 text-lg leading-relaxed text-ink">{p}</p>
                             ))}
                         </section>
                     ))}

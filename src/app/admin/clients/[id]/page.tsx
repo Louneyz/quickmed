@@ -43,16 +43,16 @@ export default function ClientPage() {
     }
 
     if (missing) return <Notice tone="error">This client doesn&apos;t exist or was removed.</Notice>;
-    if (!pharmacy) return <p className="label-mono text-gray-mid" role="status">Loading…</p>;
+    if (!pharmacy) return <p className="label-mono text-ink" role="status">Loading…</p>;
 
     return (
         <>
-            <Link href="/admin/clients" className="label-mono inline-flex items-center gap-2 text-gray-mid hover:text-ink mb-6">
+            <Link href="/admin/clients" className="label-mono inline-flex items-center gap-2 text-ink hover:text-ink mb-6">
                 <ArrowLeft className="h-3.5 w-3.5" aria-hidden /> All clients
             </Link>
             <PageHeader eyebrow={`Client since ${formatDate(pharmacy.created_at)}`} title={pharmacy.name}>
                 {stats && (
-                    <p className="text-sm text-gray">
+                    <p className="text-sm text-ink">
                         Last delivery: <span className="text-ink">{stats.last_delivery_at ? `${formatDate(stats.last_delivery_at)} · ${timeAgo(stats.last_delivery_at)}` : "Never"}</span>
                     </p>
                 )}
@@ -63,7 +63,7 @@ export default function ClientPage() {
                     <p className="label-mono text-ink">
                         {pharmacy.status === "pending" ? "Pending partner" : "Denied partner request"}
                     </p>
-                    <p className="mt-2 mb-5 text-sm text-gray">
+                    <p className="mt-2 mb-5 text-sm text-ink">
                         {pharmacy.contact_name ?? "Someone"} asked to become a partner {timeAgo(pharmacy.created_at).toLowerCase()}.
                         Approving creates their login and emails it to {pharmacy.email}.
                     </p>
@@ -100,7 +100,7 @@ export default function ClientPage() {
                 <Logins pharmacyId={pharmacy.id} logins={logins} onAdded={loadLogins} />
             </div>
 
-            <p className="label-mono text-gray-mid mb-4">Delivery history</p>
+            <p className="label-mono text-ink mb-4">Delivery history</p>
             <DeliveriesList staff pharmacyId={pharmacy.id} initialFilter="all" />
         </>
     );
@@ -166,7 +166,7 @@ function ClientDetails({ pharmacy, onSaved }: { pharmacy: Pharmacy; onSaved: (p:
                     </Field>
                 </div>
                 <div className="mt-6 flex items-center justify-end gap-4">
-                    {state === "saved" && <span className="text-sm text-gray">Saved.</span>}
+                    {state === "saved" && <span className="text-sm text-ink">Saved.</span>}
                     {state === "error" && <span className="text-sm text-red-700">Couldn&apos;t save. Try again.</span>}
                     <Button type="submit" disabled={state === "saving"}>
                         {state === "saving" ? "Saving…" : "Save details"}
@@ -206,13 +206,13 @@ function Logins({ pharmacyId, logins, onAdded }: { pharmacyId: string; logins: L
                 {logins.map((l) => (
                     <li key={l.id} className="text-sm">
                         <p className="text-ink">{l.full_name ?? l.email}</p>
-                        {l.full_name && <p className="text-gray">{l.email}</p>}
+                        {l.full_name && <p className="text-ink">{l.email}</p>}
                     </li>
                 ))}
-                {logins.length === 0 && <li className="text-sm text-gray-mid">No logins yet.</li>}
+                {logins.length === 0 && <li className="text-sm text-ink">No logins yet.</li>}
             </ul>
             <form onSubmit={add} className="space-y-4 border-t border-hairline pt-6">
-                <p className="label-mono text-gray-mid">Add a login</p>
+                <p className="label-mono text-ink">Add a login</p>
                 <Input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} aria-label="Name" />
                 <Input type="email" required placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} aria-label="Email" />
                 {message && <Notice tone={message.tone}>{message.text}</Notice>}

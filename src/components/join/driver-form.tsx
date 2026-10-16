@@ -80,14 +80,14 @@ export function DriverForm({ onDone }: { onDone: () => void }) {
                     </Field>
                 </div>
                 <div className="flex flex-col gap-2">
-                    <span className="label-mono text-gray">
+                    <span className="label-mono text-ink">
                         Resume<span className="text-accent"> *</span>
                     </span>
                     <label className="flex cursor-pointer items-center gap-4 rounded-lg border-2 border-dashed border-ink/15 bg-surface/50 px-5 py-5 transition-colors hover:border-accent hover:bg-brand-soft focus-within:border-accent">
                         {file ? <FileText className="h-6 w-6 shrink-0 text-ink" aria-hidden /> : <Upload className="h-6 w-6 shrink-0 text-ink" aria-hidden />}
                         <span className="min-w-0">
                             <span className="block truncate text-ink">{file ? file.name : "Upload your resume"}</span>
-                            <span className="block text-xs text-gray-mid">
+                            <span className="block text-xs text-ink">
                                 {file ? `${(file.size / 1024 / 1024).toFixed(1)} MB · tap to change` : `PDF or Word, up to ${MAX_MB} MB`}
                             </span>
                         </span>
@@ -105,7 +105,7 @@ export function DriverForm({ onDone }: { onDone: () => void }) {
             <Button type="submit" variant="accent" disabled={busy} className="mt-8 w-full">
                 {busy ? "Sending…" : "Submit application"}
             </Button>
-            <p className="mt-4 text-xs text-gray-mid">
+            <p className="mt-4 text-xs text-ink">
                 We only use your details and resume to review your application. See our{" "}
                 <a href="/privacy" className="underline">privacy policy</a>.
             </p>

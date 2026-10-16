@@ -14,7 +14,7 @@ export function JoinCta() {
                     <div className="absolute inset-0 grid-pattern" aria-hidden="true" />
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgb(65_191_249/0.35),transparent_60%)]" aria-hidden="true" />
                     <div className="relative">
-                        <p className="label-mono text-white/60 mb-6 inline-flex items-center gap-3">
+                        <p className="label-mono text-white mb-6 inline-flex items-center gap-3">
                             <span className="relative inline-flex h-2.5 w-2.5" aria-hidden="true">
                                 <span className="pin-pulse absolute inset-0 rounded-full bg-brand" />
                                 <span className="relative h-2.5 w-2.5 rounded-full bg-brand" />
@@ -25,7 +25,7 @@ export function JoinCta() {
                             className="title-lg max-w-3xl mx-auto mb-10"
                             parts={[
                                 { text: "Your patients stay home." },
-                                { text: "We bring the prescription.", className: "text-white/40" },
+                                { text: "We bring the prescription.", className: "text-brand" },
                             ]}
                         />
                         <div className="flex flex-col sm:flex-row gap-3 justify-center">

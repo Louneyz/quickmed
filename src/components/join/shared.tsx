@@ -26,9 +26,9 @@ export function useOpenedAt() {
 export function Intro({ eyebrow, title, children }: { eyebrow: string; title: string; children: React.ReactNode }) {
     return (
         <div className="mb-8">
-            <p className="label-mono text-gray-mid">{eyebrow}</p>
+            <p className="label-mono text-ink">{eyebrow}</p>
             <h2 id="join-dialog-title" className="title-md text-ink mt-3">{title}</h2>
-            <p className="mt-4 text-gray">{children}</p>
+            <p className="mt-4 text-ink">{children}</p>
         </div>
     );
 }
@@ -36,9 +36,9 @@ export function Intro({ eyebrow, title, children }: { eyebrow: string; title: st
 export function Done({ title, children, onDone }: { title: string; children: React.ReactNode; onDone: () => void }) {
     return (
         <div className="py-6" role="status">
-            <p className="label-mono text-gray-mid">Sent</p>
+            <p className="label-mono text-ink">Sent</p>
             <h2 id="join-dialog-title" className="title-md text-ink mt-3">{title}</h2>
-            <p className="mt-4 text-gray">{children}</p>
+            <p className="mt-4 text-ink">{children}</p>
             <button
                 type="button"
                 onClick={onDone}

@@ -72,7 +72,7 @@ export function PartnerForm({ onDone }: { onDone: () => void }) {
             <Button type="submit" variant="accent" disabled={busy} className="mt-8 w-full">
                 {busy ? "Sending…" : "Send request"}
             </Button>
-            <p className="mt-4 text-xs text-gray-mid">
+            <p className="mt-4 text-xs text-ink">
                 We only use these details to review your request and set up your account. See our{" "}
                 <a href="/privacy" className="underline">privacy policy</a>.
             </p>

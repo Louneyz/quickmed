@@ -35,10 +35,10 @@ export function PortalShell({
                             <Link href={nav[0].href} aria-label={`${area} home`} className="shrink-0">
                                 <img src="/images/brand/quickmed-logo-navy.svg" alt="QuickMed" className="h-6 md:h-7 w-auto" />
                             </Link>
-                            <span className="hidden sm:inline label-mono text-gray-mid border-l border-hairline pl-4">{area}</span>
+                            <span className="hidden sm:inline label-mono text-ink border-l border-hairline pl-4">{area}</span>
                         </div>
                         <div className="flex items-center gap-3 min-w-0">
-                            <span className="hidden md:inline text-sm text-gray truncate max-w-[16rem]">{who}</span>
+                            <span className="hidden md:inline text-sm text-ink truncate max-w-[16rem]">{who}</span>
                             <button
                                 type="button"
                                 onClick={signOut}
@@ -57,7 +57,7 @@ export function PortalShell({
                                 aria-current={isActive(item.href) ? "page" : undefined}
                                 className={cn(
                                     "whitespace-nowrap rounded-md px-3 py-2 text-sm transition-colors",
-                                    isActive(item.href) ? "bg-ink text-white" : "text-ink/80 hover:bg-ink/5 hover:text-ink",
+                                    isActive(item.href) ? "bg-ink text-white" : "text-ink hover:bg-ink/5 hover:text-ink",
                                 )}
                             >
                                 {item.label}
@@ -70,7 +70,7 @@ export function PortalShell({
                 {pharmacy?.is_demo && (
                     <div className="mb-8 rounded-lg bg-ink text-white px-5 py-4 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4" role="note">
                         <span className="label-mono text-accent">Demo account</span>
-                        <span className="text-sm text-white/80">
+                        <span className="text-sm text-white">
                             Everything here is sample data. Use made-up patient details only; real patient information
                             must never be entered in the demo.
                         </span>
@@ -78,7 +78,7 @@ export function PortalShell({
                 )}
                 {children}
             </main>
-            <footer className="mx-auto max-w-6xl px-4 md:px-8 pb-10 text-xs text-gray-mid flex flex-wrap gap-x-6 gap-y-2">
+            <footer className="mx-auto max-w-6xl px-4 md:px-8 pb-10 text-xs text-ink flex flex-wrap gap-x-6 gap-y-2">
                 <span>Questions? Call <a href="tel:+14168349123" className="text-ink underline">(416) 834-9123</a></span>
                 <span>
                     {profile.role === "staff"

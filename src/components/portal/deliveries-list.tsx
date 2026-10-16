@@ -136,7 +136,7 @@ export function DeliveriesList({
                             onClick={() => f.value !== filter && show({ filter: f.value })}
                             className={cn(
                                 "label-mono rounded-md px-4 py-2.5 transition-colors",
-                                filter === f.value ? "bg-ink text-white" : "text-gray hover:text-ink",
+                                filter === f.value ? "bg-ink text-white" : "text-ink hover:text-ink",
                             )}
                         >
                             {f.label}
@@ -150,7 +150,7 @@ export function DeliveriesList({
                         if (query !== search) show({ search: query });
                     }}
                 >
-                    <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-mid" aria-hidden />
+                    <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink" aria-hidden />
                     <Input
                         type="search"
                         placeholder="Search patient, street, phone"
@@ -169,7 +169,7 @@ export function DeliveriesList({
 
             {!loading && rows.length === 0 && !error && (
                 <div className="rounded-lg border border-dashed border-ink/15 bg-white px-6 py-16 text-center">
-                    <p className="label-mono text-gray-mid">Nothing here</p>
+                    <p className="label-mono text-ink">Nothing here</p>
                     <p className="mt-3 text-ink">
                         {filter === "pending" ? "No deliveries waiting." : "No deliveries match."}
                     </p>
@@ -178,7 +178,7 @@ export function DeliveriesList({
 
             {rows.length > 0 && (
                 <div className="rounded-lg bg-white border border-hairline divide-y divide-hairline overflow-hidden">
-                    <div className="hidden lg:grid grid-cols-12 gap-4 px-5 py-3 label-mono text-gray-mid bg-surface/60">
+                    <div className="hidden lg:grid grid-cols-12 gap-4 px-5 py-3 label-mono text-ink bg-surface/60">
                         <span className="col-span-3">Patient</span>
                         <span className="col-span-3">Address</span>
                         <span className="col-span-2">{staff ? "Pharmacy" : "Delivery date"}</span>
@@ -197,7 +197,7 @@ export function DeliveriesList({
                 </div>
             )}
 
-            {loading && <p className="label-mono text-gray-mid py-4" role="status">Loading…</p>}
+            {loading && <p className="label-mono text-ink py-4" role="status">Loading…</p>}
 
             {hasMore && !loading && (
                 <div className="flex justify-center pt-2">
@@ -229,9 +229,9 @@ function DeliveryRow({
     return (
         <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-x-4 gap-y-2 px-5 py-4 items-start md:items-center">
             <div className="md:col-span-3 lg:col-span-3 min-w-0">
-                <p className={cn("text-ink", row.redacted_at && "text-gray-mid italic")}>{name}</p>
+                <p className={cn("text-ink", row.redacted_at && "text-ink italic")}>{name}</p>
                 {!row.redacted_at && row.phone && (
-                    <a href={`tel:${row.phone}`} className="text-sm text-gray hover:text-ink">{row.phone}</a>
+                    <a href={`tel:${row.phone}`} className="text-sm text-ink hover:text-ink">{row.phone}</a>
                 )}
                 {row.flags.length > 0 && (
                     <div className="mt-1.5 flex flex-wrap gap-1">
@@ -243,22 +243,22 @@ function DeliveryRow({
                     </div>
                 )}
             </div>
-            <p className="md:col-span-3 lg:col-span-3 text-sm text-gray">{address}</p>
+            <p className="md:col-span-3 lg:col-span-3 text-sm text-ink">{address}</p>
             <div className="md:col-span-2 lg:col-span-2 text-sm">
                 {staff ? (
                     <Link href={`/admin/clients/${row.pharmacy_id}`} className="text-ink hover:underline">
                         {row.pharmacies?.name}
                     </Link>
                 ) : (
-                    <span className="text-gray">{formatDate(row.delivery_requests?.delivery_date ?? null)}</span>
+                    <span className="text-ink">{formatDate(row.delivery_requests?.delivery_date ?? null)}</span>
                 )}
                 {staff && row.delivery_requests?.delivery_date && (
-                    <p className="text-gray-mid">For {formatDate(row.delivery_requests.delivery_date)}</p>
+                    <p className="text-ink">For {formatDate(row.delivery_requests.delivery_date)}</p>
                 )}
             </div>
             <div className="md:col-span-2 lg:col-span-2">
                 <StatusBadge status={row.status} />
-                {row.completed_at && <p className="mt-1 text-xs text-gray-mid">{formatDate(row.completed_at, true)}</p>}
+                {row.completed_at && <p className="mt-1 text-xs text-ink">{formatDate(row.completed_at, true)}</p>}
             </div>
             <div className="md:col-span-2 lg:col-span-2 md:text-right">
                 {staff ? (
@@ -271,18 +271,18 @@ function DeliveryRow({
                             type="button"
                             disabled={saving}
                             onClick={() => onStatus("pending")}
-                            className="label-mono text-gray-mid hover:text-ink underline underline-offset-4"
+                            className="label-mono text-ink hover:text-ink underline underline-offset-4"
                         >
                             {saving ? "Saving…" : "Undo"}
                         </button>
                     )
                 ) : (
-                    <span className="text-sm text-gray-mid">{formatDate(row.created_at, true)}</span>
+                    <span className="text-sm text-ink">{formatDate(row.created_at, true)}</span>
                 )}
             </div>
             {row.delivery_requests?.notes && (
-                <p className="md:col-span-6 lg:col-span-12 text-sm text-gray bg-surface rounded-md px-3 py-2">
-                    <span className="label-mono text-gray-mid mr-2">Note</span>
+                <p className="md:col-span-6 lg:col-span-12 text-sm text-ink bg-surface rounded-md px-3 py-2">
+                    <span className="label-mono text-ink mr-2">Note</span>
                     {row.delivery_requests.notes}
                 </p>
             )}

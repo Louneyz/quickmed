@@ -33,7 +33,7 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
                     />
                 </Link>
 
-                <nav className="hidden lg:flex items-center gap-1 text-sm text-ink/80">
+                <nav className="hidden lg:flex items-center gap-1 text-sm text-ink">
                     {links.map((link) => (
                         <Link
                             key={link.href}

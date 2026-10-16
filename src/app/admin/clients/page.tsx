@@ -83,7 +83,7 @@ export default function ClientsPage() {
             </PageHeader>
 
             {error && <Notice tone="error">Couldn&apos;t load clients. Refresh to try again.</Notice>}
-            {!rows && !error && <p className="label-mono text-gray-mid py-4" role="status">Loading…</p>}
+            {!rows && !error && <p className="label-mono text-ink py-4" role="status">Loading…</p>}
 
             {pending.length > 0 && (
                 <section className="mb-12" aria-labelledby="pending-title">
@@ -99,21 +99,21 @@ export default function ClientsPage() {
                                         <Link href={`/admin/clients/${p.pharmacy_id}`} className="text-lg text-ink hover:underline">
                                             {p.name}
                                         </Link>
-                                        <p className="text-sm text-gray">{p.contact_name}</p>
+                                        <p className="text-sm text-ink">{p.contact_name}</p>
                                     </div>
-                                    <span className="label-mono shrink-0 text-gray-mid">{timeAgo(p.created_at)}</span>
+                                    <span className="label-mono shrink-0 text-ink">{timeAgo(p.created_at)}</span>
                                 </div>
                                 <div className="mt-3 space-y-1.5 text-sm">
                                     {p.phone && (
                                         <a href={`tel:${p.phone}`} className="flex items-center gap-2 text-ink">
-                                            <Phone className="h-4 w-4 text-gray-mid" aria-hidden /> {p.phone}
+                                            <Phone className="h-4 w-4 text-ink" aria-hidden /> {p.phone}
                                         </a>
                                     )}
                                     <a href={`mailto:${p.email}`} className="flex items-center gap-2 text-ink break-all">
-                                        <Mail className="h-4 w-4 shrink-0 text-gray-mid" aria-hidden /> {p.email}
+                                        <Mail className="h-4 w-4 shrink-0 text-ink" aria-hidden /> {p.email}
                                     </a>
                                     {(p.street || p.city) && (
-                                        <p className="text-gray">{[p.street, p.city].filter(Boolean).join(", ")}</p>
+                                        <p className="text-ink">{[p.street, p.city].filter(Boolean).join(", ")}</p>
                                     )}
                                 </div>
                                 <div className="mt-5">
@@ -130,7 +130,7 @@ export default function ClientsPage() {
 
             {rows && (
                 <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-4">
-                    <p className="text-sm text-gray">
+                    <p className="text-sm text-ink">
                         {clients.length} clients · <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent" aria-hidden />{activeCount} delivered in the last {ACTIVE_DAYS} days</span>
                         {denied > 0 && (
                             <>
@@ -142,7 +142,7 @@ export default function ClientsPage() {
                         )}
                     </p>
                     <div className="relative md:w-80">
-                        <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-mid" aria-hidden />
+                        <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink" aria-hidden />
                         <Input
                             type="search"
                             placeholder="Search clients"
@@ -157,7 +157,7 @@ export default function ClientsPage() {
 
             {rows && visible.length === 0 && pending.length === 0 && (
                 <div className="rounded-lg border border-dashed border-ink/15 bg-white px-6 py-16 text-center">
-                    <p className="label-mono text-gray-mid">No clients yet</p>
+                    <p className="label-mono text-ink">No clients yet</p>
                     <p className="mt-3 text-ink">Onboard your first pharmacy to send them a login.</p>
                 </div>
             )}
@@ -170,7 +170,7 @@ export default function ClientsPage() {
                                 key={c.key}
                                 type="button"
                                 onClick={() => setSort((s) => ({ key: c.key, desc: s.key === c.key ? !s.desc : c.key !== "name" }))}
-                                className={cn("label-mono text-left text-gray-mid hover:text-ink", c.className)}
+                                className={cn("label-mono text-left text-ink hover:text-ink", c.className)}
                                 aria-sort={sort.key === c.key ? (sort.desc ? "descending" : "ascending") : undefined}
                             >
                                 {c.label}
@@ -189,17 +189,17 @@ export default function ClientsPage() {
                                         <p className="text-ink truncate">
                                             {r.name}
                                             {r.is_demo && <span className="ml-2 label-mono rounded bg-brand-soft px-1.5 py-0.5 text-ink">Demo</span>}
-                                            {r.status === "paused" && <span className="ml-2 label-mono text-gray-mid">Paused</span>}
-                                            {r.status === "denied" && <span className="ml-2 label-mono text-gray-mid">Denied</span>}
+                                            {r.status === "paused" && <span className="ml-2 label-mono text-ink">Paused</span>}
+                                            {r.status === "denied" && <span className="ml-2 label-mono text-ink">Denied</span>}
                                         </p>
-                                        <p className="text-sm text-gray truncate">{r.contact_name ?? r.email}</p>
+                                        <p className="text-sm text-ink truncate">{r.contact_name ?? r.email}</p>
                                     </div>
                                     <Num label="Requests" value={r.request_count} className="lg:col-span-1" />
                                     <Num label="Stops" value={r.delivery_count} className="lg:col-span-1" />
                                     <Num label="Done" value={r.completed_count} className="lg:col-span-1" />
                                     <Num label="Pending" value={r.pending_count} className="lg:col-span-1" highlight={r.pending_count > 0} />
-                                    <p className="col-span-2 lg:col-span-2 text-sm text-gray lg:text-right">
-                                        <span className="lg:hidden label-mono text-gray-mid mr-2">Last request</span>
+                                    <p className="col-span-2 lg:col-span-2 text-sm text-ink lg:text-right">
+                                        <span className="lg:hidden label-mono text-ink mr-2">Last request</span>
                                         {formatDate(r.last_request_at)}
                                     </p>
                                     <LastDelivery value={r.last_delivery_at} />
@@ -217,12 +217,12 @@ function LastDelivery({ value }: { value: string | null }) {
     const days = daysSince(value);
     return (
         <p className="col-span-2 lg:col-span-3 text-sm lg:text-right flex items-center gap-2 lg:justify-end">
-            <span className="lg:hidden label-mono text-gray-mid">Last delivery</span>
+            <span className="lg:hidden label-mono text-ink">Last delivery</span>
             <span
                 className={cn("h-2 w-2 rounded-full shrink-0", days <= ACTIVE_DAYS ? "bg-accent" : days <= 60 ? "bg-gray-light" : "bg-transparent border border-gray-light")}
                 aria-hidden
             />
-            <span className={days <= ACTIVE_DAYS ? "text-ink" : "text-gray-mid"}>
+            <span className={days <= ACTIVE_DAYS ? "text-ink" : "text-ink"}>
                 {value ? `${formatDate(value)} · ${timeAgo(value)}` : "Never"}
             </span>
         </p>
@@ -232,7 +232,7 @@ function LastDelivery({ value }: { value: string | null }) {
 function Num({ label, value, className, highlight }: { label: string; value: number; className?: string; highlight?: boolean }) {
     return (
         <p className={cn("text-sm lg:text-right tabular-nums", className)}>
-            <span className="lg:hidden label-mono text-gray-mid mr-2">{label}</span>
+            <span className="lg:hidden label-mono text-ink mr-2">{label}</span>
             <span className={cn("text-ink", highlight && "rounded bg-brand-soft px-1.5 py-0.5")}>{value}</span>
         </p>
     );

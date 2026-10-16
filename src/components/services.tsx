@@ -29,7 +29,7 @@ const services = [
     {
         eyebrow: "05 Customer first",
         title: "A real person on the phone",
-        description: "Questions about a delivery? Call (416) 834-9123 and talk to our team.",
+        description: "Questions about a delivery? Call (416)\u00a0834-9123 and talk to our team.",
         scene: SupportScene,
     },
 ];
@@ -43,10 +43,10 @@ export function Services() {
                         className="title-lg text-ink"
                         parts={[
                             { text: "Handled with care," },
-                            { text: "pharmacy to patient.", className: "text-gray-light" },
+                            { text: "pharmacy to patient.", className: "text-brand-deep" },
                         ]}
                     />
-                    <p className="mt-6 text-lg text-gray max-w-xl">
+                    <p className="mt-6 text-lg text-ink max-w-xl">
                         Every delivery runs the same way, from your counter to your patient&apos;s door.
                     </p>
                 </div>
@@ -54,9 +54,9 @@ export function Services() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 md:gap-5">
                     {services.map(({ scene: SceneArt, ...service }, index) => (
                         <Reveal key={service.title} delay={(index % 3) * 100} className={`bg-surface rounded-[20px] p-6 md:p-7 flex flex-col ${index < 3 ? "lg:col-span-2" : "lg:col-span-3"} ${index === 4 ? "sm:col-span-2 lg:col-span-3" : ""}`}>
-                            <p className="label-mono text-gray-mid mb-4">{service.eyebrow}</p>
+                            <p className="label-mono text-ink mb-4">{service.eyebrow}</p>
                             <h3 className="text-2xl tracking-tight text-ink mb-3">{service.title}</h3>
-                            <p className="text-gray leading-relaxed mb-6">{service.description}</p>
+                            <p className="text-ink leading-relaxed mb-6">{service.description}</p>
                             <div className="relative mt-auto aspect-[16/9] sm:aspect-[4/3] rounded-xl overflow-hidden bg-white">
                                 <SceneArt />
                             </div>

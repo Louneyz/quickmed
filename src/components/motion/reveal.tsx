@@ -44,13 +44,13 @@ export function WordReveal({
     return (
         <Tag ref={ref} data-in={inView} className={className}>
             {parts.map((part, p) => (
-                <span key={p} className={part.className}>
+                <span key={p} className={cn("block text-balance", part.className)}>
                     {part.text.split(" ").map((word, w, words) => {
                         const i = index++;
                         return (
                             <span key={w}>
                                 <span className="word" style={{ "--i": i } as CSSProperties}>{word}</span>
-                                {w < words.length - 1 || p < parts.length - 1 ? " " : null}
+                                {w < words.length - 1 ? " " : null}
                             </span>
                         );
                     })}

@@ -82,19 +82,19 @@ export function StatBand() {
                             className="title-lg max-w-3xl mb-14"
                             parts={[
                                 { text: "A prescription can't help" },
-                                { text: "if it never leaves the shelf.", className: "text-white/40" },
+                                { text: "if it never leaves the shelf.", className: "text-brand" },
                             ]}
                         />
 
-                        <dl ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-white/15">
+                        <dl ref={ref} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 border-t border-white/15">
                             {stats.map((stat, index) => (
-                                <div key={stat.source + index} className="pt-8 pb-2 lg:pr-6 sm:even:pl-6 lg:even:pl-0 lg:[&:not(:first-child)]:pl-6 lg:[&:not(:last-child)]:border-r border-white/15">
+                                <div key={stat.source + index} className="pt-8 pb-2 xl:pr-6 sm:even:pl-6 xl:even:pl-0 xl:[&:not(:first-child)]:pl-6 xl:[&:not(:last-child)]:border-r border-white/15">
                                     <dt className="title-lg text-accent mb-4 tabular-nums">
                                         {stat.prefix}
                                         {(stat.to * progress).toFixed(stat.decimals)}
                                         {stat.suffix}
                                     </dt>
-                                    <dd className="text-white/80 leading-snug mb-4">
+                                    <dd className="text-white leading-snug mb-4 text-balance">
                                         {stat.label}
                                     </dd>
                                 </div>
@@ -103,11 +103,11 @@ export function StatBand() {
 
                         {/* One small link; the full source list opens on demand. */}
                         <details className="group mt-10">
-                            <summary className="label-mono inline-flex cursor-pointer list-none items-center gap-2 text-white/50 hover:text-white [&::-webkit-details-marker]:hidden">
+                            <summary className="label-mono inline-flex cursor-pointer list-none items-center gap-2 text-white hover:text-white [&::-webkit-details-marker]:hidden">
                                 Sources
                                 <span className="transition-transform group-open:rotate-45" aria-hidden="true">+</span>
                             </summary>
-                            <ol className="mt-4 space-y-1 text-xs text-white/50">
+                            <ol className="mt-4 space-y-1 text-xs text-white">
                                 {stats.map((stat) => (
                                     <li key={stat.source}>
                                         <a href={stat.href} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white">
