@@ -135,43 +135,177 @@ function RideRoute({
     );
 }
 
-// 1. Navy hero; the route runs the full width and the dot drives it as you scroll.
+// A small pharmacy storefront: sign with a cross, striped awning, windows and a door.
+function PharmacyFront({ className }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 96 96" className={className} aria-hidden="true">
+            <rect x="30" y="2" width="36" height="20" rx="5" fill="white" />
+            <path d="M45 6h6v5h5v6h-5v5h-6v-5h-5v-6h5z" transform="translate(0 -1.5) scale(1 0.9)" fill="var(--ink)" />
+            <rect x="14" y="38" width="68" height="52" rx="4" fill="var(--brand)" />
+            <path d="M10 26h76v10a6 6 0 0 1-12 0a6 6 0 0 1-13 0a6 6 0 0 1-13 0a6 6 0 0 1-13 0a6 6 0 0 1-13 0a6 6 0 0 1-12 0z" fill="white" />
+            <path d="M22.7 26h12.7v10a6 6 0 0 1-12.7 0zM48.1 26h12.7v10a6 6 0 0 1-12.7 0zM73.5 26h12.5v10a6 6 0 0 1-12.5 0z" fill="var(--brand-deep)" />
+            <rect x="20" y="50" width="16" height="16" rx="2" fill="white" opacity="0.9" />
+            <rect x="60" y="50" width="16" height="16" rx="2" fill="white" opacity="0.9" />
+            <rect x="40" y="56" width="16" height="34" rx="2" fill="var(--ink)" />
+            <circle cx="52" cy="74" r="1.6" fill="var(--brand)" />
+            <rect x="6" y="88" width="84" height="4" rx="2" fill="white" opacity="0.35" />
+        </svg>
+    );
+}
+
+// The patient's home, drawn large, with a soft glow and a sealed bag waiting at the step.
+function HomeFront({ className }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 160 150" className={className} overflow="visible" aria-hidden="true">
+            <circle cx="80" cy="82" r="58" fill="var(--brand)" opacity="0.1" className="pin-pulse" />
+            <path d="M22 72 L80 20 L138 72" fill="none" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M36 62 V128 H124 V62" fill="none" stroke="white" strokeWidth="7" strokeLinejoin="round" />
+            <rect x="68" y="88" width="24" height="40" rx="3" fill="var(--brand)" />
+            <circle cx="86" cy="109" r="2" fill="var(--ink)" />
+            <rect x="46" y="78" width="14" height="14" rx="2" fill="white" opacity="0.85" />
+            <rect x="100" y="78" width="14" height="14" rx="2" fill="white" opacity="0.85" />
+            <path d="M98 122 h14 l-1.5 -11 h-11z" fill="white" />
+            <path d="M101 111 a4 4 0 0 1 8 0" fill="none" stroke="white" strokeWidth="1.6" />
+            <rect x="26" y="128" width="108" height="5" rx="2.5" fill="white" opacity="0.35" />
+        </svg>
+    );
+}
+
+// Draws the route between two elements in page pixels, so it follows the layout at every screen size,
+// and moves the courier dot along it as the hero scrolls away.
+function ConnectedRoute({
+    sectionRef,
+    fromRef,
+    toRef,
+}: {
+    sectionRef: React.RefObject<HTMLElement | null>;
+    fromRef: React.RefObject<HTMLElement | null>;
+    toRef: React.RefObject<HTMLElement | null>;
+}) {
+    const svgRef = useRef<SVGSVGElement>(null);
+    const pathRef = useRef<SVGPathElement>(null);
+    const trackRef = useRef<SVGPathElement>(null);
+    const dotRef = useRef<SVGGElement>(null);
+    const reduced = useReducedMotion();
+
+    useEffect(() => {
+        const section = sectionRef.current;
+        const from = fromRef.current;
+        const to = toRef.current;
+        const svg = svgRef.current;
+        const path = pathRef.current;
+        const track = trackRef.current;
+        const dot = dotRef.current;
+        if (!section || !from || !to || !svg || !path || !track || !dot) return;
+
+        let length = 0;
+        const layout = () => {
+            const box = section.getBoundingClientRect();
+            const a = from.getBoundingClientRect();
+            const b = to.getBoundingClientRect();
+            svg.setAttribute("viewBox", `0 0 ${box.width} ${box.height}`);
+            const x0 = a.right - box.left + 6;
+            const y0 = a.top + a.height * 0.62 - box.top;
+            // End at the home's front step and leave and arrive level, so the route reads as one long S
+            // whether the home sits up and to the right (laptops) or below (phones).
+            const x1 = b.left + b.width * 0.24 - box.left;
+            const y1 = b.top + b.height * 0.84 - box.top;
+            const dx = x1 - x0;
+            const d = `M${x0} ${y0} C ${x0 + dx * 0.6} ${y0}, ${x1 - dx * 0.6} ${y1}, ${x1} ${y1}`;
+            path.setAttribute("d", d);
+            track.setAttribute("d", d);
+            length = path.getTotalLength();
+        };
+        const place = () => {
+            let progress = 1;
+            if (!reduced) {
+                const rect = section.getBoundingClientRect();
+                progress = Math.min(1, Math.max(0, 0.06 + (-rect.top / (rect.height * 0.6)) * 0.94));
+            }
+            const point = path.getPointAtLength(length * progress);
+            dot.setAttribute("transform", `translate(${point.x} ${point.y})`);
+        };
+
+        let frame = 0;
+        const onScroll = () => {
+            if (!frame)
+                frame = requestAnimationFrame(() => {
+                    frame = 0;
+                    place();
+                });
+        };
+        const onResize = () => {
+            layout();
+            place();
+        };
+        onResize();
+        const observer = new ResizeObserver(onResize);
+        observer.observe(section);
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => {
+            observer.disconnect();
+            window.removeEventListener("scroll", onScroll);
+            if (frame) cancelAnimationFrame(frame);
+        };
+    }, [reduced, sectionRef, fromRef, toRef]);
+
+    return (
+        <svg ref={svgRef} className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
+            <path ref={trackRef} fill="none" stroke="rgb(255 255 255 / 0.2)" strokeWidth="3" strokeDasharray="2 9" strokeLinecap="round" />
+            <path ref={pathRef} pathLength={1} fill="none" stroke="var(--brand)" strokeWidth="5" strokeLinecap="round" className="route-draw" />
+            <g ref={dotRef}>
+                <circle r="11" fill="white" stroke="var(--brand)" strokeWidth="5" />
+            </g>
+        </svg>
+    );
+}
+
+// 1. Navy hero. A little pharmacy under the buttons, the patient's home large in the right column,
+// and the route between them that the courier drives as you scroll.
 export function HeroNavy() {
     const ref = useRef<HTMLElement>(null);
+    const pharmacyRef = useRef<HTMLDivElement>(null);
+    const homeRef = useRef<HTMLDivElement>(null);
     return (
         <section ref={ref} id="option-1" className="relative overflow-hidden bg-ink text-white">
             <div className="absolute inset-0 grid-pattern" aria-hidden="true" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgb(65_191_249/0.28),transparent_60%)]" aria-hidden="true" />
-            <div className="relative mx-auto max-w-6xl px-5 md:px-8 pt-32 md:pt-44 pb-12 md:pb-16">
-                <WordReveal
-                    as="h1"
-                    className="title-lg mb-8 max-w-4xl"
-                    parts={[{ text: "Your patients, cared for" }, { text: "all the way home.", className: "text-brand" }]}
-                />
-                <p className="text-lg md:text-xl leading-snug text-white max-w-xl mb-10">{BODY}</p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                    <CtaLink href="/partners" variant="accent" className="[--cta-hover:#ffffff] hover:text-ink">
-                        Become a partner
-                    </CtaLink>
-                    <CtaLink href="/drivers" variant="outline-light">
-                        Drive with QuickMed
-                    </CtaLink>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgb(65_191_249/0.25),transparent_55%)]" aria-hidden="true" />
+            <ConnectedRoute sectionRef={ref} fromRef={pharmacyRef} toRef={homeRef} />
+            <div className="relative mx-auto max-w-6xl px-5 md:px-8 pt-32 md:pt-44 pb-14 md:pb-20">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
+                    <div className="lg:col-span-8">
+                        <WordReveal
+                            as="h1"
+                            className="title-lg mb-8"
+                            parts={[{ text: "Your patients." }, { text: "Your care." }, { text: "Delivered.", className: "text-brand" }]}
+                        />
+                        <p className="text-lg md:text-xl leading-snug text-white max-w-xl mb-10">{BODY}</p>
+                        <div className="flex flex-col sm:flex-row gap-3">
+                            <CtaLink href="/partners" variant="accent" className="[--cta-hover:#ffffff] hover:text-ink">
+                                Become a partner
+                            </CtaLink>
+                            <CtaLink href="/drivers" variant="outline-light">
+                                Drive with QuickMed
+                            </CtaLink>
+                        </div>
+                        <div className="mt-12 md:mt-16 inline-flex flex-col items-center gap-2">
+                            <div ref={pharmacyRef}>
+                                <PharmacyFront className="h-20 w-20 md:h-28 md:w-28" />
+                            </div>
+                            <span className="label-mono text-white">Your counter</span>
+                        </div>
+                    </div>
+                    <div className="lg:col-span-4 flex justify-end lg:justify-center lg:items-start lg:pt-36">
+                        <div className="flex flex-col items-center gap-3">
+                            <div ref={homeRef}>
+                                <HomeFront className="h-36 w-40 md:h-48 md:w-52 lg:h-60 lg:w-64" />
+                            </div>
+                            <span className="label-mono text-white" style={{ fontSize: "clamp(0.95rem, 1.3vw, 1.2rem)" }}>
+                                Their door
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <RideRoute
-                    sectionRef={ref}
-                    width={1100}
-                    height={170}
-                    track="rgb(255 255 255 / 0.2)"
-                    line="var(--brand)"
-                    pharmacyTone="brand"
-                    homeStroke="white"
-                    homeDoor="var(--brand)"
-                    dotFill="white"
-                    dotStroke="var(--brand)"
-                    labels
-                    labelClass="text-white"
-                    className="mt-14 md:mt-16 md:-mx-4"
-                />
             </div>
         </section>
     );
