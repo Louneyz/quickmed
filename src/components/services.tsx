@@ -29,7 +29,7 @@ const services = [
     {
         eyebrow: "05 Guarantee",
         title: "Customer first",
-        description: "Your customer-first delivery partner in Ontario, with your pharmacy's needs at the centre of everything.",
+        description: "Your delivery partner in Ontario, with your pharmacy's needs at the centre of everything.",
         scene: SupportScene,
     },
 ];
