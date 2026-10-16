@@ -69,7 +69,12 @@ export function PortalShell({
             <main className="mx-auto max-w-6xl px-4 md:px-8 py-8 md:py-12">{children}</main>
             <footer className="mx-auto max-w-6xl px-4 md:px-8 pb-10 text-xs text-gray-mid flex flex-wrap gap-x-6 gap-y-2">
                 <span>Questions? Call <a href="tel:+14168349123" className="text-ink underline">(416) 834-9123</a></span>
-                <span>Patient information is stored in Canada and only visible to your pharmacy and QuickMed.</span>
+                <span>
+                    {profile.role === "staff"
+                        ? "Patient information is stored in Canada. Each pharmacy only sees its own deliveries."
+                        : "Patient information is stored in Canada and only visible to your pharmacy and QuickMed."}
+                </span>
+                <Link href="/privacy" className="hover:text-ink underline">Privacy policy</Link>
             </footer>
         </div>
     );

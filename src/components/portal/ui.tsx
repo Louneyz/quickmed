@@ -68,7 +68,7 @@ export function Textarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement
 }
 
 export function Select(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
-    return <select {...props} className={cn(inputClass, "appearance-none pr-10", props.className)} />;
+    return <select {...props} className={cn(inputClass, "pr-3", props.className)} />;
 }
 
 export function Card({ className, children }: { className?: string; children: React.ReactNode }) {

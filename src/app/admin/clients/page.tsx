@@ -104,7 +104,7 @@ export default function ClientsPage() {
                                 key={c.key}
                                 type="button"
                                 onClick={() => setSort((s) => ({ key: c.key, desc: s.key === c.key ? !s.desc : c.key !== "name" }))}
-                                className={cn("label-mono text-gray-mid hover:text-ink", c.className)}
+                                className={cn("label-mono text-left text-gray-mid hover:text-ink", c.className)}
                                 aria-sort={sort.key === c.key ? (sort.desc ? "descending" : "ascending") : undefined}
                             >
                                 {c.label}

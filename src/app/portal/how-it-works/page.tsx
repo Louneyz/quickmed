@@ -27,7 +27,7 @@ export default function HowItWorksPage() {
             <ol className="grid gap-4 md:grid-cols-3">
                 {steps.map((step, i) => (
                     <li key={step.title} className="rounded-lg bg-white border border-hairline p-6 md:p-8 flex flex-col">
-                        <span className="label-mono text-accent">Step {String(i + 1).padStart(2, "0")}</span>
+                        <span className="label-mono text-gray-mid">Step {String(i + 1).padStart(2, "0")}</span>
                         <h2 className="mt-6 text-2xl tracking-tight text-ink">{step.title}</h2>
                         <p className="mt-3 text-gray leading-relaxed">{step.body}</p>
                     </li>
