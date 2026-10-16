@@ -1,6 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Become a partner / driver are pop-ups now; old links open them on the homepage.
+  async redirects() {
+    return [
+      { source: "/partners", destination: "/#become-a-partner", permanent: false },
+      { source: "/drivers", destination: "/#become-a-driver", permanent: false },
+    ];
+  },
   async headers() {
     const base = [
       { key: "X-Content-Type-Options", value: "nosniff" },

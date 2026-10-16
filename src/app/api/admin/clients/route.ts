@@ -114,9 +114,21 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "Couldn't link the login to the pharmacy." }, { status: 500 });
     }
 
+    // Approving a pending (or previously denied) partner makes them an active client.
+    let approved = false;
+    if (!createdPharmacy) {
+        const { data: activated } = await admin
+            .from("pharmacies")
+            .update({ status: "active" })
+            .eq("id", pharmacyId)
+            .in("status", ["pending", "denied"])
+            .select("id");
+        approved = Boolean(activated?.length);
+    }
+
     await admin.from("audit_log").insert({
         actor: caller.user.id,
-        action: createdPharmacy ? "onboard" : "add_login",
+        action: createdPharmacy ? "onboard" : approved ? "approve" : "add_login",
         table_name: "pharmacies",
         row_id: pharmacyId,
         details: { email },

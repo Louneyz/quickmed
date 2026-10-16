@@ -34,11 +34,11 @@ const db = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_
     auth: { persistSession: false, autoRefreshToken: false },
 });
 
-const { error: schemaError } = await db.from("pharmacies").select("id, is_demo").limit(1);
+const { error: schemaError } = await db.from("pharmacies").select("id, is_demo, source").limit(1);
 if (schemaError) {
     fail(
-        "The portal tables aren't in this Supabase project yet. Open SQL Editor, paste " +
-            "supabase/migrations/0001_portal.sql, run it, then run this again.\n  " +
+        "The portal tables aren't (all) in this Supabase project yet. In SQL Editor, run " +
+            "supabase/migrations/0001_portal.sql and then 0002_signups.sql, then run this again.\n  " +
             `(${schemaError.message})`,
     );
 }
