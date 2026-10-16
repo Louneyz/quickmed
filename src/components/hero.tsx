@@ -93,12 +93,12 @@ export function Hero() {
                             as="h1"
                             className="title-lg mb-8"
                             parts={[
-                                { text: "You fill it." },
-                                { text: "We deliver it.", className: "text-white" },
+                                { text: "Your patients, cared for" },
+                                { text: "all the way home.", className: "text-white" },
                             ]}
                         />
                         <p className="text-lg md:text-xl leading-snug text-ink max-w-xl mb-10">
-                            QuickMed is the prescription delivery partner for Ontario pharmacies. When an order is ready, book a pickup in our portal. One of our trained drivers collects it from your counter and brings it to your patient&apos;s door, sealed and handled with care. Your patients get their medication without leaving home, and you never have to hire a driver.
+                            They get their medication at home, and you get back to patient care. Book a pickup online and a trained driver takes it from your counter to their door.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3">
                             <CtaLink href="/partners" variant="ink">
