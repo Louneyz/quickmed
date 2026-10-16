@@ -169,28 +169,56 @@ export function SupportScene() {
 }
 
 // Last stop: a wide route that ends at the patient's door, drawn for the dark panel.
-// Closing panel: a straight route from the pharmacy to the patient's door, drawn under the buttons.
+// A gentle up-and-down route from x0 to x1 along y, as smooth quadratic waves.
+function waveRoute(x0: number, x1: number, y: number, waves: number, amp: number) {
+    const half = (x1 - x0) / (waves * 2);
+    return `M${x0} ${y} q ${half / 2} ${-amp * 2} ${half} 0` + ` t ${half} 0`.repeat(waves * 2 - 1);
+}
+
+function DoorstepRoute({ width, waves, id, className }: { width: number; waves: number; id: string; className?: string }) {
+    const motion = !useReducedMotion();
+    const route = waveRoute(64, width - 64, 50, waves, 16);
+    return (
+        <svg viewBox={`0 0 ${width} 100`} className={cn("h-auto w-full", className)} aria-hidden="true">
+            <path d={route} fill="none" stroke="rgb(255 255 255 / 0.2)" strokeWidth="3" strokeDasharray="2 8" strokeLinecap="round" />
+            <path id={id} d={route} pathLength={1} fill="none" stroke="var(--brand)" strokeWidth="4" strokeLinecap="round" className="s-draw" />
+
+            <g transform="translate(32 50)">
+                <rect x="-22" y="-22" width="44" height="44" rx="11" fill="var(--brand)" />
+                <path d="M-3.5 -11h7v7.5h7.5v7h-7.5v7.5h-7v-7.5h-7.5v-7h7.5z" fill="var(--ink)" />
+            </g>
+
+            <g transform={`translate(${width - 32} 50)`}>
+                <circle r="26" fill="var(--brand)" opacity="0.18" className="pin-pulse" />
+                <path d="M-18 3 L0 -15 L18 3" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M-13 0 V18 H13 V0" fill="none" stroke="white" strokeWidth="3" strokeLinejoin="round" />
+                <rect x="-4" y="7" width="8" height="11" rx="2" fill="var(--brand)" />
+            </g>
+
+            <g>
+                <circle r="9" fill="white" stroke="var(--brand)" strokeWidth="4" />
+                {/* Separate elements so SMIL starts fresh when motion turns on after hydration. */}
+                {motion ? (
+                    <animateMotion key="drive" dur="6s" repeatCount="indefinite">
+                        <mpath href={`#${id}`} />
+                    </animateMotion>
+                ) : (
+                    <animateMotion key="still" dur="0.01s" fill="freeze" keyPoints="1;1" keyTimes="0;1" calcMode="linear">
+                        <mpath href={`#${id}`} />
+                    </animateMotion>
+                )}
+            </g>
+        </svg>
+    );
+}
+
+// Closing panel: a winding route from the pharmacy to the patient's door, drawn under the buttons.
+// Phones get a shorter route with fewer bends so the icons stay a readable size.
 export function DoorstepLine() {
     return (
-        <Scene label="Delivery route from the pharmacy to the patient's front door" className="flex items-center gap-3 md:gap-4">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-brand" aria-hidden="true">
-                <svg viewBox="-12 -12 24 24" className="h-5 w-5"><path d="M-3 -10h6v7h7v6h-7v7h-6v-7h-7v-6h7z" fill="var(--ink)" /></svg>
-            </span>
-            <span className="relative h-2.5 flex-1" aria-hidden="true">
-                <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 border-t-2 border-dashed border-white/25" />
-                <span className="s-line absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-brand" />
-                <span className="s-drive absolute inset-0">
-                    <span className="absolute left-0 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-brand bg-white" />
-                </span>
-            </span>
-            <span className="relative flex h-10 w-10 shrink-0 items-center justify-center" aria-hidden="true">
-                <span className="pin-pulse absolute inset-0 rounded-full bg-brand/20" />
-                <svg viewBox="-24 -22 48 48" className="relative h-8 w-8">
-                    <path d="M-22 4 L0 -18 L22 4" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M-16 0 V22 H16 V0" fill="none" stroke="white" strokeWidth="3" strokeLinejoin="round" />
-                    <rect x="-5" y="8" width="10" height="14" rx="2" fill="var(--brand)" />
-                </svg>
-            </span>
+        <Scene label="Delivery route from the pharmacy to the patient's front door">
+            <DoorstepRoute width={420} waves={2} id="door-route-sm" className="md:hidden" />
+            <DoorstepRoute width={1100} waves={4} id="door-route-lg" className="hidden md:block" />
         </Scene>
     );
 }

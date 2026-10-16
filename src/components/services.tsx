@@ -23,13 +23,13 @@ const services = [
     {
         eyebrow: "04 Secure",
         title: "Patient privacy, protected",
-        description: "We handle patient information under Ontario's PHIPA and Canada's PIPEDA. Requests only go through a login-protected portal.",
+        description: "Patient information is handled under Ontario's PHIPA and Canada's PIPEDA, and stored in Canada.",
         scene: PrivacyScene,
     },
     {
         eyebrow: "05 Customer first",
         title: "Here for you",
-        description: "Your customer-first delivery partner in Ontario. We put your pharmacy's needs at the centre of everything, with reliable deliveries and friendly service from a real person at (416)\u00a0834-9123.",
+        description: "Your customer-first delivery partner in Ontario, with your pharmacy's needs at the centre of everything.",
         scene: SupportScene,
     },
 ];

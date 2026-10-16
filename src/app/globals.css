@@ -277,31 +277,7 @@ body {
   transform-origin: center;
 }
 
-.scene .s-line {
-  transform-origin: left center;
-}
-
-.scene .s-drive {
-  transform: translateX(100%);
-}
-
 @media (prefers-reduced-motion: no-preference) {
-  .scene[data-in="false"] .s-line {
-    transform: scaleX(0);
-  }
-
-  .scene[data-in="true"] .s-line {
-    animation: s-line 2s var(--ease-expo) both;
-  }
-
-  .scene[data-in="false"] .s-drive {
-    opacity: 0;
-  }
-
-  .scene[data-in="true"] .s-drive {
-    animation: s-drive 6s ease-in-out 1.6s infinite both;
-  }
-
   .scene[data-in="false"] .s-draw {
     stroke-dashoffset: 1;
   }
@@ -406,31 +382,3 @@ a[href^="tel:"] {
   white-space: nowrap;
 }
 
-@keyframes s-line {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-/* The courier dot drives the line, waits at the door, then starts the next run. */
-@keyframes s-drive {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  70% {
-    transform: translateX(100%);
-    opacity: 1;
-  }
-  90% {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 0;
-  }
-}
