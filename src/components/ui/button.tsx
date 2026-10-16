@@ -1,5 +1,4 @@
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -36,20 +35,24 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant = "default", size = "default", asChild = false, ...props }, ref) => {
-        const Comp = asChild ? Slot : "button"
-        // Note: Slot requires @radix-ui/react-slot, if not installed we just use button. 
-        // Since I didn't install radix, I'll simplify to just button for now or install it.
-        // For simplicity I will just use button and remove asChild logic if not needed, or install radix-slot. 
-        // To match user expectation of "perfect replication" visually, I don't STRICTLY need radix. 
-        // I'll stick to a simpler button implementation without Slot for now to avoid extra installs unless requested.
+    ({ className, variant = "default", size = "default", asChild = false, children, ...props }, ref) => {
+        const classes = cn(buttonVariants(variant, size), className)
+
+        // asChild: style the single child element (e.g. a Link) instead of wrapping it in a <button>.
+        if (asChild && React.isValidElement<{ className?: string }>(children)) {
+            return React.cloneElement(children, {
+                className: cn(classes, children.props.className),
+            })
+        }
 
         return (
             <button
-                className={cn(buttonVariants(variant, size), className)}
+                className={classes}
                 ref={ref}
                 {...props}
-            />
+            >
+                {children}
+            </button>
         )
     }
 )

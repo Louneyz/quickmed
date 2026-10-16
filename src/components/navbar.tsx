@@ -1,44 +1,88 @@
+'use client';
+
 import Link from "next/link";
-import { Button, buttonVariants, cn } from "./ui/button";
-import { Menu } from "lucide-react";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { cn } from "./ui/button";
+import { CtaLink } from "./ui/cta-link";
 
-export function Navbar() {
+const links = [
+    { href: "/", label: "Home" },
+    { href: "/partners", label: "Become A Partner" },
+    { href: "/drivers", label: "Become A Driver" },
+];
+
+// Floating frosted-glass bar. `overlay` lets it sit over a dark hero (homepage);
+// other pages keep it in the flow on an ink background.
+export function Navbar({ overlay = false }: { overlay?: boolean }) {
+    const [open, setOpen] = useState(false);
+
     return (
-        <header className="sticky top-0 z-50 w-full bg-primary border-b-0 shadow-sm">
-            <div className="container mx-auto flex h-16 items-center justify-between px-4">
-                <Link href="/" className="flex items-center space-x-2">
-                    {/* Enhanced Logo Presentation */}
-                    {/* Enhanced Logo Presentation */}
-                    <div className="relative w-40 h-12">
-                        <img
-                            src="/images/quickmed_logo_transparent.png"
-                            alt="QuickMed Logo"
-                            className="w-full h-full object-contain object-left"
-                        />
-                    </div>
+        <header
+            className={cn(
+                "z-50 w-full px-4 md:px-8 pt-4 md:pt-6",
+                overlay ? "fixed top-0 left-0" : "sticky top-0 bg-ink pb-4 md:pb-6",
+            )}
+        >
+            <div className="mx-auto max-w-6xl flex h-16 items-center justify-between rounded-lg bg-black/30 backdrop-blur-[30px] pl-5 pr-2">
+                <Link href="/" className="flex items-center" aria-label="QuickMed home">
+                    <img
+                        src="/images/quickmed_logo_transparent.png"
+                        alt="QuickMed"
+                        className="h-7 w-auto"
+                    />
                 </Link>
-                <nav className="hidden md:flex items-center gap-2 text-sm font-medium text-white">
-                    <Link href="/" className="px-4 py-2 rounded-full transition-all hover:bg-white hover:text-primary">
-                        Home
-                    </Link>
-                    <Link href="/partners" className="px-4 py-2 rounded-full transition-all hover:bg-white hover:text-primary">
-                        Become A Partner
-                    </Link>
-                    <Link href="/drivers" className="px-4 py-2 rounded-full transition-all hover:bg-white hover:text-primary">
-                        Become A Driver
-                    </Link>
 
+                <nav className="hidden md:flex items-center gap-1 text-sm text-white/90">
+                    {links.map((link) => (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            className="px-3 py-2 rounded-md transition-colors hover:text-white hover:bg-white/10"
+                        >
+                            {link.label}
+                        </Link>
+                    ))}
                 </nav>
-                <div className="flex items-center gap-4">
-                    {/* Mobile Menu Trigger could go here */}
-                    <Link href="/login" className={cn(buttonVariants("default"), "hidden md:inline-flex bg-transparent border border-white text-white hover:bg-white hover:text-primary font-bold shadow-none")}>
+
+                <div className="hidden md:flex items-center gap-2">
+                    <CtaLink href="/partners" variant="accent" className="py-3.5 px-4">
+                        Partner with us
+                    </CtaLink>
+                    <CtaLink href="/login" variant="light" className="py-3.5 px-4">
                         Login
-                    </Link>
-                    <Button variant="ghost" size="icon" className="md:hidden text-white hover:bg-white/10 hover:text-white">
-                        <Menu className="h-6 w-6" />
-                    </Button>
+                    </CtaLink>
                 </div>
+
+                <button
+                    type="button"
+                    className="md:hidden h-12 w-12 flex items-center justify-center rounded-lg text-white hover:bg-white/10"
+                    aria-label={open ? "Close menu" : "Open menu"}
+                    aria-expanded={open}
+                    onClick={() => setOpen(!open)}
+                >
+                    {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                </button>
             </div>
+
+            {open && (
+                <div className="md:hidden mx-auto mt-2 max-w-6xl rounded-lg bg-black/60 backdrop-blur-[30px] p-5 flex flex-col gap-1">
+                    {links.map((link) => (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            onClick={() => setOpen(false)}
+                            className="py-3 text-lg text-white border-b border-white/15"
+                        >
+                            {link.label}
+                        </Link>
+                    ))}
+                    <div className="grid grid-cols-2 gap-2 pt-4">
+                        <CtaLink href="/partners" variant="accent">Partner with us</CtaLink>
+                        <CtaLink href="/login" variant="light">Login</CtaLink>
+                    </div>
+                </div>
+            )}
         </header>
     );
 }
