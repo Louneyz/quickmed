@@ -93,9 +93,8 @@ export function Hero() {
                             as="h1"
                             className="title-lg mb-8"
                             parts={[
-                                { text: "Your patients," },
-                                { text: "CARED FOR", className: "text-white text-[1.18em] leading-[0.95] tracking-tight" },
-                                { text: "all the way home." },
+                                { text: "Your patients, cared for" },
+                                { text: "all the way home.", className: "text-white" },
                             ]}
                         />
                         <p className="text-lg md:text-xl leading-snug text-ink max-w-xl mb-10">
