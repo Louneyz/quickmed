@@ -88,8 +88,9 @@ export function Process() {
                                 { text: "door to door.", className: "text-brand-deep" },
                             ]}
                         />
-                        <p className="mt-6 text-lg text-ink max-w-md">
-                            You keep running the pharmacy. We handle everything after the order is packed.
+                        <p className="mt-6 text-lg text-ink max-w-lg">
+                            <span className="block">You keep running the pharmacy.</span>
+                            <span className="block">We handle everything after the order is packed.</span>
                         </p>
 
                         {/* Live tracker card that follows the active step (desktop). */}

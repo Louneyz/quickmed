@@ -9,39 +9,39 @@ import { WordReveal } from "../motion/reveal";
 const stats = [
     {
         prefix: "1 in ",
-        to: 7,
+        to: 20,
         decimals: 0,
         suffix: "",
-        label: "prescriptions for a chronic condition is never filled.",
-        source: "Lemstra et al., Patient Preference and Adherence, 2018",
-        href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5944464",
+        label: "prescriptions a pharmacy fills is never picked up.",
+        source: "Li et al., Exploratory Research in Clinical and Social Pharmacy, 2024 (US, 91 community pharmacies)",
+        href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11345311",
+    },
+    {
+        prefix: "1 in ",
+        to: 3,
+        decimals: 0,
+        suffix: "",
+        label: "new prescriptions in a Canadian study were never filled at all.",
+        source: "Tamblyn et al., Annals of Internal Medicine, 2014 (Quebec primary care)",
+        href: "https://doi.org/10.7326/M13-1705",
     },
     {
         prefix: "",
-        to: 5.4,
-        decimals: 1,
-        suffix: "%",
-        label: "of hospital stays in Canada are estimated to come from patients not taking their medication.",
-        source: "Iskedjian et al., Value in Health, 2002, cited in Lemstra et al., 2018",
-        href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5944464",
-    },
-    {
-        prefix: "",
-        to: 59,
+        to: 85,
         decimals: 0,
         suffix: "%",
-        label: "more likely to stay on their medication when it's delivered to their home.",
-        source: "Iyengar et al., J Manag Care Spec Pharm, 2016 (US data)",
-        href: "https://amcp.org/node/35904",
+        label: "of new statin patients who got them delivered reached their cholesterol target, vs 74% who picked up in store.",
+        source: "Schmittdiel et al., Journal of General Internal Medicine, 2011 (Kaiser Permanente, US)",
+        href: "https://divisionofresearch.kaiserpermanente.org/study-finds-that-patients-using-statins-for-the-first-time-and-who-used-mail-order-pharmacies-are-more-likely-to-have-good-cholesterol-control/",
     },
     {
-        prefix: "",
-        to: 4.6,
-        decimals: 1,
-        suffix: "M",
-        label: "Ontarians will be 65 or older by 2051, up from 3.1 million today.",
-        source: "Ontario Ministry of Finance, Population Projections 2025–2051",
-        href: "https://www.ontario.ca/page/ontario-population-projections",
+        prefix: "1 in ",
+        to: 4,
+        decimals: 0,
+        suffix: "",
+        label: "Canadian seniors is on 10 or more medications.",
+        source: "Canadian Institute for Health Information, Changes in drug prescribing to seniors in Canada, 2022",
+        href: "https://www.cihi.ca/en/changes-in-drug-prescribing-to-seniors-in-canada",
     },
 ];
 
@@ -72,14 +72,14 @@ export function StatBand() {
     const progress = useCountUp(inView);
 
     return (
-        <section id="why" className="bg-white pb-20 md:pb-32 scroll-mt-24">
+        <section id="why" className="bg-white pb-16 md:pb-24 scroll-mt-24">
             <div className="mx-auto max-w-6xl px-5 md:px-8">
-                <div className="relative overflow-hidden rounded-[20px] bg-ink text-white px-6 py-14 md:px-12 md:py-20">
+                <div className="relative overflow-hidden rounded-[20px] bg-ink text-white px-6 py-10 md:px-12 md:py-14">
                     <div className="absolute inset-0 grid-pattern" aria-hidden="true" />
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgb(65_191_249/0.25),transparent_55%)]" aria-hidden="true" />
                     <div className="relative">
                         <WordReveal
-                            className="title-lg max-w-3xl mb-14"
+                            className="title-lg max-w-3xl mb-10"
                             parts={[
                                 { text: "A prescription can't help" },
                                 { text: "if it never leaves the shelf.", className: "text-brand" },
@@ -104,7 +104,7 @@ export function StatBand() {
                         {/* One small link; the full source list opens on demand. */}
                         <details className="group mt-10">
                             <summary className="label-mono inline-flex cursor-pointer list-none items-center gap-2 text-white hover:text-white [&::-webkit-details-marker]:hidden">
-                                Sources
+                                Sources · industry research, not QuickMed data
                                 <span className="transition-transform group-open:rotate-45" aria-hidden="true">+</span>
                             </summary>
                             <ol className="mt-4 space-y-1 text-xs text-white">

@@ -20,7 +20,7 @@ function Cross({ className }: { className: string }) {
 
 export function Partners() {
     return (
-        <section id="trusted" className="bg-white py-20 md:py-28 scroll-mt-24">
+        <section id="trusted" className="bg-white pt-20 md:pt-28 pb-12 md:pb-16 scroll-mt-24">
             <div className="mx-auto max-w-6xl px-5 md:px-8">
                 <WordReveal
                     className="title-lg text-ink text-center max-w-3xl mx-auto mb-14 md:mb-20"

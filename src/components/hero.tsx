@@ -94,7 +94,7 @@ export function Hero() {
                             className="title-lg mb-8"
                             parts={[
                                 { text: "You fill it." },
-                                { text: "We deliver it.", className: "text-ink block" },
+                                { text: "We deliver it.", className: "text-white" },
                             ]}
                         />
                         <p className="text-lg md:text-xl leading-snug text-ink max-w-xl mb-10">
@@ -104,7 +104,7 @@ export function Hero() {
                             <CtaLink href="/partners" variant="ink">
                                 Become a partner
                             </CtaLink>
-                            <CtaLink href="/drivers" variant="outline-ink" className="border-ink/40">
+                            <CtaLink href="/drivers" variant="light">
                                 Drive with QuickMed
                             </CtaLink>
                         </div>

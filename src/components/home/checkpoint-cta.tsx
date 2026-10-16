@@ -8,9 +8,14 @@ export function CheckpointCta() {
         <section className="bg-white pb-20 md:pb-28">
             <div className="mx-auto max-w-6xl px-5 md:px-8">
                 <Reveal className="rounded-[20px] bg-brand text-ink px-6 py-10 md:px-12 md:py-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
-                    <div>
-                        <p className="title-md max-w-xl">
-                            Offer delivery <span className="text-ink">without hiring a driver.</span>
+                    <div className="max-w-2xl">
+                        <p className="title-md">
+                            Don&apos;t lose the patients who can&apos;t make it in.
+                        </p>
+                        <p className="mt-4 text-lg leading-snug">
+                            When getting to the pharmacy gets hard, patients go looking for one that delivers. Keep them with
+                            you. Our trained drivers handle every order under PHIPA, from $5 a delivery, with no drivers for
+                            you to hire.
                         </p>
                     </div>
                     <div className="shrink-0 flex flex-col items-start md:items-end gap-3">
