@@ -12,7 +12,7 @@ export function AuthFrame({ children }: { children: React.ReactNode }) {
                 <div className="flex-1 flex items-center py-12">
                     <div className="w-full max-w-sm mx-auto lg:mx-0">{children}</div>
                 </div>
-                <p className="text-sm text-gray-mid">
+                <p className="text-sm text-ink">
                     Need help? Call <a href="tel:+14168349123" className="text-ink underline">(416) 834-9123</a>
                 </p>
             </div>
@@ -27,7 +27,7 @@ export function AuthFrame({ children }: { children: React.ReactNode }) {
                         backgroundSize: "64px 64px",
                     }}
                 />
-                <p className="relative label-mono text-ink/70">Pharmacy partner portal</p>
+                <p className="relative label-mono text-ink">Pharmacy partner portal</p>
                 <svg aria-hidden viewBox="0 0 400 220" className="relative w-full max-w-md self-end" fill="none">
                     <path d="M30 200 C 90 150, 110 120, 120 90 S 220 40, 290 70 S 360 60, 370 20" stroke="white" strokeWidth="3" strokeLinecap="round" />
                     <rect x="16" y="186" width="28" height="28" rx="6" fill="#0f172a" />
@@ -37,7 +37,7 @@ export function AuthFrame({ children }: { children: React.ReactNode }) {
                 </svg>
                 <div className="relative">
                     <p className="title-lg max-w-lg">From your counter to their door.</p>
-                    <p className="mt-6 max-w-md text-ink/80">
+                    <p className="mt-6 max-w-md text-ink">
                         Send deliveries, track every stop and see our rates in one secure place. Patient information stays in Canada.
                     </p>
                 </div>

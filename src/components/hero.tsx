@@ -64,11 +64,11 @@ function RouteMap() {
                 </g>
             </svg>
 
-            <span className="label-mono absolute left-5 bottom-5 text-gray-mid">Pharmacy</span>
-            <span className="label-mono absolute right-5 top-5 text-gray-mid">Patient</span>
+            <span className="label-mono absolute left-5 bottom-5 text-ink">Pharmacy</span>
+            <span className="label-mono absolute right-5 top-5 text-ink">Patient</span>
 
             <div className="absolute left-5 top-5 rounded-lg bg-ink text-white px-4 py-3 min-w-44">
-                <p className="label-mono text-white/50 mb-1">Status</p>
+                <p className="label-mono text-white mb-1">Status</p>
                 <p className="text-lg tracking-tight" aria-live="off">
                     <span className="inline-block h-2 w-2 rounded-full bg-brand mr-2 align-middle" />
                     {statuses[status]}
@@ -89,29 +89,25 @@ export function Hero() {
             <div className="relative mx-auto max-w-6xl px-5 md:px-8 pt-32 md:pt-44 pb-16 md:pb-24">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
                     <div className="lg:col-span-7">
-                        <p className="label-mono text-ink/70 mb-8">Pharmacy delivery partner · Ontario</p>
                         <WordReveal
                             as="h1"
                             className="title-lg mb-8"
                             parts={[
-                                { text: "From your counter" },
-                                { text: "to your patient's door.", className: "text-ink/55" },
+                                { text: "You fill it." },
+                                { text: "We deliver it.", className: "text-ink block" },
                             ]}
                         />
-                        <p className="text-lg md:text-xl leading-snug text-ink/80 max-w-xl mb-10">
-                            We bridge the gap between pharmacies and patients with secure, timely, and professional medication delivery services.
+                        <p className="text-lg md:text-xl leading-snug text-ink max-w-xl mb-10">
+                            QuickMed picks up prescriptions from your pharmacy and brings them to your patients&apos; homes. You offer delivery without hiring drivers or planning routes.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3">
                             <CtaLink href="/partners" variant="ink">
                                 Become a partner
                             </CtaLink>
                             <CtaLink href="/drivers" variant="outline-ink" className="border-ink/40">
-                                Apply as driver
+                                Drive with QuickMed
                             </CtaLink>
                         </div>
-                        <p className="mt-6 text-ink/80">
-                            Questions? Call <a href="tel:+14168349123" className="underline underline-offset-4 hover:text-ink">(416) 834-9123</a>
-                        </p>
                     </div>
 
                     <div className="lg:col-span-5 flex justify-center lg:justify-end">
@@ -119,12 +115,6 @@ export function Hero() {
                     </div>
                 </div>
 
-                <a href="#trusted" className="mt-16 md:mt-20 hidden md:flex items-center gap-4 text-ink/70 hover:text-ink">
-                    <span className="relative block h-10 w-px bg-ink/20 overflow-hidden">
-                        <span className="scroll-cue absolute inset-0 bg-ink" />
-                    </span>
-                    <span className="label-mono">Follow the route</span>
-                </a>
             </div>
 
             <div className="relative flex justify-center text-white" aria-hidden="true">

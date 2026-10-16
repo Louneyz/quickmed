@@ -46,18 +46,18 @@ export function Field({
 }) {
     return (
         <label className={cn("flex flex-col gap-2", className)}>
-            <span className="label-mono text-gray">
+            <span className="label-mono text-ink">
                 {label}
                 {required && <span className="text-accent"> *</span>}
             </span>
             {children}
-            {hint && <span className="text-xs text-gray-mid">{hint}</span>}
+            {hint && <span className="text-xs text-ink">{hint}</span>}
         </label>
     );
 }
 
 const inputClass =
-    "w-full rounded-lg border border-hairline bg-white px-4 py-3 text-ink placeholder:text-gray-mid/70 transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30";
+    "w-full rounded-lg border border-hairline bg-white px-4 py-3 text-ink placeholder:text-ink transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30";
 
 export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
     return <input {...props} className={cn(inputClass, props.className)} />;
@@ -89,7 +89,7 @@ export function PageHeader({
     return (
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-8">
             <div>
-                <p className="label-mono text-gray-mid">{eyebrow}</p>
+                <p className="label-mono text-ink">{eyebrow}</p>
                 <h1 className="title-md text-ink mt-3">{title}</h1>
             </div>
             {children}
@@ -100,7 +100,7 @@ export function PageHeader({
 const statusStyles: Record<DeliveryStatus, string> = {
     pending: "bg-brand-soft text-ink",
     completed: "bg-ink text-white",
-    cancelled: "bg-surface text-gray-mid line-through",
+    cancelled: "bg-surface text-ink line-through",
 };
 
 const statusLabels: Record<DeliveryStatus, string> = {
@@ -126,7 +126,7 @@ export function Notice({ tone = "info", children }: { tone?: "info" | "error" | 
                 "rounded-lg px-4 py-3 text-sm",
                 tone === "error" && "bg-red-50 text-red-800 border border-red-200",
                 tone === "success" && "bg-brand-soft text-ink border border-accent/40",
-                tone === "info" && "bg-surface text-gray border border-hairline",
+                tone === "info" && "bg-surface text-ink border border-hairline",
             )}
         >
             {children}
@@ -137,7 +137,7 @@ export function Notice({ tone = "info", children }: { tone?: "info" | "error" | 
 export function Stat({ label, value }: { label: string; value: React.ReactNode }) {
     return (
         <div className="rounded-lg bg-white border border-hairline p-5">
-            <p className="label-mono text-gray-mid">{label}</p>
+            <p className="label-mono text-ink">{label}</p>
             <p className="mt-3 text-3xl tracking-tight text-ink tabular-nums">{value}</p>
         </div>
     );

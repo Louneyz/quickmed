@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { X } from "lucide-react";
 
 // The forms only download when someone opens a pop-up, keeping every page light.
-const loading = () => <p className="label-mono text-gray-mid" role="status">Loading…</p>;
+const loading = () => <p className="label-mono text-ink" role="status">Loading…</p>;
 const PartnerForm = dynamic(() => import("./partner-form").then((m) => m.PartnerForm), { ssr: false, loading });
 const DriverForm = dynamic(() => import("./driver-form").then((m) => m.DriverForm), { ssr: false, loading });
 

@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "QuickMed - Fast And Reliable Pharmaceutical Delivery",
-  description: "QuickMed is a pharmaceutical delivery service that partners with pharmacies to deliver medications to patients.",
+  title: "QuickMed | Prescription delivery for Ontario pharmacies",
+  description: "QuickMed picks up prescriptions from your pharmacy and delivers them to your patients. Trained drivers, discreet packaging, and a real person on the phone.",
 };
 
 export default function RootLayout({

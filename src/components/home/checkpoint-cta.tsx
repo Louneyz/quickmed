@@ -9,16 +9,15 @@ export function CheckpointCta() {
             <div className="mx-auto max-w-6xl px-5 md:px-8">
                 <Reveal className="rounded-[20px] bg-brand text-ink px-6 py-10 md:px-12 md:py-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
                     <div>
-                        <p className="label-mono text-ink/70 mb-4">Next stop · Your pharmacy</p>
                         <p className="title-md max-w-xl">
-                            Add delivery for your patients <span className="text-ink/55">without hiring a driver.</span>
+                            Offer delivery <span className="text-ink">without hiring a driver.</span>
                         </p>
                     </div>
                     <div className="shrink-0 flex flex-col items-start md:items-end gap-3">
                         <CtaLink href="/partners" variant="ink">
                             Become a partner
                         </CtaLink>
-                        <a href="tel:+14168349123" className="label-mono text-ink/70 hover:text-ink">or call (416) 834-9123</a>
+                        <a href="tel:+14168349123" className="label-mono text-ink hover:text-ink">or call (416) 834-9123</a>
                     </div>
                 </Reveal>
             </div>

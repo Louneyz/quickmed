@@ -64,7 +64,7 @@ export default function SetPasswordPage() {
 
     return (
         <AuthFrame>
-            <p className="label-mono text-gray-mid">Account setup</p>
+            <p className="label-mono text-ink">Account setup</p>
             <h1 className="title-md text-ink mt-3 mb-8">Choose your password.</h1>
 
             {ready === null && <Notice>Checking your link…</Notice>}

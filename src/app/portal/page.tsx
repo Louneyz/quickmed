@@ -125,13 +125,13 @@ export default function RequestDeliveryPage() {
                 <Card key={stop.key} className="p-6 md:p-8">
                     <div className="flex items-center justify-between mb-6">
                         <p className="label-mono text-ink">
-                            <span className="text-gray-mid">Stop {String(index + 1).padStart(2, "0")}</span> · Patient
+                            <span className="text-ink">Stop {String(index + 1).padStart(2, "0")}</span> · Patient
                         </p>
                         {stops.length > 1 && (
                             <button
                                 type="button"
                                 onClick={() => setStops((all) => all.filter((s) => s.key !== stop.key))}
-                                className="label-mono inline-flex items-center gap-1.5 text-gray-mid hover:text-red-700"
+                                className="label-mono inline-flex items-center gap-1.5 text-ink hover:text-red-700"
                             >
                                 <Trash2 className="h-3.5 w-3.5" aria-hidden /> Remove
                             </button>
@@ -168,7 +168,7 @@ export default function RequestDeliveryPage() {
                     </div>
 
                     <fieldset className="mt-6">
-                        <legend className="label-mono text-gray mb-3">Special delivery (if applicable)</legend>
+                        <legend className="label-mono text-ink mb-3">Special delivery (if applicable)</legend>
                         <div className="flex flex-wrap gap-2">
                             {deliveryFlags.map((flag) => {
                                 const on = stop.flags.includes(flag.value);
@@ -204,7 +204,7 @@ export default function RequestDeliveryPage() {
             {error && <Notice tone="error">{error}</Notice>}
 
             <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm text-gray-mid max-w-md">
+                <p className="text-sm text-ink max-w-md">
                     Only your pharmacy and QuickMed can see these details. They&apos;re stored in Canada.
                 </p>
                 <Button type="submit" variant="accent" disabled={busy} className="sm:min-w-56">

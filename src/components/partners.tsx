@@ -22,12 +22,11 @@ export function Partners() {
     return (
         <section id="trusted" className="bg-white py-20 md:py-28 scroll-mt-24">
             <div className="mx-auto max-w-6xl px-5 md:px-8">
-                <p className="label-mono text-gray-mid text-center mb-6">Stop 01 · Trusted</p>
                 <WordReveal
                     className="title-lg text-ink text-center max-w-3xl mx-auto mb-14 md:mb-20"
                     parts={[
-                        { text: "Trusted by the pharmacies" },
-                        { text: "your patients know.", className: "text-gray-light" },
+                        { text: "Trusted by pharmacies" },
+                        { text: "your patients already know.", className: "text-brand-deep" },
                     ]}
                 />
 

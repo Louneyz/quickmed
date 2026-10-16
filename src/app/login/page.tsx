@@ -46,7 +46,7 @@ export default function LoginPage() {
 
     return (
         <AuthFrame>
-            <p className="label-mono text-gray-mid">{mode === "login" ? "Partner login" : "Reset password"}</p>
+            <p className="label-mono text-ink">{mode === "login" ? "Partner login" : "Reset password"}</p>
             <h1 className="title-md text-ink mt-3 mb-8">
                 {mode === "login" ? "Welcome back." : "Forgot your password?"}
             </h1>
@@ -91,7 +91,7 @@ export default function LoginPage() {
                                 />
                                 <button
                                     type="button"
-                                    className="absolute inset-y-0 right-0 flex items-center px-4 text-gray-mid hover:text-ink"
+                                    className="absolute inset-y-0 right-0 flex items-center px-4 text-ink hover:text-ink"
                                     onClick={() => setShowPassword(!showPassword)}
                                     aria-label={showPassword ? "Hide password" : "Show password"}
                                 >
@@ -110,7 +110,7 @@ export default function LoginPage() {
                     <div className="flex justify-between text-sm">
                         <button
                             type="button"
-                            className="text-gray hover:text-ink underline underline-offset-4"
+                            className="text-ink hover:text-ink underline underline-offset-4"
                             onClick={() => {
                                 setMode(mode === "login" ? "reset" : "login");
                                 setError(null);
@@ -122,7 +122,7 @@ export default function LoginPage() {
                 </form>
             )}
 
-            <p className="mt-10 text-sm text-gray">
+            <p className="mt-10 text-sm text-ink">
                 Not a partner yet?{" "}
                 <a href="/partners" className="text-ink underline underline-offset-4">Become a partner</a>
             </p>

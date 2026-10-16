@@ -109,7 +109,7 @@ export function PortalGate({ role, children }: { role: Role; children: React.Rea
     if (state === "no-profile") {
         return (
             <Centered>
-                <p className="label-mono text-gray-mid">Account not set up</p>
+                <p className="label-mono text-ink">Account not set up</p>
                 <p className="mt-3 text-ink">
                     Your login works but isn&apos;t linked to a pharmacy yet. Please call QuickMed at{" "}
                     <a className="underline" href="tel:+14168349123">(416) 834-9123</a>.
@@ -154,7 +154,7 @@ export function Centered({ children }: { children: React.ReactNode }) {
 function Loading() {
     return (
         <div className="min-h-screen bg-surface flex items-center justify-center" role="status">
-            <span className="label-mono text-gray-mid">Loading…</span>
+            <span className="label-mono text-ink">Loading…</span>
         </div>
     );
 }
@@ -162,7 +162,7 @@ function Loading() {
 export function NotConfigured() {
     return (
         <Centered>
-            <p className="label-mono text-gray-mid">Portal not connected</p>
+            <p className="label-mono text-ink">Portal not connected</p>
             <p className="mt-3 text-ink">
                 The database hasn&apos;t been connected yet. Set the Supabase environment variables described
                 in PORTAL.md and redeploy.

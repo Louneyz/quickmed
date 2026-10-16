@@ -12,7 +12,7 @@ const stats = [
         to: 7,
         decimals: 0,
         suffix: "",
-        label: "prescriptions for chronic conditions is never filled.",
+        label: "prescriptions for a chronic condition is never filled.",
         source: "Lemstra et al., Patient Preference and Adherence, 2018",
         href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5944464",
     },
@@ -21,7 +21,7 @@ const stats = [
         to: 5.4,
         decimals: 1,
         suffix: "%",
-        label: "of hospitalizations in Canada are estimated to be due to patients not taking their medication.",
+        label: "of hospital stays in Canada are estimated to come from patients not taking their medication.",
         source: "Iskedjian et al., Value in Health, 2002, cited in Lemstra et al., 2018",
         href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5944464",
     },
@@ -30,7 +30,7 @@ const stats = [
         to: 59,
         decimals: 0,
         suffix: "%",
-        label: "more likely to stay on their medication when patients use home delivery.",
+        label: "more likely to stay on their medication when it's delivered to their home.",
         source: "Iyengar et al., J Manag Care Spec Pharm, 2016 (US data)",
         href: "https://amcp.org/node/35904",
     },
@@ -39,7 +39,7 @@ const stats = [
         to: 4.6,
         decimals: 1,
         suffix: "M",
-        label: "Ontarians aged 65+ by 2051, up from 3.1 million today.",
+        label: "Ontarians will be 65 or older by 2051, up from 3.1 million today.",
         source: "Ontario Ministry of Finance, Population Projections 2025–2051",
         href: "https://www.ontario.ca/page/ontario-population-projections",
     },
@@ -78,41 +78,45 @@ export function StatBand() {
                     <div className="absolute inset-0 grid-pattern" aria-hidden="true" />
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgb(65_191_249/0.25),transparent_55%)]" aria-hidden="true" />
                     <div className="relative">
-                        <p className="label-mono text-white/60 mb-6">Stop 02 · Why delivery matters</p>
                         <WordReveal
                             className="title-lg max-w-3xl mb-14"
                             parts={[
-                                { text: "The prescription only works" },
-                                { text: "if it reaches the patient.", className: "text-white/40" },
+                                { text: "A prescription can't help" },
+                                { text: "if it never leaves the shelf.", className: "text-brand" },
                             ]}
                         />
 
-                        <dl ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-white/15">
+                        <dl ref={ref} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 border-t border-white/15">
                             {stats.map((stat, index) => (
-                                <div key={stat.source + index} className="pt-8 pb-2 lg:pr-6 sm:even:pl-6 lg:even:pl-0 lg:[&:not(:first-child)]:pl-6 lg:[&:not(:last-child)]:border-r border-white/15">
+                                <div key={stat.source + index} className="pt-8 pb-2 xl:pr-6 sm:even:pl-6 xl:even:pl-0 xl:[&:not(:first-child)]:pl-6 xl:[&:not(:last-child)]:border-r border-white/15">
                                     <dt className="title-lg text-accent mb-4 tabular-nums">
                                         {stat.prefix}
                                         {(stat.to * progress).toFixed(stat.decimals)}
                                         {stat.suffix}
                                     </dt>
-                                    <dd className="text-white/80 leading-snug mb-4">
+                                    <dd className="text-white leading-snug mb-4 text-balance">
                                         {stat.label}
-                                        <sup className="label-mono text-white/40 ml-1">{index + 1}</sup>
                                     </dd>
                                 </div>
                             ))}
                         </dl>
 
-                        <ol className="mt-10 pt-6 border-t border-white/10 space-y-1 text-xs text-white/40">
-                            {stats.map((stat, index) => (
-                                <li key={stat.source + index}>
-                                    {index + 1}.{" "}
-                                    <a href={stat.href} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white">
-                                        {stat.source}
-                                    </a>
-                                </li>
-                            ))}
-                        </ol>
+                        {/* One small link; the full source list opens on demand. */}
+                        <details className="group mt-10">
+                            <summary className="label-mono inline-flex cursor-pointer list-none items-center gap-2 text-white hover:text-white [&::-webkit-details-marker]:hidden">
+                                Sources
+                                <span className="transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                            </summary>
+                            <ol className="mt-4 space-y-1 text-xs text-white">
+                                {stats.map((stat) => (
+                                    <li key={stat.source}>
+                                        <a href={stat.href} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white">
+                                            {stat.source}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ol>
+                        </details>
                     </div>
                 </div>
             </div>

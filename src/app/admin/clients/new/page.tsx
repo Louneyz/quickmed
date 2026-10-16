@@ -43,7 +43,7 @@ export default function OnboardClientPage() {
     return (
         <form onSubmit={handleSubmit} className="max-w-3xl space-y-6">
             <PageHeader eyebrow="New client" title="Onboard a pharmacy" />
-            <p className="text-gray -mt-4">
+            <p className="text-ink -mt-4">
                 We&apos;ll email the contact an invite to set their password and log in to the pharmacy portal.
             </p>
 

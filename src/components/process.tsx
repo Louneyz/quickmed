@@ -7,26 +7,26 @@ import { WordReveal } from "./motion/reveal";
 
 const steps = [
     {
-        title: "Join QuickMed",
-        description: "Apply as a partner. We set up your pharmacy's account and email you secure login details.",
-        status: "Pharmacy onboarded",
+        title: "Sign up",
+        description: "Fill out the partner form. We set up your pharmacy's account and email you your login.",
+        status: "Account ready",
         icon: Building2,
     },
     {
-        title: "Submit a Request",
-        description: "Fill out a short form in our secure member area with the recipient's information and medication details.",
-        status: "Order received",
+        title: "Book a delivery",
+        description: "Log in and enter the patient's name, address and order details.",
+        status: "Request received",
         icon: Upload,
     },
     {
-        title: "Driver Pickup",
-        description: "Our team schedules a trained driver to collect the delivery from your pharmacy at the designated time.",
+        title: "We pick it up",
+        description: "We assign a driver, who collects the order from your counter at the time you set.",
         status: "On the road",
         icon: Car,
     },
     {
-        title: "Delivered",
-        description: "Our drivers know the local routes and bring the medication to your patient's door.",
+        title: "Your patient gets it",
+        description: "The driver brings it straight to your patient's door.",
         status: "Delivered",
         icon: House,
     },
@@ -81,23 +81,22 @@ export function Process() {
             <div className="mx-auto max-w-6xl px-5 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
                 <div className="lg:col-span-5">
                     <div className="lg:sticky lg:top-36">
-                        <p className="label-mono text-gray-mid mb-6">Stop 03 · How it works</p>
                         <WordReveal
                             className="title-lg text-ink"
                             parts={[
-                                { text: "Four steps" },
-                                { text: "from shelf to doorstep.", className: "text-gray-light" },
+                                { text: "Four steps," },
+                                { text: "door to door.", className: "text-brand-deep" },
                             ]}
                         />
-                        <p className="mt-6 text-lg text-gray max-w-md">
-                            A simple process that gets medication from your pharmacy to your patients quickly and securely.
+                        <p className="mt-6 text-lg text-ink max-w-md">
+                            You keep running the pharmacy. We handle everything after the order is packed.
                         </p>
 
                         {/* Live tracker card that follows the active step (desktop). */}
                         <div className="hidden lg:block mt-12 max-w-sm rounded-[20px] bg-white p-6" aria-hidden="true">
                             <div className="flex items-center justify-between mb-6">
-                                <p className="label-mono text-gray-mid">Delivery status</p>
-                                <p className="label-mono text-gray-light">
+                                <p className="label-mono text-ink">Delivery status</p>
+                                <p className="label-mono text-brand-deep">
                                     {String(active + 1).padStart(2, "0")} / {String(steps.length).padStart(2, "0")}
                                 </p>
                             </div>
@@ -140,19 +139,19 @@ export function Process() {
                                         data-stop
                                         className={cn(
                                             "relative z-10 h-12 w-12 rounded-lg flex items-center justify-center transition-colors duration-500",
-                                            reached ? "bg-brand text-ink" : "bg-white text-gray-light",
+                                            reached ? "bg-brand text-ink" : "bg-white text-brand-deep",
                                         )}
                                     >
                                         <Icon className="h-5 w-5" />
                                     </span>
                                     <div>
-                                        <p className={cn("label-mono mb-3 transition-colors duration-500", reached ? "text-gray-mid" : "text-gray-light")}>
+                                        <p className={cn("label-mono mb-3 transition-colors duration-500", reached ? "text-ink" : "text-brand-deep")}>
                                             {String(index + 1).padStart(2, "0")} · {step.status}
                                         </p>
-                                        <h3 className={cn("title-md mb-3 transition-colors duration-500", reached ? "text-ink" : "text-gray-light")}>
+                                        <h3 className={cn("title-md mb-3 transition-colors duration-500", reached ? "text-ink" : "text-brand-deep")}>
                                             {step.title}
                                         </h3>
-                                        <p className={cn("text-lg leading-snug max-w-md transition-colors duration-500", reached ? "text-gray" : "text-gray-mid/70")}>
+                                        <p className={cn("text-lg leading-snug max-w-md transition-colors duration-500", "text-ink")}>
                                             {step.description}
                                         </p>
                                     </div>
