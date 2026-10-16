@@ -157,7 +157,6 @@ function PharmacyFront({ className }: { className?: string }) {
 function HomeFront({ className }: { className?: string }) {
     return (
         <svg viewBox="0 0 160 150" className={className} overflow="visible" aria-hidden="true">
-            <circle cx="80" cy="82" r="58" fill="var(--brand)" opacity="0.1" className="pin-pulse" />
             <path d="M22 72 L80 20 L138 72" fill="none" stroke="white" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M36 62 V128 H124 V62" fill="none" stroke="white" strokeWidth="7" strokeLinejoin="round" />
             <rect x="68" y="88" width="24" height="40" rx="3" fill="var(--brand)" />
@@ -171,16 +170,63 @@ function HomeFront({ className }: { className?: string }) {
     );
 }
 
+// The QuickMed bird from the logo, used as the courier. A white outline layer sits under the colour
+// so it stands out on navy and blue.
+const BIRD_PATHS = [
+    { d: "M60.5 78C60 70 63 64 68.6 58.6C71 56 70.6 54 69.5 52L88 51.5L90.6 45.6L92.2 47C98 47.2 104 47.7 110.6 48.5C100 51 92.5 55.5 86 58.6C74 64 63.5 69 60.5 78Z", fill: "url(#qmLower)" },
+    { d: "M50.4 28.6C56 31 61 35 66 38C72 41.2 79 41.8 84 44.5C87 46.2 89.5 48.5 91.2 50.8L69.5 52.2C62 49.5 55 44.5 51.6 37.5C50.2 34.5 49.9 31.2 50.4 28.6Z", fill: "url(#qmUpper)" },
+    { d: "M106.8 22C99 22.4 91 27 87 32.5C84 36.6 82.6 40.6 83.5 43.1C84.4 45.1 86.5 46.1 88.6 45.8C91 44 92.5 41.5 93.8 38.5C96 33 99.5 27 106.8 22Z", fill: "url(#qmHeadL)" },
+];
+
+function BirdDefs() {
+    return (
+        <defs>
+            <linearGradient id="qmUpper" gradientUnits="userSpaceOnUse" x1="50" y1="29" x2="91" y2="51">
+                <stop offset="0" stopColor="#1499bd" />
+                <stop offset=".55" stopColor="#18eef8" />
+                <stop offset="1" stopColor="#12a6c4" />
+            </linearGradient>
+            <linearGradient id="qmLower" gradientUnits="userSpaceOnUse" x1="61" y1="74" x2="110" y2="48">
+                <stop offset="0" stopColor="#1f447a" />
+                <stop offset=".3" stopColor="#1a5a88" />
+                <stop offset=".6" stopColor="#079ab6" />
+                <stop offset="1" stopColor="#10dceb" />
+            </linearGradient>
+            <linearGradient id="qmHeadL" gradientUnits="userSpaceOnUse" x1="104" y1="22" x2="86" y2="46">
+                <stop offset="0" stopColor="#9fe3f2" />
+                <stop offset="1" stopColor="#4fb3d6" />
+            </linearGradient>
+        </defs>
+    );
+}
+
+// Centred on the route point; the bird's own artwork spans roughly x 50-111, y 22-78.
+function BirdCourier({ size = 58 }: { size?: number }) {
+    const scale = size / 62;
+    return (
+        <g transform={`scale(${scale}) translate(-80 -50)`}>
+            {BIRD_PATHS.map((p) => (
+                <path key={`o${p.fill}`} d={p.d} fill="white" stroke="white" strokeWidth={6} strokeLinejoin="round" />
+            ))}
+            {BIRD_PATHS.map((p) => (
+                <path key={p.fill} d={p.d} fill={p.fill} />
+            ))}
+        </g>
+    );
+}
+
 // Draws the route between two elements in page pixels, so it follows the layout at every screen size,
-// and moves the courier dot along it as the hero scrolls away.
+// and loops the courier dot from the pharmacy to the door.
 function ConnectedRoute({
     sectionRef,
     fromRef,
     toRef,
+    rise = false,
 }: {
+    rise?: boolean;
     sectionRef: React.RefObject<HTMLElement | null>;
     fromRef: React.RefObject<HTMLElement | null>;
-    toRef: React.RefObject<HTMLElement | null>;
+    toRef: React.RefObject<HTMLElement | null> | React.RefObject<HTMLElement | null>[];
 }) {
     const svgRef = useRef<SVGSVGElement>(null);
     const pathRef = useRef<SVGPathElement>(null);
@@ -191,77 +237,87 @@ function ConnectedRoute({
     useEffect(() => {
         const section = sectionRef.current;
         const from = fromRef.current;
-        const to = toRef.current;
+        const targets = (Array.isArray(toRef) ? toRef : [toRef]).map((r) => r.current).filter((el): el is HTMLElement => !!el);
         const svg = svgRef.current;
         const path = pathRef.current;
         const track = trackRef.current;
         const dot = dotRef.current;
-        if (!section || !from || !to || !svg || !path || !track || !dot) return;
+        if (!section || !from || !targets.length || !svg || !path || !track || !dot) return;
 
         let length = 0;
         const layout = () => {
             const box = section.getBoundingClientRect();
             const a = from.getBoundingClientRect();
+            const to = targets.find((el) => el.offsetParent !== null) ?? targets[0];
             const b = to.getBoundingClientRect();
             svg.setAttribute("viewBox", `0 0 ${box.width} ${box.height}`);
             const x0 = a.right - box.left + 6;
             const y0 = a.top + a.height * 0.62 - box.top;
-            // End at the home's front step and leave and arrive level, so the route reads as one long S
-            // whether the home sits up and to the right (laptops) or below (phones).
-            const x1 = b.left + b.width * 0.24 - box.left;
-            const y1 = b.top + b.height * 0.84 - box.top;
-            const dx = x1 - x0;
-            const d = `M${x0} ${y0} C ${x0 + dx * 0.6} ${y0}, ${x1 - dx * 0.6} ${y1}, ${x1} ${y1}`;
+            let d: string;
+            if (rise && b.bottom < a.top && b.left > a.right) {
+                // Home sits up beside the title (centred layout): run right past the text, climb, and come in to the step.
+                const r = 36;
+                const xr = b.right + 34 - box.left;
+                const x1 = b.left + b.width * 0.76 - box.left;
+                const y1 = b.top + b.height * 0.84 - box.top;
+                d = `M${x0} ${y0} H${xr - r} Q${xr} ${y0} ${xr} ${y0 - r} V${y1 + r} Q${xr} ${y1} ${xr - r} ${y1} H${x1}`;
+            } else {
+                // End at the home's front step and leave and arrive level, so the route reads as one long S
+                // whether the home sits up and to the right (laptops) or below (phones).
+                const x1 = b.left + b.width * 0.24 - box.left;
+                const y1 = b.top + b.height * 0.84 - box.top;
+                const dx = x1 - x0;
+                d = `M${x0} ${y0} C ${x0 + dx * 0.6} ${y0}, ${x1 - dx * 0.6} ${y1}, ${x1} ${y1}`;
+            }
             path.setAttribute("d", d);
             track.setAttribute("d", d);
             length = path.getTotalLength();
         };
-        const place = () => {
-            let progress = 1;
-            if (!reduced) {
-                const rect = section.getBoundingClientRect();
-                progress = Math.min(1, Math.max(0, 0.06 + (-rect.top / (rect.height * 0.6)) * 0.94));
-            }
+        const place = (progress: number) => {
             const point = path.getPointAtLength(length * progress);
             dot.setAttribute("transform", `translate(${point.x} ${point.y})`);
         };
 
+        // The trip loops on its own: drive for 4.5s, wait at the door for 1.5s, start again.
+        const DRIVE = 4500;
+        const WAIT = 1500;
         let frame = 0;
-        const onScroll = () => {
-            if (!frame)
-                frame = requestAnimationFrame(() => {
-                    frame = 0;
-                    place();
-                });
+        let start = 0;
+        const tick = (now: number) => {
+            if (!start) start = now;
+            const t = (now - start) % (DRIVE + WAIT);
+            const x = Math.min(1, t / DRIVE);
+            place(x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+            frame = requestAnimationFrame(tick);
         };
         const onResize = () => {
             layout();
-            place();
+            if (reduced) place(1);
         };
         onResize();
         const observer = new ResizeObserver(onResize);
         observer.observe(section);
-        window.addEventListener("scroll", onScroll, { passive: true });
+        if (!reduced) frame = requestAnimationFrame(tick);
         return () => {
             observer.disconnect();
-            window.removeEventListener("scroll", onScroll);
             if (frame) cancelAnimationFrame(frame);
         };
-    }, [reduced, sectionRef, fromRef, toRef]);
+    }, [reduced, rise, sectionRef, fromRef, toRef]);
 
     return (
         <svg ref={svgRef} className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
+            <BirdDefs />
             <path ref={trackRef} fill="none" stroke="rgb(255 255 255 / 0.2)" strokeWidth="3" strokeDasharray="2 9" strokeLinecap="round" />
             <path ref={pathRef} pathLength={1} fill="none" stroke="var(--brand)" strokeWidth="5" strokeLinecap="round" className="route-draw" />
             <g ref={dotRef}>
-                <circle r="11" fill="white" stroke="var(--brand)" strokeWidth="5" />
+                <BirdCourier />
             </g>
         </svg>
     );
 }
 
 // 1. Navy hero. A little pharmacy under the buttons, the patient's home large in the right column,
-// and the route between them that the courier drives as you scroll.
+// and the route between them that the courier drives on a loop.
 export function HeroNavy() {
     const ref = useRef<HTMLElement>(null);
     const pharmacyRef = useRef<HTMLDivElement>(null);
@@ -304,6 +360,59 @@ export function HeroNavy() {
                                 Their door
                             </span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+// 1b. Same idea, centred: the home sits beside the title, the pharmacy under the buttons.
+export function HeroNavyCentred() {
+    const ref = useRef<HTMLElement>(null);
+    const pharmacyRef = useRef<HTMLDivElement>(null);
+    const homeBesideRef = useRef<HTMLDivElement>(null);
+    const homeBelowRef = useRef<HTMLDivElement>(null);
+    return (
+        <section ref={ref} id="option-1b" className="relative overflow-hidden bg-ink text-white">
+            <div className="absolute inset-0 grid-pattern" aria-hidden="true" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgb(65_191_249/0.22),transparent_60%)]" aria-hidden="true" />
+            <ConnectedRoute sectionRef={ref} fromRef={pharmacyRef} toRef={[homeBesideRef, homeBelowRef]} rise />
+            <div className="relative mx-auto max-w-6xl px-5 md:px-8 pt-32 md:pt-44 pb-14 md:pb-20 text-center">
+                <div className="flex items-center justify-center gap-8 lg:gap-12">
+                    <WordReveal
+                        as="h1"
+                        className="title-lg text-left"
+                        parts={[{ text: "Your patients." }, { text: "Your care." }, { text: "Delivered.", className: "text-brand" }]}
+                    />
+                    <div className="hidden md:flex flex-col items-center gap-2">
+                        <div ref={homeBesideRef}>
+                            <HomeFront className="h-32 w-36 lg:h-40 lg:w-44" />
+                        </div>
+                        <span className="label-mono text-white">Their door</span>
+                    </div>
+                </div>
+                <p className="mt-8 text-lg md:text-xl leading-snug text-white max-w-xl mx-auto mb-10">{BODY}</p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <CtaLink href="/partners" variant="accent" className="[--cta-hover:#ffffff] hover:text-ink">
+                        Become a partner
+                    </CtaLink>
+                    <CtaLink href="/drivers" variant="outline-light">
+                        Drive with QuickMed
+                    </CtaLink>
+                </div>
+                <div className="mt-12 md:mt-14 flex items-end justify-between md:justify-center">
+                    <div className="flex flex-col items-center gap-2">
+                        <div ref={pharmacyRef}>
+                            <PharmacyFront className="h-20 w-20 md:h-24 md:w-24" />
+                        </div>
+                        <span className="label-mono text-white">Your counter</span>
+                    </div>
+                    <div className="flex md:hidden flex-col items-center gap-2">
+                        <div ref={homeBelowRef}>
+                            <HomeFront className="h-24 w-28" />
+                        </div>
+                        <span className="label-mono text-white">Their door</span>
                     </div>
                 </div>
             </div>
