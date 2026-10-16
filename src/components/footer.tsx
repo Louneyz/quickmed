@@ -44,8 +44,9 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="mt-16 pt-6 border-t border-white/10 text-sm text-white/40">
-                    © {new Date().getFullYear()} QuickMed. All rights reserved.
+                <div className="mt-16 pt-6 border-t border-white/10 text-sm text-white/40 flex flex-wrap justify-between gap-4">
+                    <span>© {new Date().getFullYear()} QuickMed. All rights reserved.</span>
+                    <Link href="/privacy" className="hover:text-white transition-colors">Privacy policy</Link>
                 </div>
             </div>
         </footer>

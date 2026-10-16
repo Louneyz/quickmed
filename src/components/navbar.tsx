@@ -33,7 +33,7 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
                     />
                 </Link>
 
-                <nav className="hidden md:flex items-center gap-1 text-sm text-ink/80">
+                <nav className="hidden lg:flex items-center gap-1 text-sm text-ink/80">
                     {links.map((link) => (
                         <Link
                             key={link.href}
@@ -45,7 +45,7 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
                     ))}
                 </nav>
 
-                <div className="hidden md:flex items-center gap-2">
+                <div className="hidden lg:flex items-center gap-2">
                     <CtaLink href="/partners" variant="ink" className="py-3.5 px-4">
                         Partner with us
                     </CtaLink>
@@ -56,7 +56,7 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
 
                 <button
                     type="button"
-                    className="md:hidden h-12 w-12 flex items-center justify-center rounded-lg text-ink hover:bg-ink/5"
+                    className="lg:hidden h-12 w-12 flex items-center justify-center rounded-lg text-ink hover:bg-ink/5"
                     aria-label={open ? "Close menu" : "Open menu"}
                     aria-expanded={open}
                     onClick={() => setOpen(!open)}
@@ -66,7 +66,7 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
             </div>
 
             {open && (
-                <div className="md:hidden mx-auto mt-2 max-w-6xl rounded-lg bg-white/90 backdrop-blur-[30px] shadow-[0_4px_24px_rgb(15_23_42/0.08)] p-5 flex flex-col gap-1">
+                <div className="lg:hidden mx-auto mt-2 max-w-6xl rounded-lg bg-white/90 backdrop-blur-[30px] shadow-[0_4px_24px_rgb(15_23_42/0.08)] p-5 flex flex-col gap-1">
                     {links.map((link) => (
                         <Link
                             key={link.href}
