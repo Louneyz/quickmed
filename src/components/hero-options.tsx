@@ -249,8 +249,11 @@ function ConnectedRoute({
         if (!section || !sources.length || !targets.length || !svg || !path || !track || !dot) return;
 
         let length = 0;
+        let birdScale = 1;
         const layout = () => {
             const box = section.getBoundingClientRect();
+            // A smaller bird on phones so it stays in proportion with the smaller icons.
+            birdScale = box.width < 640 ? 0.62 : 1;
             // Phones and laptops can use different copies of the icons; follow whichever is showing.
             const from = sources.find((el) => el.offsetParent !== null) ?? sources[0];
             const to = targets.find((el) => el.offsetParent !== null) ?? targets[0];
@@ -270,8 +273,13 @@ function ConnectedRoute({
                 if (under && under.offsetParent !== null && under.getBoundingClientRect().bottom > Math.max(a.bottom, b.bottom)) {
                     // Drop straight down from the pharmacy, run under the body and buttons, and climb to the door.
                     const low = under.getBoundingClientRect().bottom - box.top + 56;
-                    const r = Math.min(90, (low - Math.max(y0, y1)) / 2, dx / 4);
-                    d = `M${x0} ${y0} V${low - r} Q${x0} ${low} ${x0 + r} ${low} H${x1 - r} Q${x1} ${low} ${x1} ${low - r} V${y1}`;
+                    // On phones the icons sit over the text column, so the sides of the loop run out in the margins.
+                    const xs = Math.min(x0, under.getBoundingClientRect().left - box.left - 8);
+                    const xe = Math.max(x1, under.getBoundingClientRect().right - box.left + 8);
+                    const r = Math.min(90, (low - Math.max(y0, y1)) / 2, (xe - xs) / 4);
+                    const left = xs < x0 ? `C ${x0} ${y0 + 24}, ${xs} ${y0 + 8}, ${xs} ${y0 + 40} ` : "";
+                    const right = xe > x1 ? ` V${y1 + 40} C ${xe} ${y1 + 8}, ${x1} ${y1 + 24}, ${x1} ${y1}` : ` V${y1}`;
+                    d = `M${x0} ${y0} ${left}V${low - r} Q${xs} ${low} ${xs + r} ${low} H${xe - r} Q${xe} ${low} ${xe} ${low - r}${right}`;
                 } else {
                     const low = Math.max(y0, y1) + Math.max(36, Math.min(80, dx * 0.09));
                     d = `M${x0} ${y0} C ${x0 + dx * 0.12} ${low}, ${x1 - dx * 0.12} ${low}, ${x1} ${y1}`;
@@ -292,7 +300,7 @@ function ConnectedRoute({
         };
         const place = (progress: number) => {
             const point = path.getPointAtLength(length * progress);
-            dot.setAttribute("transform", `translate(${point.x} ${point.y})`);
+            dot.setAttribute("transform", `translate(${point.x} ${point.y}) scale(${birdScale})`);
         };
 
         // The trip loops on its own: drive for 4.5s, wait at the door for 1.5s, start again.
@@ -389,46 +397,36 @@ export function HeroNavyCentred() {
     const ref = useRef<HTMLElement>(null);
     const pharmacySideRef = useRef<HTMLDivElement>(null);
     const homeSideRef = useRef<HTMLDivElement>(null);
-    const pharmacyBelowRef = useRef<HTMLDivElement>(null);
-    const homeBelowRef = useRef<HTMLDivElement>(null);
     const ctaRef = useRef<HTMLDivElement>(null);
     return (
         <section ref={ref} id="option-1b" className="relative overflow-hidden bg-ink text-white">
             <div className="absolute inset-0 grid-pattern" aria-hidden="true" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgb(65_191_249/0.22),transparent_60%)]" aria-hidden="true" />
-            <ConnectedRoute sectionRef={ref} fromRef={[pharmacySideRef, pharmacyBelowRef]} toRef={[homeSideRef, homeBelowRef]} underRef={ctaRef} shape="sag" />
-            <div className="relative mx-auto max-w-6xl px-5 md:px-8 pt-32 md:pt-44 pb-14 md:pb-36 text-center">
-                {/* Pharmacy on the left of the title, the patient's home on the right. */}
-                <div className="flex items-end justify-center gap-8 lg:gap-14">
-                    <div ref={pharmacySideRef} className="hidden md:block shrink-0">
-                        <PharmacyFront className="h-28 w-28 lg:h-32 lg:w-32" />
+            <ConnectedRoute sectionRef={ref} fromRef={pharmacySideRef} toRef={homeSideRef} underRef={ctaRef} shape="sag" />
+            <div className="relative mx-auto max-w-6xl px-4 sm:px-5 md:px-8 pt-32 md:pt-44 pb-24 md:pb-36 text-center">
+                {/* Pharmacy on the left of the title, the patient's home on the right. On phones the pharmacy
+                    sits up by the first line and the home down by "Delivered." */}
+                <div className="flex items-end justify-center gap-1.5 sm:gap-4 md:gap-8 lg:gap-14">
+                    <div ref={pharmacySideRef} className="shrink-0 self-start md:self-end">
+                        <PharmacyFront className="h-12 w-12 sm:h-20 sm:w-20 md:h-28 md:w-28 lg:h-32 lg:w-32" />
                     </div>
                     <WordReveal
                         as="h1"
-                        className="title-lg text-center"
-                        parts={[{ text: "Your patients." }, { text: "Your care." }, { text: "Delivered.", className: "text-brand font-semibold" }]}
+                        className="title-lg text-center whitespace-nowrap"
+                        parts={[{ text: "Your Patients." }, { text: "Your Care." }, { text: "Delivered.", className: "text-brand font-semibold" }]}
                     />
-                    <div ref={homeSideRef} className="hidden md:block shrink-0">
-                        <HomeFront className="h-32 w-36 lg:h-36 lg:w-40" />
+                    <div ref={homeSideRef} className="shrink-0">
+                        <HomeFront className="h-12 w-14 sm:h-20 sm:w-24 md:h-32 md:w-36 lg:h-36 lg:w-40" />
                     </div>
                 </div>
                 <p className="mt-10 md:mt-12 text-lg md:text-xl leading-snug text-white max-w-xl mx-auto mb-10">{BODY}</p>
-                <div ref={ctaRef} className="flex flex-col sm:flex-row gap-3 justify-center">
+                <div ref={ctaRef} className="flex flex-col sm:flex-row sm:w-fit sm:mx-auto gap-3 justify-center">
                     <CtaLink href="/partners" variant="accent" className="[--cta-hover:#ffffff] hover:text-ink">
                         Become a partner
                     </CtaLink>
                     <CtaLink href="/drivers" variant="outline-light">
                         Drive with QuickMed
                     </CtaLink>
-                </div>
-                {/* Phones: no room beside the title, so the trip runs under the buttons. */}
-                <div className="mt-12 mb-10 flex items-end justify-between md:hidden">
-                    <div ref={pharmacyBelowRef}>
-                        <PharmacyFront className="h-20 w-20" />
-                    </div>
-                    <div ref={homeBelowRef}>
-                        <HomeFront className="h-24 w-28" />
-                    </div>
                 </div>
             </div>
         </section>
