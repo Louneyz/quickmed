@@ -17,7 +17,7 @@ export default function HeroPreview() {
         <main className="min-h-screen flex flex-col">
             <Navbar overlay />
             <HeroNavy />
-            <Divider label="Option 1b · Centred, home beside the title" />
+            <Divider label="Option 1b · Centred, pharmacy and home either side of the title" />
             <HeroNavyCentred />
             <Divider label="Option 2 · Centred headline" />
             <HeroCentred />
