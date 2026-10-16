@@ -13,7 +13,7 @@ QuickMed staff use `/admin` to see every delivery, mark stops complete, manage c
 ## One-time setup
 
 1. **Create a Supabase project** at supabase.com. Region: **Canada (Central)**. Save the database password somewhere safe.
-2. **Run the schema.** In the dashboard, open SQL Editor, paste `supabase/migrations/0001_portal.sql`, run it.
+2. **Run the schema.** In the dashboard, open SQL Editor, paste `supabase/migrations/0001_portal.sql`, run it. Then do the same with `0002_signups.sql` (partner sign-ups, driver applications, resume storage).
 3. **Auth settings** (Authentication → Providers / Sign In / URL Configuration):
    - Email provider on; **turn "Allow new users to sign up" off** (accounts are invite-only).
    - Minimum password length 10 (the demo password is 10 characters; new pharmacy users are asked for 12).
@@ -24,11 +24,13 @@ QuickMed staff use `/admin` to see every delivery, mark stops complete, manage c
    select cron.schedule('purge-patient-details', '0 8 * * *', $$select public.purge_patient_details(180)$$);
    ```
    This blanks patient name, street, postal code and phone 180 days after a stop is completed or cancelled.
-6. **Vercel environment variables** (Project → Settings → Environment Variables), from Supabase Settings → API. See `.env.example`:
+6. **Resend** (resend.com): verify the quickmed.ca domain (DNS records), create an API key. The same account can be Supabase's SMTP sender in step 4.
+7. **Vercel environment variables** (Project → Settings → Environment Variables), from Supabase Settings → API. See `.env.example`:
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - `SUPABASE_SERVICE_ROLE_KEY` (secret; server only)
-7. **Your staff login and the sales demo.** On your computer, in the repo folder:
+   - `RESEND_API_KEY` (secret; server only), optionally `EMAIL_FROM` and `QUICKMED_INBOX` (default info@quickmed.ca)
+8. **Your staff login and the sales demo.** On your computer, in the repo folder:
    ```bash
    cp .env.example .env.local   # fill in the Supabase values, STAFF_* and DEMO_PASSWORD
    npm install
@@ -58,3 +60,11 @@ Without the env vars the marketing site runs normally and the portal shows "Port
 - A named privacy contact, and the `/privacy` page reviewed by someone qualified.
 - A breach log kept for at least 24 months (PIPEDA).
 - Supabase Pro plan once live (daily backups, no auto-pause).
+
+## Become a partner / Become a driver
+
+Both open as pop-ups from any "Become a partner" / "Become a driver" link (the old `/partners` and `/drivers` URLs redirect to them).
+
+- **Partner:** the request lands in Clients as a **Pending partner**. Tap **Approve & send login** (creates the login and emails the invite) or **Deny**. New requests are also emailed to `QUICKMED_INBOX` with a link straight to the client.
+- **Driver:** the applicant gets a thank-you email; every answer plus the resume goes to `QUICKMED_INBOX`. Resumes are also kept in the private `driver-resumes` storage bucket (Canada) and the `driver_applications` table.
+- Spam screen: a hidden honeypot field and a minimum time on the form.

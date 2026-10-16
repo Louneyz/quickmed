@@ -18,10 +18,12 @@ export type Pharmacy = {
     province: string;
     postal_code: string | null;
     notes: string | null;
-    status: "active" | "paused";
+    status: PharmacyStatus;
     is_demo: boolean;
     created_at: string;
 };
+
+export type PharmacyStatus = "pending" | "active" | "paused" | "denied";
 
 export type DeliveryStatus = "pending" | "completed" | "cancelled";
 
@@ -52,7 +54,7 @@ export type PharmacyStats = {
     contact_name: string | null;
     email: string;
     phone: string | null;
-    status: "active" | "paused";
+    status: PharmacyStatus;
     is_demo: boolean;
     created_at: string;
     request_count: number;
@@ -60,6 +62,10 @@ export type PharmacyStats = {
     completed_count: number;
     pending_count: number;
     last_request_at: string | null;
+    last_delivery_at: string | null;
+    source: "admin" | "signup";
+    street: string | null;
+    city: string | null;
 };
 
 export const deliveryFlags = [
@@ -84,4 +90,21 @@ export function formatDate(value: string | null, withTime = false) {
         year: "numeric",
         ...(withTime ? { hour: "numeric", minute: "2-digit" } : {}),
     });
+}
+
+// "3 days ago", "Today", for the CRM's activity columns.
+export function timeAgo(value: string | null) {
+    if (!value) return "Never";
+    const days = Math.floor((Date.now() - new Date(value).getTime()) / 86_400_000);
+    if (days <= 0) return "Today";
+    if (days === 1) return "Yesterday";
+    if (days < 30) return `${days} days ago`;
+    const months = Math.floor(days / 30);
+    if (months < 12) return `${months} month${months === 1 ? "" : "s"} ago`;
+    const years = Math.floor(days / 365);
+    return `${years} year${years === 1 ? "" : "s"} ago`;
+}
+
+export function daysSince(value: string | null) {
+    return value ? (Date.now() - new Date(value).getTime()) / 86_400_000 : Infinity;
 }

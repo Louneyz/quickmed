@@ -232,3 +232,8 @@ body {
     animation: none;
   }
 }
+
+/* Keep the page behind an open pop-up from scrolling. */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
