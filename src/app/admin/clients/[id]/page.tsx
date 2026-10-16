@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { ApprovalActions } from "@/components/portal/approval";
 import { DeliveriesList } from "@/components/portal/deliveries-list";
 import { Button, Card, Field, Input, Notice, PageHeader, Select, Stat, Textarea } from "@/components/portal/ui";
 import { onboard } from "@/lib/portal/admin-api";
 import { supabase } from "@/lib/portal/supabase";
-import { formatDate, type Pharmacy, type PharmacyStats, type Profile } from "@/lib/portal/types";
+import { formatDate, timeAgo, type Pharmacy, type PharmacyStats, type Profile } from "@/lib/portal/types";
 
 type Login = Pick<Profile, "id" | "full_name"> & { email: string | null; created_at: string };
 
@@ -49,7 +50,37 @@ export default function ClientPage() {
             <Link href="/admin/clients" className="label-mono inline-flex items-center gap-2 text-gray-mid hover:text-ink mb-6">
                 <ArrowLeft className="h-3.5 w-3.5" aria-hidden /> All clients
             </Link>
-            <PageHeader eyebrow={`Client since ${formatDate(pharmacy.created_at)}`} title={pharmacy.name} />
+            <PageHeader eyebrow={`Client since ${formatDate(pharmacy.created_at)}`} title={pharmacy.name}>
+                {stats && (
+                    <p className="text-sm text-gray">
+                        Last delivery: <span className="text-ink">{stats.last_delivery_at ? `${formatDate(stats.last_delivery_at)} · ${timeAgo(stats.last_delivery_at)}` : "Never"}</span>
+                    </p>
+                )}
+            </PageHeader>
+
+            {(pharmacy.status === "pending" || pharmacy.status === "denied") && (
+                <Card className="p-5 md:p-6 mb-6 border-accent/50">
+                    <p className="label-mono text-ink">
+                        {pharmacy.status === "pending" ? "Pending partner" : "Denied partner request"}
+                    </p>
+                    <p className="mt-2 mb-5 text-sm text-gray">
+                        {pharmacy.contact_name ?? "Someone"} asked to become a partner {timeAgo(pharmacy.created_at).toLowerCase()}.
+                        Approving creates their login and emails it to {pharmacy.email}.
+                    </p>
+                    <div className="md:max-w-md">
+                        <ApprovalActions
+                            pharmacy={pharmacy}
+                            onChange={(status) => {
+                                setPharmacy({ ...pharmacy, status });
+                                if (status === "active") {
+                                    setInvited(pharmacy.email);
+                                    loadLogins();
+                                }
+                            }}
+                        />
+                    </div>
+                </Card>
+            )}
 
             {invited && (
                 <div className="mb-6">
@@ -65,7 +96,7 @@ export default function ClientPage() {
             </div>
 
             <div className="grid gap-6 lg:grid-cols-3 mb-12">
-                <ClientDetails pharmacy={pharmacy} onSaved={setPharmacy} />
+                <ClientDetails key={pharmacy.status} pharmacy={pharmacy} onSaved={setPharmacy} />
                 <Logins pharmacyId={pharmacy.id} logins={logins} onAdded={loadLogins} />
             </div>
 
@@ -126,6 +157,8 @@ function ClientDetails({ pharmacy, onSaved }: { pharmacy: Pharmacy; onSaved: (p:
                         <Select value={form.status} onChange={set("status")}>
                             <option value="active">Active</option>
                             <option value="paused">Paused</option>
+                            {form.status === "pending" && <option value="pending" disabled>Pending approval</option>}
+                            {form.status === "denied" && <option value="denied" disabled>Denied</option>}
                         </Select>
                     </Field>
                     <Field label="Internal notes" className="md:col-span-4">
