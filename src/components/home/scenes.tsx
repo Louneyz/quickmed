@@ -177,7 +177,7 @@ function waveRoute(x0: number, x1: number, y: number, waves: number, amp: number
 
 function DoorstepRoute({ width, waves, id, className }: { width: number; waves: number; id: string; className?: string }) {
     const motion = !useReducedMotion();
-    const route = waveRoute(64, width - 64, 50, waves, 16);
+    const route = waveRoute(64, width - 64, 50, waves, 24);
     return (
         <svg viewBox={`0 0 ${width} 100`} className={cn("h-auto w-full", className)} aria-hidden="true">
             <path d={route} fill="none" stroke="rgb(255 255 255 / 0.2)" strokeWidth="3" strokeDasharray="2 8" strokeLinecap="round" />
@@ -212,13 +212,13 @@ function DoorstepRoute({ width, waves, id, className }: { width: number; waves: 
     );
 }
 
-// Closing panel: a winding route from the pharmacy to the patient's door, drawn under the buttons.
-// Phones get a shorter route with fewer bends so the icons stay a readable size.
+// Closing panel: one long S-shaped route from the pharmacy to the patient's door, drawn under the buttons.
+// Phones get a shorter route so the icons stay a readable size.
 export function DoorstepLine() {
     return (
         <Scene label="Delivery route from the pharmacy to the patient's front door">
-            <DoorstepRoute width={420} waves={2} id="door-route-sm" className="md:hidden" />
-            <DoorstepRoute width={1100} waves={4} id="door-route-lg" className="hidden md:block" />
+            <DoorstepRoute width={420} waves={1} id="door-route-sm" className="md:hidden" />
+            <DoorstepRoute width={1100} waves={1} id="door-route-lg" className="hidden md:block" />
         </Scene>
     );
 }
