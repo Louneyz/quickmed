@@ -315,8 +315,8 @@ function ConnectedRoute({
             dot.setAttribute("opacity", String(seen));
         };
 
-        // The trip loops on its own: drive for 4.5s, pause while the bird is inside, start again.
-        const DRIVE = 4500;
+        // The trip loops on its own: drive for about 6.4s, pause while the bird is inside, start again.
+        const DRIVE = 6430;
         const WAIT = 1500;
         let frame = 0;
         let start = 0;
