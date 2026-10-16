@@ -4,10 +4,10 @@ import { cn } from "./button";
 type Variant = "accent" | "light" | "ghost" | "outline-light";
 
 const variants: Record<Variant, string> = {
-    accent: "bg-accent text-ink hover:text-white [--cta-hover:var(--ink)]",
-    light: "bg-white text-ink hover:text-white [--cta-hover:var(--ink)]",
-    ghost: "bg-ink/5 text-ink hover:text-accent [--cta-hover:var(--ink)]",
-    "outline-light": "border border-white/40 text-white hover:text-ink [--cta-hover:#ffffff]",
+    accent: "bg-accent text-white hover:text-white [--cta-hover:var(--ink)]",
+    light: "bg-white text-accent hover:text-white [--cta-hover:var(--ink)]",
+    ghost: "bg-ink/5 text-ink hover:text-white [--cta-hover:var(--ink)]",
+    "outline-light": "border border-white/70 text-white hover:text-accent [--cta-hover:#ffffff]",
 };
 
 export function CtaLink({

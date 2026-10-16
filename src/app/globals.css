@@ -7,10 +7,9 @@
   --secondary: #0f172a;
   --muted: #64748b;
 
-  /* Homepage design tokens, after terminal-industries.com:
-     a deep ink for text and dark panels, QuickMed blue as the sparing accent. */
-  --ink: #062236;
-  --ink-soft: #0b3350;
+  /* Homepage design tokens: terminal-industries.com layout on QuickMed's own
+     colours (logo blue, white, slate text). */
+  --ink: #1e293b;
   --accent: #41bff9;
   --surface: #f0f2f4;
   --gray: #4a5560;
@@ -27,7 +26,6 @@
   --color-secondary: var(--secondary);
   --color-muted: var(--muted);
   --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
   --color-accent: var(--accent);
   --color-surface: var(--surface);
   --color-gray: var(--gray);
@@ -76,11 +74,11 @@ body {
   letter-spacing: -0.02em;
 }
 
-/* Faint square grid used on dark panels. */
+/* Faint square grid used on the blue panels. */
 .grid-pattern {
   background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgb(255 255 255 / 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.14) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 

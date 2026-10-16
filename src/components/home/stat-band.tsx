@@ -31,32 +31,32 @@ export function StatBand() {
     return (
         <section className="bg-white pb-20 md:pb-32">
             <div className="mx-auto max-w-6xl px-5 md:px-8">
-                <div className="relative overflow-hidden rounded-[20px] bg-ink text-white px-6 py-14 md:px-12 md:py-20">
+                <div className="relative overflow-hidden rounded-[20px] bg-accent text-white px-6 py-14 md:px-12 md:py-20">
                     <div className="absolute inset-0 grid-pattern" aria-hidden="true" />
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgb(65_191_249/0.2),transparent_55%)]" aria-hidden="true" />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgb(255_255_255/0.25),transparent_55%)]" aria-hidden="true" />
                     <div className="relative">
-                        <p className="label-mono text-white/60 mb-6">Why delivery matters</p>
+                        <p className="label-mono text-ink/70 mb-6">Why delivery matters</p>
                         <h2 className="title-lg max-w-3xl mb-14">
-                            The prescription only works <span className="text-white/40">if it reaches the patient.</span>
+                            The prescription only works <span className="text-ink">if it reaches the patient.</span>
                         </h2>
 
-                        <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-white/15">
+                        <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-white/40">
                             {stats.map((stat, index) => (
-                                <div key={stat.value} className="pt-8 pb-2 lg:pr-6 sm:even:pl-6 lg:even:pl-0 lg:[&:not(:first-child)]:pl-6 lg:[&:not(:last-child)]:border-r border-white/15">
-                                    <dt className="title-lg text-accent mb-4">{stat.value}</dt>
-                                    <dd className="text-white/80 leading-snug mb-4">
+                                <div key={stat.value} className="pt-8 pb-2 lg:pr-6 sm:even:pl-6 lg:even:pl-0 lg:[&:not(:first-child)]:pl-6 lg:[&:not(:last-child)]:border-r border-white/40">
+                                    <dt className="title-lg text-white mb-4">{stat.value}</dt>
+                                    <dd className="text-ink leading-snug mb-4">
                                         {stat.label}
-                                        <sup className="label-mono text-white/40 ml-1">{index + 1}</sup>
+                                        <sup className="label-mono text-ink/60 ml-1">{index + 1}</sup>
                                     </dd>
                                 </div>
                             ))}
                         </dl>
 
-                        <ol className="mt-10 pt-6 border-t border-white/10 space-y-1 text-xs text-white/40">
+                        <ol className="mt-10 pt-6 border-t border-white/40 space-y-1 text-xs text-ink/70">
                             {stats.map((stat, index) => (
                                 <li key={stat.value}>
                                     {index + 1}.{" "}
-                                    <a href={stat.href} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-white">
+                                    <a href={stat.href} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-ink">
                                         {stat.source}
                                     </a>
                                 </li>
