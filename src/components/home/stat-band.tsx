@@ -12,7 +12,7 @@ const stats = [
         to: 7,
         decimals: 0,
         suffix: "",
-        label: "prescriptions for chronic conditions is never filled.",
+        label: "prescriptions for a chronic condition is never filled.",
         source: "Lemstra et al., Patient Preference and Adherence, 2018",
         href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5944464",
     },
@@ -21,7 +21,7 @@ const stats = [
         to: 5.4,
         decimals: 1,
         suffix: "%",
-        label: "of hospitalizations in Canada are estimated to be due to patients not taking their medication.",
+        label: "of hospital stays in Canada are estimated to come from patients not taking their medication.",
         source: "Iskedjian et al., Value in Health, 2002, cited in Lemstra et al., 2018",
         href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5944464",
     },
@@ -30,7 +30,7 @@ const stats = [
         to: 59,
         decimals: 0,
         suffix: "%",
-        label: "more likely to stay on their medication when patients use home delivery.",
+        label: "more likely to stay on their medication when it's delivered to their home.",
         source: "Iyengar et al., J Manag Care Spec Pharm, 2016 (US data)",
         href: "https://amcp.org/node/35904",
     },
@@ -39,7 +39,7 @@ const stats = [
         to: 4.6,
         decimals: 1,
         suffix: "M",
-        label: "Ontarians aged 65+ by 2051, up from 3.1 million today.",
+        label: "Ontarians will be 65 or older by 2051, up from 3.1 million today.",
         source: "Ontario Ministry of Finance, Population Projections 2025–2051",
         href: "https://www.ontario.ca/page/ontario-population-projections",
     },
@@ -81,8 +81,8 @@ export function StatBand() {
                         <WordReveal
                             className="title-lg max-w-3xl mb-14"
                             parts={[
-                                { text: "The prescription only works" },
-                                { text: "if it reaches the patient.", className: "text-white/40" },
+                                { text: "A prescription can't help" },
+                                { text: "if it never leaves the shelf.", className: "text-white/40" },
                             ]}
                         />
 

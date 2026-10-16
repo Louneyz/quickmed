@@ -141,6 +141,30 @@ export function PackageScene() {
     );
 }
 
+// 05 Customer first: a call comes in, the phone rings, and a person answers.
+export function SupportScene() {
+    return (
+        <Scene label="A phone call answered by the QuickMed team">
+            <svg viewBox="0 0 320 240" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                {STREETS}
+                <g transform="translate(120 132)">
+                    <circle r="46" fill="var(--brand)" opacity="0.15" className="pin-pulse" />
+                    <circle r="30" fill="var(--ink)" />
+                    <path d="M-10 -12 c-3 0 -5 2 -5 5 c0 12 10 22 22 22 c3 0 5 -2 5 -5 v-4 l-7 -3 l-3 4 c-5 -2 -9 -6 -11 -11 l4 -3 l-3 -7 z" fill="white" />
+                </g>
+                <g transform="translate(214 92)"><g className="s-lock">
+                    <rect x="-48" y="-22" width="96" height="44" rx="12" fill="white" stroke="var(--hairline)" strokeWidth="1.5" />
+                    <path d="M-30 22 l-6 12 l16 -12 z" fill="white" />
+                    <circle cx="-28" cy="0" r="5" fill="var(--brand)" />
+                    <rect x="-16" y="-6" width="48" height="4" rx="2" fill="var(--ink)" />
+                    <rect x="-16" y="3" width="32" height="4" rx="2" fill="var(--gray-light)" />
+                </g></g>
+                <text x="120" y="204" textAnchor="middle" className="scene-label">(416) 834-9123</text>
+            </svg>
+        </Scene>
+    );
+}
+
 // Last stop: a wide route that ends at the patient's door, drawn for the dark panel.
 const DOOR_ROUTE = "M60 240 C 140 240, 160 140, 260 140 S 400 200, 470 150 S 540 90, 572 112";
 

@@ -25,8 +25,8 @@ export function Partners() {
                 <WordReveal
                     className="title-lg text-ink text-center max-w-3xl mx-auto mb-14 md:mb-20"
                     parts={[
-                        { text: "Trusted by the pharmacies" },
-                        { text: "your patients know.", className: "text-gray-light" },
+                        { text: "Trusted by pharmacies" },
+                        { text: "your patients already know.", className: "text-gray-light" },
                     ]}
                 />
 

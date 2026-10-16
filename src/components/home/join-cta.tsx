@@ -19,13 +19,13 @@ export function JoinCta() {
                                 <span className="pin-pulse absolute inset-0 rounded-full bg-brand" />
                                 <span className="relative h-2.5 w-2.5 rounded-full bg-brand" />
                             </span>
-                            Last stop · Join QuickMed today
+                            Join QuickMed
                         </p>
                         <WordReveal
                             className="title-lg max-w-3xl mx-auto mb-10"
                             parts={[
-                                { text: "Deliver more," },
-                                { text: "without running a fleet.", className: "text-white/40" },
+                                { text: "Your patients stay home." },
+                                { text: "We bring the prescription.", className: "text-white/40" },
                             ]}
                         />
                         <div className="flex flex-col sm:flex-row gap-3 justify-center">

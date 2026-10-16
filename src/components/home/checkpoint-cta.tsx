@@ -10,7 +10,7 @@ export function CheckpointCta() {
                 <Reveal className="rounded-[20px] bg-brand text-ink px-6 py-10 md:px-12 md:py-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
                     <div>
                         <p className="title-md max-w-xl">
-                            Add delivery for your patients <span className="text-ink/55">without hiring a driver.</span>
+                            Offer delivery <span className="text-ink/55">without hiring a driver.</span>
                         </p>
                     </div>
                     <div className="shrink-0 flex flex-col items-start md:items-end gap-3">

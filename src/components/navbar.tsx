@@ -8,8 +8,8 @@ import { CtaLink } from "./ui/cta-link";
 
 const links = [
     { href: "/", label: "Home" },
-    { href: "/partners", label: "Become A Partner" },
-    { href: "/drivers", label: "Become A Driver" },
+    { href: "/partners", label: "Become a partner" },
+    { href: "/drivers", label: "Become a driver" },
 ];
 
 // Floating frosted-glass bar. `overlay` lets it sit over a dark hero (homepage);

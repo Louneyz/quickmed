@@ -2,11 +2,11 @@ import Link from "next/link";
 
 const columns = [
     {
-        heading: "Services",
+        heading: "QuickMed",
         links: [
             { href: "/", label: "Home" },
-            { href: "/partners", label: "Become A Partner" },
-            { href: "/drivers", label: "Become A Driver" },
+            { href: "/partners", label: "Become a partner" },
+            { href: "/drivers", label: "Become a driver" },
         ],
     },
 ];
@@ -23,7 +23,7 @@ export function Footer() {
                     <div className="md:col-span-4 space-y-4">
                         <img src="/images/brand/quickmed-logo-white.svg" alt="QuickMed" className="h-7 w-auto" />
                         <p className="text-white/60 max-w-xs">
-                            Fast and reliable pharmaceutical delivery services for pharmacies and patients.
+                            Prescription delivery for Ontario pharmacies.
                         </p>
                     </div>
                     {columns.map((column) => (

@@ -7,26 +7,26 @@ import { WordReveal } from "./motion/reveal";
 
 const steps = [
     {
-        title: "Join QuickMed",
-        description: "Apply as a partner. We set up your pharmacy's account and email you secure login details.",
-        status: "Pharmacy onboarded",
+        title: "Sign up",
+        description: "Fill out the partner form. We set up your pharmacy's account and email you your login.",
+        status: "Account ready",
         icon: Building2,
     },
     {
-        title: "Submit a Request",
-        description: "Fill out a short form in our secure member area with the recipient's information and medication details.",
-        status: "Order received",
+        title: "Book a delivery",
+        description: "Log in and enter the patient's name, address and order details.",
+        status: "Request received",
         icon: Upload,
     },
     {
-        title: "Driver Pickup",
-        description: "Our team schedules a trained driver to collect the delivery from your pharmacy at the designated time.",
+        title: "We pick it up",
+        description: "We assign a driver, who collects the order from your counter at the time you set.",
         status: "On the road",
         icon: Car,
     },
     {
-        title: "Delivered",
-        description: "Our drivers know the local routes and bring the medication to your patient's door.",
+        title: "Your patient gets it",
+        description: "The driver brings it straight to your patient's door.",
         status: "Delivered",
         icon: House,
     },
@@ -84,12 +84,12 @@ export function Process() {
                         <WordReveal
                             className="title-lg text-ink"
                             parts={[
-                                { text: "Four steps" },
-                                { text: "from shelf to doorstep.", className: "text-gray-light" },
+                                { text: "Four steps," },
+                                { text: "counter to doorstep.", className: "text-gray-light" },
                             ]}
                         />
                         <p className="mt-6 text-lg text-gray max-w-md">
-                            A simple process that gets medication from your pharmacy to your patients quickly and securely.
+                            You keep running the pharmacy. We handle everything after the order is packed.
                         </p>
 
                         {/* Live tracker card that follows the active step (desktop). */}

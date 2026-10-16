@@ -5,24 +5,24 @@ import { clsx } from "clsx";
 
 const faqs = [
     {
-        question: "How do I request a delivery?",
-        answer: "Partner pharmacies log in to our secure member area and fill out a short form with the recipient's information and the medication details.",
+        question: "How do I book a delivery?",
+        answer: "Log in to your QuickMed account and fill out a short form with the patient's address and what's being delivered. That's it.",
     },
     {
-        question: "How is patient information protected?",
-        answer: "We handle personal health information in line with Ontario's Personal Health Information Protection Act (PHIPA) and Canada's PIPEDA. Requests are submitted through a secure, login-only member area, and our drivers are trained in confidentiality.",
+        question: "How do you protect patient information?",
+        answer: "We follow Ontario's PHIPA and Canada's PIPEDA. Requests only come in through your password-protected account, and our drivers are trained to keep patient details private.",
     },
     {
-        question: "What happens after I submit a request?",
-        answer: "Our team processes the request and schedules a driver from our network to collect the delivery from your pharmacy at the designated time.",
+        question: "What happens after I book?",
+        answer: "We assign a driver, who picks up the order at your pharmacy at the time you chose and takes it to your patient.",
     },
     {
-        question: "How can I become a partner pharmacy?",
-        answer: "Fill out the Become a Partner form. Our team sets up your pharmacy's account and emails you your login details.",
+        question: "How do I become a partner?",
+        answer: "Fill out the partner form. We set up your pharmacy's account and email you your login.",
     },
     {
-        question: "Who do I contact with questions?",
-        answer: "Call our customer support team at (416) 834-9123.",
+        question: "Who do I call with a question?",
+        answer: "Call us at (416) 834-9123. You'll reach a person on our team.",
     },
 ];
 

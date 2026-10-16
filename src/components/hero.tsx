@@ -93,19 +93,19 @@ export function Hero() {
                             as="h1"
                             className="title-lg mb-8"
                             parts={[
-                                { text: "From your counter" },
-                                { text: "to your patient's door.", className: "text-ink/55" },
+                                { text: "You fill it." },
+                                { text: "We deliver it.", className: "text-ink/55 block" },
                             ]}
                         />
                         <p className="text-lg md:text-xl leading-snug text-ink/80 max-w-xl mb-10">
-                            We bridge the gap between pharmacies and patients with secure, timely, and professional medication delivery services.
+                            QuickMed picks up prescriptions from your pharmacy and brings them to your patients&apos; homes. You offer delivery without hiring drivers or planning routes.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3">
                             <CtaLink href="/partners" variant="ink">
                                 Become a partner
                             </CtaLink>
                             <CtaLink href="/drivers" variant="outline-ink" className="border-ink/40">
-                                Apply as driver
+                                Drive with QuickMed
                             </CtaLink>
                         </div>
                     </div>
