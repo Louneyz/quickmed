@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Reveal, WordReveal } from "./motion/reveal";
 
 const partners = [
     { src: "/images/partner_logo_color_1.png", name: "Shoppers Drug Mart" },
@@ -19,19 +20,24 @@ function Cross({ className }: { className: string }) {
 
 export function Partners() {
     return (
-        <section className="bg-white py-20 md:py-28">
+        <section id="trusted" className="bg-white py-20 md:py-28 scroll-mt-24">
             <div className="mx-auto max-w-6xl px-5 md:px-8">
-                <h2 className="title-lg text-ink text-center max-w-3xl mx-auto mb-14 md:mb-20">
-                    Trusted by the pharmacies <span className="text-gray-light">your patients know</span>
-                </h2>
+                <p className="label-mono text-gray-mid text-center mb-6">Stop 01 · Trusted</p>
+                <WordReveal
+                    className="title-lg text-ink text-center max-w-3xl mx-auto mb-14 md:mb-20"
+                    parts={[
+                        { text: "Trusted by the pharmacies" },
+                        { text: "your patients know.", className: "text-gray-light" },
+                    ]}
+                />
 
                 <div className="relative grid grid-cols-2 md:grid-cols-5 border-t border-l border-hairline">
-                    {partners.map((partner) => (
+                    {partners.map((partner, index) => (
                         <div key={partner.name} className="relative h-28 md:h-36 border-r border-b border-hairline flex items-center justify-center p-6">
                             <Cross className="left-0 top-0" />
-                            <div className="relative w-full h-10 md:h-12">
+                            <Reveal delay={index * 90} className="relative w-full h-10 md:h-12">
                                 <Image src={partner.src} alt={partner.name} fill sizes="200px" className="object-contain" />
-                            </div>
+                            </Reveal>
                         </div>
                     ))}
                     {/* Empty cell keeps the 2-column mobile grid even. */}

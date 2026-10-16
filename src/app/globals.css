@@ -7,15 +7,18 @@
   --secondary: #0f172a;
   --muted: #64748b;
 
-  /* Homepage design tokens: terminal-industries.com layout on QuickMed's own
-     colours (logo blue, white, slate text). */
-  --ink: #1e293b;
+  /* Homepage design tokens: Terminal Industries' layout and motion in
+     QuickMed's own colours (sky blue + white, with the site's navy for text). */
+  --ink: #0f172a;
+  --ink-soft: #1e293b;
+  --brand: #41bff9;
+  --brand-soft: #e8f7fe;
   --accent: #41bff9;
-  --surface: #f0f2f4;
-  --gray: #4a5560;
-  --gray-mid: #7c858f;
-  --gray-light: #c3c8cd;
-  --hairline: #e5e7ea;
+  --surface: #f1f5f9;
+  --gray: #475569;
+  --gray-mid: #64748b;
+  --gray-light: #cbd5e1;
+  --hairline: #e2e8f0;
   --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -26,7 +29,10 @@
   --color-secondary: var(--secondary);
   --color-muted: var(--muted);
   --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
   --color-accent: var(--accent);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
   --color-surface: var(--surface);
   --color-gray: var(--gray);
   --color-gray-mid: var(--gray-mid);
@@ -74,11 +80,11 @@ body {
   letter-spacing: -0.02em;
 }
 
-/* Faint square grid used on the blue panels. */
+/* Faint square grid used on dark panels. */
 .grid-pattern {
   background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.14) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.14) 1px, transparent 1px);
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
@@ -120,5 +126,109 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .cta::before {
     transition: none;
+  }
+}
+
+/* ---- Scroll motion. Everything animates with native scroll, never against it,
+   and renders in its final state for prefers-reduced-motion. ---- */
+
+/* Fade and rise in once when the element enters the viewport (see <Reveal>). */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s var(--ease-expo) var(--delay, 0ms),
+    transform 0.9s var(--ease-expo) var(--delay, 0ms);
+}
+
+.reveal[data-in="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Headline words rise in one after another (see <WordReveal>). */
+.word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.4em);
+  transition:
+    opacity 0.8s var(--ease-expo) calc(var(--i, 0) * 60ms),
+    transform 0.8s var(--ease-expo) calc(var(--i, 0) * 60ms);
+}
+
+[data-in="true"] .word {
+  opacity: 1;
+  transform: none;
+}
+
+/* Delivery route drawn once, then a courier dot drives it on a loop. */
+.route-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: route-draw 2.4s var(--ease-expo) 0.4s forwards;
+}
+
+@keyframes route-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.pin-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pin-pulse 2.4s ease-out infinite;
+}
+
+@keyframes pin-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Small "scroll" cue: a line that runs down on a loop. */
+.scroll-cue {
+  animation: scroll-cue 2s var(--ease-expo) infinite;
+  transform-origin: top;
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: scaleY(0);
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .word {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .route-draw {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .pin-pulse,
+  .scroll-cue {
+    animation: none;
   }
 }

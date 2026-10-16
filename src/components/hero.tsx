@@ -1,47 +1,130 @@
-import Image from "next/image";
+'use client';
+
+import { useEffect, useState } from "react";
 import { CtaLink } from "./ui/cta-link";
+import { WordReveal } from "./motion/reveal";
+import { useReducedMotion } from "./motion/use-in-view";
+
+// A stylised street grid with the delivery route drawn from the pharmacy to the patient's door.
+const ROUTE = "M70 380 C 70 300, 150 300, 150 240 S 230 150, 300 170 S 380 230, 410 110";
+
+const statuses = ["Order received", "Picked up", "On the road", "Delivered"];
+
+function RouteMap() {
+    const motion = !useReducedMotion();
+    const [tick, setTick] = useState(0);
+
+    useEffect(() => {
+        if (!motion) return;
+        // Step the tracker label in time with the courier's 6s loop.
+        const timer = setInterval(() => setTick((t) => t + 1), 1500);
+        return () => clearInterval(timer);
+    }, [motion]);
+
+    const status = motion ? tick % statuses.length : statuses.length - 1;
+
+    return (
+        <div className="relative w-full max-w-md aspect-square rounded-[20px] bg-white shadow-[0_8px_32px_rgb(15_23_42/0.12)] overflow-hidden">
+            <svg viewBox="0 0 480 480" className="absolute inset-0 h-full w-full" aria-hidden="true">
+                <defs>
+                    <pattern id="streets" width="60" height="60" patternUnits="userSpaceOnUse">
+                        <path d="M60 0H0V60" fill="none" stroke="var(--hairline)" strokeWidth="1" />
+                    </pattern>
+                </defs>
+                <rect width="480" height="480" fill="url(#streets)" />
+                <path d="M0 300 H480 M240 0 V480" stroke="var(--brand-soft)" strokeWidth="18" />
+
+                <path d={ROUTE} fill="none" stroke="var(--gray-light)" strokeWidth="3" strokeDasharray="2 8" strokeLinecap="round" />
+                <path id="hero-route" d={ROUTE} pathLength={1} fill="none" stroke="var(--brand)" strokeWidth="4" strokeLinecap="round" className="route-draw" />
+
+                {/* Pharmacy */}
+                <g transform="translate(70 380)">
+                    <rect x="-16" y="-16" width="32" height="32" rx="8" fill="var(--ink)" />
+                    <path d="M-2 -8h4v6h6v4h-6v6h-4v-6h-6v-4h6z" fill="white" />
+                </g>
+
+                {/* Patient's door */}
+                <g transform="translate(410 110)">
+                    <circle r="10" fill="var(--brand)" className="pin-pulse" />
+                    <circle r="10" fill="var(--brand)" stroke="white" strokeWidth="3" />
+                </g>
+
+                {/* Courier */}
+                <g>
+                    <circle r="9" fill="var(--ink)" stroke="white" strokeWidth="3" />
+                    {motion ? (
+                        <animateMotion dur="6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.45 0 0.55 1">
+                            <mpath href="#hero-route" />
+                        </animateMotion>
+                    ) : (
+                        <animateMotion dur="0.01s" fill="freeze" keyPoints="1;1" keyTimes="0;1" calcMode="linear">
+                            <mpath href="#hero-route" />
+                        </animateMotion>
+                    )}
+                </g>
+            </svg>
+
+            <span className="label-mono absolute left-5 bottom-5 text-gray-mid">Pharmacy</span>
+            <span className="label-mono absolute right-5 top-5 text-gray-mid">Patient</span>
+
+            <div className="absolute left-5 top-5 rounded-lg bg-ink text-white px-4 py-3 min-w-44">
+                <p className="label-mono text-white/50 mb-1">Status</p>
+                <p className="text-lg tracking-tight" aria-live="off">
+                    <span className="inline-block h-2 w-2 rounded-full bg-brand mr-2 align-middle" />
+                    {statuses[status]}
+                </p>
+            </div>
+        </div>
+    );
+}
 
 export function Hero() {
     return (
-        <section className="relative bg-accent text-white overflow-hidden">
-            <div className="absolute inset-0 grid-pattern [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" aria-hidden="true" />
-            <div className="absolute -top-40 right-0 w-[40rem] h-[40rem] rounded-full bg-white/25 blur-3xl" aria-hidden="true" />
+        <section id="pickup" className="relative bg-brand text-ink overflow-hidden">
+            <div
+                className="absolute inset-0 [background-image:linear-gradient(to_right,rgb(255_255_255/0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgb(255_255_255/0.18)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]"
+                aria-hidden="true"
+            />
 
-            <div className="relative mx-auto max-w-6xl px-5 md:px-8 pt-36 md:pt-44 pb-24 md:pb-32">
+            <div className="relative mx-auto max-w-6xl px-5 md:px-8 pt-32 md:pt-44 pb-16 md:pb-24">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-                    <div className="lg:col-span-7 text-center lg:text-left">
-                        <p className="label-mono text-ink/70 mb-8">Pharmacy delivery partner</p>
-                        <h1 className="title-xl mb-8">
-                            Fast and reliable pharmaceutical delivery<span className="text-ink">.</span>
-                        </h1>
-                        <p className="text-lg md:text-xl leading-snug text-white max-w-xl mx-auto lg:mx-0 mb-10">
+                    <div className="lg:col-span-7">
+                        <p className="label-mono text-ink/70 mb-8">Pharmacy delivery partner · Ontario</p>
+                        <WordReveal
+                            as="h1"
+                            className="title-lg mb-8"
+                            parts={[
+                                { text: "From your counter" },
+                                { text: "to your patient's door.", className: "text-ink/55" },
+                            ]}
+                        />
+                        <p className="text-lg md:text-xl leading-snug text-ink/80 max-w-xl mb-10">
                             We bridge the gap between pharmacies and patients with secure, timely, and professional medication delivery services.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-                            <CtaLink href="/partners" variant="light">
+                        <div className="flex flex-col sm:flex-row gap-3">
+                            <CtaLink href="/partners" variant="ink">
                                 Become a partner
                             </CtaLink>
-                            <CtaLink href="/drivers" variant="outline-light">
+                            <CtaLink href="/drivers" variant="outline-ink" className="border-ink/40">
                                 Apply as driver
                             </CtaLink>
                         </div>
+                        <p className="mt-6 text-ink/80">
+                            Questions? Call <a href="tel:+14168349123" className="underline underline-offset-4 hover:text-ink">(416) 834-9123</a>
+                        </p>
                     </div>
 
                     <div className="lg:col-span-5 flex justify-center lg:justify-end">
-                        <div className="relative w-full max-w-sm aspect-square rounded-[20px] bg-white/15 border border-white/30 overflow-hidden">
-                            <Image
-                                src="/images/hero_illustration_transparent.png"
-                                alt="QuickMed courier carrying a pharmacy delivery bag"
-                                fill
-                                sizes="(min-width: 1024px) 384px, 90vw"
-                                className="object-contain scale-110"
-                                priority
-                            />
-                            <span className="label-mono absolute left-4 top-4 text-ink/60">01</span>
-                            <span className="label-mono absolute right-4 bottom-4 text-ink/60">Same-day</span>
-                        </div>
+                        <RouteMap />
                     </div>
                 </div>
+
+                <a href="#trusted" className="mt-16 md:mt-20 hidden md:flex items-center gap-4 text-ink/70 hover:text-ink">
+                    <span className="relative block h-10 w-px bg-ink/20 overflow-hidden">
+                        <span className="scroll-cue absolute inset-0 bg-ink" />
+                    </span>
+                    <span className="label-mono">Follow the route</span>
+                </a>
             </div>
 
             <div className="relative flex justify-center text-white" aria-hidden="true">

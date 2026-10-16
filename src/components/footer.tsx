@@ -1,6 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 const columns = [
     {
@@ -11,25 +9,11 @@ const columns = [
             { href: "/drivers", label: "Become A Driver" },
         ],
     },
-    {
-        heading: "Legal",
-        links: [
-            { href: "/privacy", label: "Privacy Policy" },
-            { href: "/terms", label: "Terms of Service" },
-        ],
-    },
-];
-
-const socials = [
-    { label: "Facebook", icon: Facebook },
-    { label: "Twitter", icon: Twitter },
-    { label: "Instagram", icon: Instagram },
-    { label: "LinkedIn", icon: Linkedin },
 ];
 
 export function Footer() {
     return (
-        <footer className="bg-slate-50 border-t border-hairline text-ink mt-20 md:mt-28">
+        <footer className="bg-ink text-white mt-20 md:mt-28">
             <div className="mx-auto max-w-6xl px-5 md:px-8 pt-20 md:pt-28 pb-10">
                 <p className="title-lg max-w-3xl mb-16 md:mb-24">
                     Medication, delivered<span className="text-accent">.</span>
@@ -37,21 +21,14 @@ export function Footer() {
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
                     <div className="md:col-span-4 space-y-4">
-                        <Image
-                            src="/brand/quickmed-logo-navy.svg"
-                            alt="QuickMed"
-                            width={175}
-                            height={32}
-                            className="h-8 w-auto"
-                            unoptimized
-                        />
-                        <p className="text-gray max-w-xs">
+                        <img src="/images/brand/quickmed-logo-white.svg" alt="QuickMed" className="h-7 w-auto" />
+                        <p className="text-white/60 max-w-xs">
                             Fast and reliable pharmaceutical delivery services for pharmacies and patients.
                         </p>
                     </div>
                     {columns.map((column) => (
                         <div key={column.heading} className="md:col-span-3">
-                            <h4 className="label-mono text-gray-mid mb-5">{column.heading}</h4>
+                            <h4 className="label-mono text-white/60 mb-5">{column.heading}</h4>
                             <ul className="space-y-2 text-lg">
                                 {column.links.map((link) => (
                                     <li key={link.href}>
@@ -61,19 +38,13 @@ export function Footer() {
                             </ul>
                         </div>
                     ))}
-                    <div className="md:col-span-2">
-                        <h4 className="label-mono text-gray-mid mb-5">Connect</h4>
-                        <div className="flex gap-5">
-                            {socials.map(({ label, icon: Icon }) => (
-                                <Link key={label} href="#" aria-label={label} className="text-gray hover:text-accent transition-colors">
-                                    <Icon className="h-5 w-5" />
-                                </Link>
-                            ))}
-                        </div>
+                    <div className="md:col-span-3">
+                        <h4 className="label-mono text-white/60 mb-5">Customer support</h4>
+                        <a href="tel:+14168349123" className="text-lg hover:text-accent transition-colors">(416) 834-9123</a>
                     </div>
                 </div>
 
-                <div className="mt-16 pt-6 border-t border-hairline text-sm text-gray-mid">
+                <div className="mt-16 pt-6 border-t border-white/10 text-sm text-white/40">
                     © {new Date().getFullYear()} QuickMed. All rights reserved.
                 </div>
             </div>

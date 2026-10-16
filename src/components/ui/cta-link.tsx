@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { cn } from "./button";
 
-type Variant = "accent" | "light" | "ghost" | "outline-light";
+type Variant = "accent" | "ink" | "light" | "ghost" | "outline-light" | "outline-ink";
 
 const variants: Record<Variant, string> = {
-    accent: "bg-accent text-white hover:text-white [--cta-hover:var(--ink)]",
-    light: "bg-white text-accent hover:text-white [--cta-hover:var(--ink)]",
-    ghost: "bg-ink/5 text-ink hover:text-white [--cta-hover:var(--ink)]",
-    "outline-light": "border border-white/70 text-white hover:text-accent [--cta-hover:#ffffff]",
+    accent: "bg-accent text-ink hover:text-white [--cta-hover:var(--ink)]",
+    light: "bg-white text-ink hover:text-white [--cta-hover:var(--ink)]",
+    ghost: "bg-ink/5 text-ink hover:text-accent [--cta-hover:var(--ink)]",
+    ink: "bg-ink text-white hover:text-ink [--cta-hover:#ffffff]",
+    "outline-light": "border border-white/40 text-white hover:text-ink [--cta-hover:#ffffff]",
+    "outline-ink": "border border-ink/30 text-ink hover:text-white [--cta-hover:var(--ink)]",
 };
 
 export function CtaLink({

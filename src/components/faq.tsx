@@ -5,20 +5,24 @@ import { clsx } from "clsx";
 
 const faqs = [
     {
-        question: "How fast is the delivery?",
-        answer: "Most deliveries are completed within 2-4 hours of pickup, depending on the distance and urgency level selected by the pharmacy.",
+        question: "How do I request a delivery?",
+        answer: "Partner pharmacies log in to our secure member area and fill out a short form with the recipient's information and the medication details.",
     },
     {
-        question: "Is the service HIPAA compliant?",
-        answer: "Yes, all our drivers are trained in HIPAA compliance and we use secure technology to ensure patient data privacy.",
+        question: "How is patient information protected?",
+        answer: "We handle personal health information in line with Ontario's Personal Health Information Protection Act (PHIPA) and Canada's PIPEDA. Requests are submitted through a secure, login-only member area, and our drivers are trained in confidentiality.",
+    },
+    {
+        question: "What happens after I submit a request?",
+        answer: "Our team processes the request and schedules a driver from our network to collect the delivery from your pharmacy at the designated time.",
     },
     {
         question: "How can I become a partner pharmacy?",
-        answer: "You can click on the 'Become A Partner' button in the menu, fill out the form, and our team will get back to you within 24 hours.",
+        answer: "Fill out the Become a Partner form. Our team sets up your pharmacy's account and emails you your login details.",
     },
     {
-        question: "Do you deliver on weekends?",
-        answer: "Yes, QuickMed operates 7 days a week to ensure patients receive their medications when they need them.",
+        question: "Who do I contact with questions?",
+        answer: "Call our customer support team at (416) 834-9123.",
     },
 ];
 
@@ -30,10 +34,10 @@ export function FAQ() {
     };
 
     return (
-        <section className="bg-white py-20 md:py-32">
+        <section id="questions" className="bg-white py-20 md:py-32 scroll-mt-24">
             <div className="mx-auto max-w-6xl px-5 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
                 <div className="lg:col-span-4">
-                    <p className="label-mono text-gray-mid mb-6">FAQ</p>
+                    <p className="label-mono text-gray-mid mb-6">Stop 05 · Questions</p>
                     <h2 className="title-md text-ink max-w-xs">
                         Frequently asked <span className="text-gray-light">questions.</span>
                     </h2>

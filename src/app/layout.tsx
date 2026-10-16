@@ -24,6 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Scroll reveals start hidden; without JavaScript, show everything. */}
+        <noscript>
+          <style>{`.reveal,.word{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+      </head>
       <body
         className={`${inter.variable} ${geistMono.variable} antialiased`}
       >
