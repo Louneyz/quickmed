@@ -1,6 +1,7 @@
 'use client';
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "./ui/button";
@@ -26,10 +27,14 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
         >
             <div className="mx-auto max-w-6xl flex h-16 items-center justify-between rounded-lg bg-white/15 border border-white/25 backdrop-blur-[30px] pl-5 pr-2">
                 <Link href="/" className="flex items-center" aria-label="QuickMed home">
-                    <img
-                        src="/images/quickmed_logo_transparent.png"
+                    <Image
+                        src="/brand/quickmed-logo-white.svg"
                         alt="QuickMed"
-                        className="h-7 w-auto"
+                        width={175}
+                        height={32}
+                        className="h-8 w-auto"
+                        unoptimized
+                        priority
                     />
                 </Link>
 

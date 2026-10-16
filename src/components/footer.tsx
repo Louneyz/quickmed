@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 const columns = [
@@ -36,7 +37,14 @@ export function Footer() {
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
                     <div className="md:col-span-4 space-y-4">
-                        <p className="text-xl font-bold text-accent">QuickMed</p>
+                        <Image
+                            src="/brand/quickmed-logo-navy.svg"
+                            alt="QuickMed"
+                            width={175}
+                            height={32}
+                            className="h-8 w-auto"
+                            unoptimized
+                        />
                         <p className="text-gray max-w-xs">
                             Fast and reliable pharmaceutical delivery services for pharmacies and patients.
                         </p>
