@@ -7,26 +7,26 @@ import { WordReveal } from "./motion/reveal";
 
 const steps = [
     {
-        title: "Create Your Profile",
-        description: "Sign up in seconds and verify your pharmacy credentials.",
+        title: "Join QuickMed",
+        description: "Apply as a partner. We set up your pharmacy's account and email you secure login details.",
         status: "Pharmacy onboarded",
         icon: Building2,
     },
     {
-        title: "Upload Delivery Info",
-        description: "Upload your patients' delivery details via our secure portal.",
+        title: "Submit a Request",
+        description: "Fill out a short form in our secure member area with the recipient's information and medication details.",
         status: "Order received",
         icon: Upload,
     },
     {
         title: "Driver Pickup",
-        description: "A specially trained driver arrives to pick up your orders.",
+        description: "Our team schedules a trained driver to collect the delivery from your pharmacy at the designated time.",
         status: "On the road",
         icon: Car,
     },
     {
-        title: "Delivery Complete",
-        description: "Your patient receives their delivery the very same day.",
+        title: "Delivered",
+        description: "Our drivers know the local routes and bring the medication to your patient's door.",
         status: "Delivered",
         icon: House,
     },
@@ -90,7 +90,7 @@ export function Process() {
                             ]}
                         />
                         <p className="mt-6 text-lg text-gray max-w-md">
-                            Our streamlined process ensures that medications reach patients quickly, safely, and securely.
+                            A simple process that gets medication from your pharmacy to your patients quickly and securely.
                         </p>
 
                         {/* Live tracker card that follows the active step (desktop). */}

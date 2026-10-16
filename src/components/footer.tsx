@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 const columns = [
     {
@@ -10,20 +9,6 @@ const columns = [
             { href: "/drivers", label: "Become A Driver" },
         ],
     },
-    {
-        heading: "Legal",
-        links: [
-            { href: "/privacy", label: "Privacy Policy" },
-            { href: "/terms", label: "Terms of Service" },
-        ],
-    },
-];
-
-const socials = [
-    { label: "Facebook", icon: Facebook },
-    { label: "Twitter", icon: Twitter },
-    { label: "Instagram", icon: Instagram },
-    { label: "LinkedIn", icon: Linkedin },
 ];
 
 export function Footer() {
@@ -53,15 +38,9 @@ export function Footer() {
                             </ul>
                         </div>
                     ))}
-                    <div className="md:col-span-2">
-                        <h4 className="label-mono text-white/60 mb-5">Connect</h4>
-                        <div className="flex gap-5">
-                            {socials.map(({ label, icon: Icon }) => (
-                                <Link key={label} href="#" aria-label={label} className="text-white/80 hover:text-accent transition-colors">
-                                    <Icon className="h-5 w-5" />
-                                </Link>
-                            ))}
-                        </div>
+                    <div className="md:col-span-3">
+                        <h4 className="label-mono text-white/60 mb-5">Customer support</h4>
+                        <a href="tel:+14168349123" className="text-lg hover:text-accent transition-colors">(416) 834-9123</a>
                     </div>
                 </div>
 

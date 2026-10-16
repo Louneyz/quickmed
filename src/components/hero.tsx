@@ -89,13 +89,13 @@ export function Hero() {
             <div className="relative mx-auto max-w-6xl px-5 md:px-8 pt-32 md:pt-44 pb-16 md:pb-24">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
                     <div className="lg:col-span-7">
-                        <p className="label-mono text-ink/70 mb-8">Pharmacy delivery partner</p>
+                        <p className="label-mono text-ink/70 mb-8">Pharmacy delivery partner · Ontario</p>
                         <WordReveal
                             as="h1"
                             className="title-lg mb-8"
                             parts={[
                                 { text: "From your counter" },
-                                { text: "to their door, the same day.", className: "text-ink/55" },
+                                { text: "to your patient's door.", className: "text-ink/55" },
                             ]}
                         />
                         <p className="text-lg md:text-xl leading-snug text-ink/80 max-w-xl mb-10">
@@ -109,6 +109,9 @@ export function Hero() {
                                 Apply as driver
                             </CtaLink>
                         </div>
+                        <p className="mt-6 text-ink/80">
+                            Questions? Call <a href="tel:+14168349123" className="underline underline-offset-4 hover:text-ink">(416) 834-9123</a>
+                        </p>
                     </div>
 
                     <div className="lg:col-span-5 flex justify-center lg:justify-end">

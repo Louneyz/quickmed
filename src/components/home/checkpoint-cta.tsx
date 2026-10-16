@@ -11,12 +11,15 @@ export function CheckpointCta() {
                     <div>
                         <p className="label-mono text-ink/70 mb-4">Next stop · Your pharmacy</p>
                         <p className="title-md max-w-xl">
-                            Add same-day delivery <span className="text-ink/55">without hiring a driver.</span>
+                            Add delivery for your patients <span className="text-ink/55">without hiring a driver.</span>
                         </p>
                     </div>
-                    <CtaLink href="/partners" variant="ink" className="shrink-0">
-                        Become a partner
-                    </CtaLink>
+                    <div className="shrink-0 flex flex-col items-start md:items-end gap-3">
+                        <CtaLink href="/partners" variant="ink">
+                            Become a partner
+                        </CtaLink>
+                        <a href="tel:+14168349123" className="label-mono text-ink/70 hover:text-ink">or call (416) 834-9123</a>
+                    </div>
                 </Reveal>
             </div>
         </section>

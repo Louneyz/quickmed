@@ -5,28 +5,28 @@ const services = [
     {
         eyebrow: "01 Collaboration",
         title: "Seamless Collaboration",
-        description: "We work directly with pharmacies to integrate smooth delivery workflows.",
+        description: "We work directly with pharmacies to fit delivery into your existing workflow.",
         image: "/images/service_collaboration_1770207670910.png",
         alt: "Pharmacist handing a bag to a courier",
     },
     {
-        eyebrow: "02 Security",
-        title: "Secure Delivery",
-        description: "HIPAA-compliant, temperature-controlled transport for sensitive medications.",
+        eyebrow: "02 Privacy",
+        title: "Patient Privacy",
+        description: "Patient information is handled in line with Ontario's PHIPA and Canada's PIPEDA, and requests go through our secure member area.",
         image: "/images/service_delivery_1770207689182.png",
-        alt: "Delivery status on a phone screen",
+        alt: "Delivery details on a phone screen",
     },
     {
-        eyebrow: "03 Visibility",
-        title: "Real-Time Tracking",
-        description: "Patients and pharmacies can track deliveries every step of the way.",
+        eyebrow: "03 Drivers",
+        title: "Trained Drivers",
+        description: "Professional drivers who are trained for medication delivery and know the local routes.",
         image: "/images/service_scooter_1770207705372.png",
         alt: "Courier on a scooter following a route",
     },
     {
-        eyebrow: "04 Verification",
-        title: "Proof of Delivery",
-        description: "Digital signatures and photo verification ensure successful handoffs.",
+        eyebrow: "04 Handling",
+        title: "Discreet and Secure",
+        description: "Secure, discreet packaging, with temperature control when a medication needs it.",
         image: "/images/service_team_1770207719832.png",
         alt: "QuickMed team under a row of stars",
     },
@@ -41,8 +41,8 @@ export function Services() {
                     <WordReveal
                         className="title-lg text-ink"
                         parts={[
-                            { text: "Every handoff," },
-                            { text: "accounted for.", className: "text-gray-light" },
+                            { text: "Handled with care," },
+                            { text: "pharmacy to patient.", className: "text-gray-light" },
                         ]}
                     />
                     <p className="mt-6 text-lg text-gray max-w-xl">
