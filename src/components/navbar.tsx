@@ -13,7 +13,7 @@ const links = [
     { href: "/#questions", label: "FAQ" },
 ];
 
-// Floating frosted-glass bar. `overlay` lets it sit over a dark hero (homepage);
+// Floating solid white bar. `overlay` lets it sit over a dark hero (homepage);
 // other pages keep it in the flow on an ink background.
 export function Navbar({ overlay = false }: { overlay?: boolean }) {
     const [open, setOpen] = useState(false);
@@ -25,7 +25,7 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
                 overlay ? "fixed top-0 left-0" : "sticky top-0 bg-white border-b border-hairline pb-4 md:pb-6",
             )}
         >
-            <div className="mx-auto max-w-6xl flex h-16 items-center justify-between rounded-lg bg-white/75 backdrop-blur-[30px] shadow-[0_4px_24px_rgb(15_23_42/0.08)] pl-5 pr-2">
+            <div className="mx-auto max-w-6xl flex h-16 items-center justify-between rounded-lg bg-white shadow-[0_4px_24px_rgb(15_23_42/0.12)] pl-5 pr-2">
                 <Link href="/" className="flex items-center" aria-label="QuickMed home">
                     <img
                         src="/images/brand/quickmed-logo-navy.svg"
@@ -47,10 +47,10 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
                 </nav>
 
                 <div className="hidden lg:flex items-center gap-2">
-                    <CtaLink href="/partners" variant="ink" className="py-3.5 px-4">
+                    <CtaLink href="/partners" variant="accent" className="py-3.5 px-4">
                         Partner with us
                     </CtaLink>
-                    <CtaLink href="/login" variant="ghost" className="py-3.5 px-4">
+                    <CtaLink href="/login" variant="outline-ink" className="py-3.5 px-4 border-brand-deep text-brand-deep">
                         Login
                     </CtaLink>
                 </div>
@@ -67,7 +67,7 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
             </div>
 
             {open && (
-                <div className="lg:hidden mx-auto mt-2 max-w-6xl rounded-lg bg-white/90 backdrop-blur-[30px] shadow-[0_4px_24px_rgb(15_23_42/0.08)] p-5 flex flex-col gap-1">
+                <div className="lg:hidden mx-auto mt-2 max-w-6xl rounded-lg bg-white shadow-[0_4px_24px_rgb(15_23_42/0.08)] p-5 flex flex-col gap-1">
                     {links.map((link) => (
                         <Link
                             key={link.href}
@@ -79,8 +79,8 @@ export function Navbar({ overlay = false }: { overlay?: boolean }) {
                         </Link>
                     ))}
                     <div className="grid grid-cols-2 gap-2 pt-4">
-                        <CtaLink href="/partners" variant="ink">Partner with us</CtaLink>
-                        <CtaLink href="/login" variant="ghost">Login</CtaLink>
+                        <CtaLink href="/partners" variant="accent">Partner with us</CtaLink>
+                        <CtaLink href="/login" variant="outline-ink" className="border-brand-deep text-brand-deep">Login</CtaLink>
                     </div>
                 </div>
             )}
