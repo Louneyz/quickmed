@@ -46,7 +46,7 @@ export function RouteTracker() {
     return (
         <nav
             aria-label="Page sections"
-            className="hidden 2xl:flex fixed left-8 top-1/2 -translate-y-1/2 z-40 rounded-lg bg-white/80 backdrop-blur-[30px] shadow-[0_4px_24px_rgb(15_23_42/0.08)] px-4 py-5"
+            className="hidden 2xl:flex fixed left-8 top-1/2 -translate-y-1/2 z-40 rounded-lg bg-white shadow-[0_4px_24px_rgb(15_23_42/0.12)] px-4 py-5"
         >
             <ol className="relative flex flex-col gap-5">
                 <span className="absolute left-[5px] top-1.5 bottom-1.5 w-px bg-hairline" aria-hidden="true">
