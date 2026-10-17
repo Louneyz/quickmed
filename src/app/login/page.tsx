@@ -5,6 +5,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { AuthFrame } from "@/components/portal/auth-frame";
 import { Button, Field, Input, Notice } from "@/components/portal/ui";
 import { homeFor, loadProfile, toLoginEmail } from "@/lib/portal/session";
+import { DEMO_ONLY } from "@/lib/portal/demo";
 import { isConfigured, supabase } from "@/lib/portal/supabase";
 
 export default function LoginPage() {
@@ -19,7 +20,11 @@ export default function LoginPage() {
         e.preventDefault();
         setBusy(true);
         setError(null);
-        const { data, error } = await supabase().auth.signInWithPassword({ email: toLoginEmail(email), password });
+        // Demo mode: whatever is typed (or nothing) opens the sales demo.
+        const credentials = DEMO_ONLY
+            ? { email: "demo@accounts.quickmed.ca", password: "demo" }
+            : { email: toLoginEmail(email), password };
+        const { data, error } = await supabase().auth.signInWithPassword(credentials);
         if (error || !data.user) {
             setError("That login and password don't match. Try again or reset your password.");
             setBusy(false);
@@ -71,7 +76,7 @@ export default function LoginPage() {
                             type={mode === "login" ? "text" : "email"}
                             autoCapitalize="none"
                             autoComplete="username"
-                            required
+                            required={!DEMO_ONLY || mode !== "login"}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="you@pharmacy.ca"
@@ -84,7 +89,7 @@ export default function LoginPage() {
                                 <Input
                                     type={showPassword ? "text" : "password"}
                                     autoComplete="current-password"
-                                    required
+                                    required={!DEMO_ONLY}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     className="pr-12"

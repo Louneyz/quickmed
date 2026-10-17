@@ -40,6 +40,10 @@ QuickMed staff use `/admin` to see every delivery, mark stops complete, manage c
 
 ## Sales demo
 
+**Right now the portal is in demo-only mode.** `/login` still shows, but any username and password (or none) opens the demo pharmacy, which runs entirely in the visitor's browser on made-up data and never touches the database. To switch to real logins, set `NEXT_PUBLIC_PORTAL_MODE=live` in Vercel and redeploy. The code is in `src/lib/portal/demo.ts`.
+
+Once live, the demo login below works against the real database:
+
 - Log in at `/login` with username `Demo` and the `DEMO_PASSWORD` you set. It is a normal pharmacy account flagged `is_demo`, so the database never shows it real clients' data.
 - Its sample deliveries are made up. A banner reminds salespeople not to type real patient details.
 - Its requests are hidden from the staff Deliveries board and counts; they appear only on the demo's own client page, tagged "Demo" in Clients.
