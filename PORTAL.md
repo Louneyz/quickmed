@@ -13,7 +13,7 @@ QuickMed staff use `/admin` to see every delivery, mark stops complete, manage c
 ## One-time setup
 
 1. **Create a Supabase project** at supabase.com. Region: **Canada (Central)**. Save the database password somewhere safe.
-2. **Run the schema.** In the dashboard, open SQL Editor, paste `supabase/migrations/0001_portal.sql`, run it. Then do the same with `0002_signups.sql` (partner sign-ups, driver applications, resume storage).
+2. **Run the schema.** In the dashboard, open SQL Editor, paste `supabase/migrations/0001_portal.sql`, run it. Then do the same with `0002_signups.sql` (partner sign-ups, driver applications, resume storage) and `0003_function_grants.sql`.
 3. **Auth settings** (Authentication → Providers / Sign In / URL Configuration):
    - Email provider on; **turn "Allow new users to sign up" off** (accounts are invite-only).
    - Minimum password length 10 (the demo password is 10 characters; new pharmacy users are asked for 12).
