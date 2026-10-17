@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
 import { cn } from "@/components/ui/button";
+import { DEMO_ONLY, switchDemoView, type DemoView } from "@/lib/portal/demo";
 import { signOut, usePortalSession } from "@/lib/portal/session";
 
 type NavItem = { href: string; label: string };
@@ -67,13 +68,16 @@ export function PortalShell({
                 </div>
             </header>
             <main className="mx-auto max-w-6xl px-4 md:px-8 py-8 md:py-12">
-                {pharmacy?.is_demo && (
-                    <div className="mb-8 rounded-lg bg-ink text-white px-5 py-4 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4" role="note">
-                        <span className="label-mono text-accent">Demo account</span>
-                        <span className="text-sm text-white">
-                            Everything here is sample data. Use made-up patient details only; real patient information
-                            must never be entered in the demo.
-                        </span>
+                {(DEMO_ONLY || pharmacy?.is_demo) && (
+                    <div className="mb-8 rounded-lg bg-ink text-white px-5 py-4 flex flex-col gap-3 md:flex-row md:items-center md:gap-4" role="note">
+                        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4 min-w-0">
+                            <span className="label-mono text-accent shrink-0">Demo</span>
+                            <span className="text-sm text-white">
+                                Everything here is sample data. Use made-up patient details only; real patient
+                                information must never be entered in the demo.
+                            </span>
+                        </div>
+                        {DEMO_ONLY && <ViewToggle current={profile.role === "staff" ? "staff" : "pharmacy"} />}
                     </div>
                 )}
                 {children}
@@ -87,6 +91,33 @@ export function PortalShell({
                 </span>
                 <Link href="/privacy" className="hover:text-ink underline">Privacy policy</Link>
             </footer>
+        </div>
+    );
+}
+
+const VIEWS: { view: DemoView; label: string }[] = [
+    { view: "pharmacy", label: "Pharmacy view" },
+    { view: "staff", label: "Dispatch view" },
+];
+
+// Demo only: flips between what a pharmacy sees and the QuickMed dispatch dashboard.
+function ViewToggle({ current }: { current: DemoView }) {
+    return (
+        <div className="flex shrink-0 rounded-lg bg-white/10 p-1 md:ml-auto" role="group" aria-label="Demo view">
+            {VIEWS.map(({ view, label }) => (
+                <button
+                    key={view}
+                    type="button"
+                    aria-pressed={current === view}
+                    onClick={() => current !== view && switchDemoView(view)}
+                    className={cn(
+                        "flex-1 whitespace-nowrap rounded-md px-4 py-2.5 text-sm transition-colors",
+                        current === view ? "bg-white text-ink" : "text-white hover:bg-white/10",
+                    )}
+                >
+                    {label}
+                </button>
+            ))}
         </div>
     );
 }
