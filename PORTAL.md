@@ -13,7 +13,7 @@ QuickMed staff use `/admin` to see every delivery, mark stops complete, manage c
 ## One-time setup
 
 1. **Create a Supabase project** at supabase.com. Region: **Canada (Central)**. Save the database password somewhere safe.
-2. **Run the schema.** In the dashboard, open SQL Editor, paste `supabase/migrations/0001_portal.sql`, run it. Then do the same with `0002_signups.sql` (partner sign-ups, driver applications, resume storage).
+2. **Run the schema.** In the dashboard, open SQL Editor, paste `supabase/migrations/0001_portal.sql`, run it. Then do the same with `0002_signups.sql` (partner sign-ups, driver applications, resume storage) and `0003_function_grants.sql`.
 3. **Auth settings** (Authentication → Providers / Sign In / URL Configuration):
    - Email provider on; **turn "Allow new users to sign up" off** (accounts are invite-only).
    - Minimum password length 10 (the demo password is 10 characters; new pharmacy users are asked for 12).
@@ -39,6 +39,10 @@ QuickMed staff use `/admin` to see every delivery, mark stops complete, manage c
    This creates your `/admin` login (no email needed) and the sales demo login (username `Demo`), and loads the demo's sample deliveries. Run it again any time to reset the demo to a clean state or change either password. From `/admin`, onboard real pharmacies with "Onboard a client".
 
 ## Sales demo
+
+**Right now the portal is in demo-only mode.** `/login` still shows, but any username and password (or none) opens the demo pharmacy, which runs entirely in the visitor's browser on made-up data and never touches the database. To switch to real logins, set `NEXT_PUBLIC_PORTAL_MODE=live` in Vercel and redeploy. The code is in `src/lib/portal/demo.ts`.
+
+Once live, the demo login below works against the real database:
 
 - Log in at `/login` with username `Demo` and the `DEMO_PASSWORD` you set. It is a normal pharmacy account flagged `is_demo`, so the database never shows it real clients' data.
 - Its sample deliveries are made up. A banner reminds salespeople not to type real patient details.
